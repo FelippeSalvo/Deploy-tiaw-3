@@ -85,10 +85,10 @@ Os papéis abaixo são apenas para organização do time.
 
 ##  Definição dos Papéis – Sprint 1
 
-- 👨‍💻 Tech Lead:
-- 🗄️ Arquiteto de Dados:
-- 🧪 Gerente de Qualidade:
-- 📋 Facilitador Ágil:
+- 👨‍💻 Tech Lead: Felippe Salvo de Mendonça
+- 🗄️ Arquiteto de Dados: Gabriel Max Ferreira Rodrigues
+- 🧪 Gerente de Qualidade: Carlos Eduardo Nascimento Gandra Pereira e Alephe Luiz Silva
+- 📋 Facilitador Ágil: Igor Tiago Ribeiro Matos
 
 > Caso os papéis mudem nas próximas Sprints, atualizar neste documento.
 
