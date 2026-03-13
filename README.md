@@ -6,20 +6,21 @@
 
 `SEMESTRE`: 1/2026
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+O projeto consiste no desenvolvimento de um site interativo que permite aos usuários montar e verificar a compatibilidade entre diferentes peças de computador, como processador, placa-mãe, memória RAM, placa de vídeo e fonte de alimentação. A plataforma funcionará como uma ferramenta de apoio para pessoas que desejam montar ou atualizar um computador, ajudando a evitar incompatibilidades entre componentes e facilitando o processo de escolha das peças. A aplicação realizará validações automáticas entre os componentes selecionados, indicando possíveis conflitos ou limitações de compatibilidade.
 
-ODS Alinhados:
+ODS Alinhados: ODS 9 – Indústria, Inovação e Infraestrutura
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
+* Alephe Luiz Silva
+* Carlos Eduardo Nascimento Gandra Pereira
+* Felippe Salvo de Mendonça
+* Igor Tiago Ribeiro Matos
+* Gabriel Max Ferreira Rodrigues
 
 ## Orientador
 
-* Nome completo do professor 1
+* Juliana Padilha
 
 ## Instruções de utilização
 
