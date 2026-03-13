@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PCraft - Login</title>
+    <title>PCraft - Login</title>
 
-<link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
 
 </head>
 
 <body>
 
-<div class="login-container">
+    <div class="login-container">
 
-<div class="login-box">
+        <div class="login-box">
 
-<h1>PCraft</h1>
-<p class="subtitle">Monte seu PC</p>
+            <h1>PCraft</h1>
+            <p class="subtitle">Monte seu PC</p>
 
-<form>
+            <form id="formLogin">
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="Digite seu email" required>
 
-<label>Email</label>
-<input type="email" placeholder="Digite seu email" required>
+                <label>Senha</label>
+                <input type="password" id="loginSenha" placeholder="Digite sua senha" required>
 
-<label>Senha</label>
-<input type="password" placeholder="Digite sua senha" required>
-
-<button type="submit">Entrar</button>
-
-</form>
+                <button type="submit">Entrar</button>
+            </form>
 
 
-<div class="register">
-<p>Não tem uma conta?</p>
-<a href="cadastro.html">Criar conta</a>
-</div>
+            <div class="register">
+                <p>Não tem uma conta?</p>
+                <a href="cadastro.html">Criar conta</a>
+            </div>
 
-</div>
+        </div>
 
-</div>
-
+    </div>
+    <script src="../js/script.js"></script>
 </body>
 </html>
