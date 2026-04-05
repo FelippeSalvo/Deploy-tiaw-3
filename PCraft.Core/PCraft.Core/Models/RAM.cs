@@ -1,16 +1,11 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace PCraft.Core.Models
 {
-    public class RAM : Componente
+    public class RAM
     {
-        [Required]
-        public int Capacidade { get; set; } // GB
-
-        [Required]
-        public int Velocidade { get; set; } // MHz
-
-        [Required]
-        public string Tipo { get; set; } // e.g., DDR4
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public RamType Tipo { get; set; }
+        public int Capacidade { get; set; } // GB por módulo
+        public int QuantidadeModulos { get; set; }
     }
 }

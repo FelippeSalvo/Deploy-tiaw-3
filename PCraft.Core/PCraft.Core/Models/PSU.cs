@@ -1,13 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace PCraft.Core.Models
 {
-    public class PSU : Componente
+    public class PSU
     {
-        [Required]
+        public int Id { get; set; }
+        public string Nome { get; set; }
         public int Potencia { get; set; } // Watts
-
-        [Required]
-        public string Eficiencia { get; set; } // e.g., 80+ Bronze
+        public PsuCertification Certificacao { get; set; }
     }
 }

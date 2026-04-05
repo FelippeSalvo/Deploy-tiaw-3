@@ -1,19 +1,11 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace PCraft.Core.Models
 {
-    public class GPU : Componente
+    public class GPU
     {
-        [Required]
-        public int VRAM { get; set; } // GB
-
-        [Required]
-        public string TipoMemoria { get; set; }
-
-        [Required]
-        public int ClockCore { get; set; } // MHz
-
-        [Required]
-        public int ClockBoost { get; set; } // MHz
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public int TDP { get; set; } // Watts
+        public int ConsumoRecomendado { get; set; } // PSU mínima recomendada
+        public int Comprimento { get; set; } // mm
     }
 }

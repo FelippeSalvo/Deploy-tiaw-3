@@ -1,19 +1,12 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace PCraft.Core.Models
 {
-    public class Motherboard : Componente
+    public class Motherboard
     {
-        [Required]
-        public string Socket{ get; set; }
-
-        [Required]
-        public string Formato { get; set; } // e.g., ATX
-
-        [Required]
-        public string Chipset { get; set; }
-
-        [Required]
-        public int SlotsRAM { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public CpuSocket Socket { get; set; }
+        public RamType TipoRamSuportado { get; set; }
+        public int CapacidadeMaximaRam { get; set; } // GB
+        public int SlotsRam { get; set; }
     }
 }
