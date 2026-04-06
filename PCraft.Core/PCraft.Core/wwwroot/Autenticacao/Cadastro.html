@@ -3,44 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>PCraft - Cadastro</title>
-
     <link rel="stylesheet" href="Login.css">
-
 </head>
 
 <body>
 
-    <div class="login-box">
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="../Home page/index.html" class="logo">PCraft</a>
 
-        <h1>PCraft</h1>
-        <p class="subtitle">Criar conta</p>
-
-        <form id="formCadastro">
-            <label>Nome</label>
-            <input type="text" id="nome" placeholder="Digite seu nome" required>
-
-            <label>Email</label>
-            <input type="email" id="email" placeholder="Digite seu email" required>
-
-            <label>Senha</label>
-            <input type="password" id="senha" placeholder="Crie uma senha" required>
-
-            <label>Confirmar senha</label>
-            <input type="password" id="confirmarSenha" placeholder="Confirme a senha" required>
-
-            <button type="submit">Cadastrar</button>
-        </form>
-
-        </form>
-
-        <div class="register">
-            <p>Já tem uma conta?</p>
-            <a href="login.html">Voltar para login</a>
+            <div class="nav-actions">
+                <a href="../Home page/index.html" class="btn-cadastro">Home</a>
+                <a href="Login.html" class="btn-login">Login</a>
+            </div>
         </div>
+    </nav>
 
+    <div class="login-container">
+        <div class="login-box">
+
+            <h1>PCraft</h1>
+            <p class="subtitle">Criar conta</p>
+
+            <form id="formCadastro">
+                <label>Nome</label>
+                <input type="text" id="nome" placeholder="Digite seu nome" required>
+
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Digite seu email" required>
+
+                <label>Senha</label>
+                <input type="password" id="senha" placeholder="Crie uma senha" required>
+
+                <label>Confirmar senha</label>
+                <input type="password" id="confirmarSenha" placeholder="Confirme a senha" required>
+
+                <button type="submit">Cadastrar</button>
+            </form>
+
+            <div class="register">
+                <p>Já tem uma conta?</p>
+                <a href="Login.html">Voltar para login</a>
+            </div>
+
+        </div>
     </div>
+
     <script src="../Montagem/app.js"></script>
 </body>
 </html>
