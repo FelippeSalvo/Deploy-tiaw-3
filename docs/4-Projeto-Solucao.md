@@ -1,40 +1,14 @@
 
 # 4. Projeto da Solução
 
-> ⚠️ **Aviso aos Squads (Software House)**
->
-> Esta seção **não deve ser preenchida integralmente antes da codificação**.
-> Trata-se de um **Documento Vivo**, que deverá ser atualizado **incrementalmente a cada Sprint**, refletindo fielmente o código real implementado.
-
 ---
 
 ## 4.1 Arquitetura da Solução (Sprint 1 e 2)
 
-Apresente um **diagrama macro** demonstrando como os componentes do sistema se comunicam.
+### 📎 Inserir o Diagrama de Arquitetura do Projeto do Grupo
 
-A arquitetura deve refletir o modelo de **fatias verticais**, evidenciando o fluxo:
+![Diagrama da Arquitetura](images/FluxogramaArquiteturaTI.png)
 
-**Front-end → API (Back-end) → Banco de Dados**
-
-Semelhante à imagem abaixo:
-
-![Exemplo de Arquitetura](https://uds.com.br/blog/wp-content/uploads/2024/09/Imagem-1-Comparativo-ilustrativo-das-diferencas-entre-front-end-e-back-end.jpg)
-
-
-
- **Fonte:** [Guia Completo de Desenvolvimento de Software - UDS](https://uds.com.br/blog/desenvolvimento-de-software-guia-completo/) <br><br>
- 
- ### 📎 Inserir o Diagrama de Arquitetura do Projeto do Grupo
-🚨 O grupo deverá inserir aqui a imagem
-
-
----
-🔧**Ferramentas recomendadas:**
-- Draw.io
-- Lucidchart
-- Figma
-
----
 
 ## 4.2 Tecnologias Utilizadas (Sprint 1)
 
@@ -42,15 +16,12 @@ Descreva as tecnologias, linguagens, frameworks, bibliotecas e serviços escolhi
 
 | Dimensão | Tecnologia Escolhida |
 |----------|----------------------|
-| Banco de Dados (SGBD) | Ex: SQL Server, PostgreSQL ou MongoDB |
-| Back-end (API) | Ex: C# (.NET Core) |
-| Front-end / Mobile | Ex: HTML + CSS + JavaScript, React ou Flutter |
-| Hospedagem / Deploy | Ex: Azure, AWS, Render ou Railway |
-| Gestão e Versionamento | GitHub e GitHub Projects (Kanban) |
+| Banco de Dados (SGBD) | PostgreSQL |
+| Back-end (API) | C# (ASP.NET Core) |
+| Front-end / Mobile | HTML + CSS + JavaScript |
+| Hospedagem / Deploy | Ainda não definido - provavelmente Vercel/ Render |
+| Gestão e Versionamento | GitHub e Trello |
 
- ⚠️ **Observação:**
- - GitHub Pages não executa back-end.
- - Utilize apenas tecnologias realmente implementadas.
 
 ---
 
@@ -91,50 +62,60 @@ Representação simplificada do Wireframe:
 
 ## 4.4 Modelagem de Dados (Sprint 2 e 3)
 
-O sistema exige persistência de dados.
-
-A documentação do banco seguirá a abordagem de **entrega contínua**, sendo expandida conforme evolução do projeto.
-
 ---
 
 ### 4.4.1 Script Físico (Entrega na Sprint 2 - MVP)
 
-Para a primeira fatia vertical (MVP), o Squad deverá entregar o **script de criação das tabelas ou coleções utilizadas**.
-
 #### 🔹 Para Banco Relacional (SQL)
 
-Incluir:
-
-- Comandos `CREATE TABLE`
-- Definição de chave primária (PK)
-- Definição de chaves estrangeiras (FK)
-
-**Exemplo:**
-
-```sql
-CREATE TABLE Usuario (
-    Id INT PRIMARY KEY,
-    Nome VARCHAR(100),
-    Email VARCHAR(150) UNIQUE,
-    Senha VARCHAR(200)
+CREATE TABLE CPUs (
+  Id SERIAL PRIMARY KEY,
+  Nome TEXT NOT NULL,
+  Fabricante TEXT NOT NULL,
+  Socket TEXT NOT NULL,
+  TDP INTEGER NOT NULL
 );
-```
 
----
+CREATE TABLE GPUs (
+  Id SERIAL PRIMARY KEY,
+  Nome TEXT NOT NULL,
+  TDP INTEGER NOT NULL,
+  ConsumoRecomendado INTEGER NOT NULL,
+  Comprimento INTEGER NOT NULL
+);
 
-### Para Banco NoSQL
+CREATE TABLE Motherboards (
+  Id SERIAL PRIMARY KEY,
+  Nome TEXT NOT NULL,
+  Socket TEXT NOT NULL,
+  TipoRamSuportado TEXT NOT NULL,
+  CapacidadeMaximaRam INTEGER NOT NULL,
+  SlotsRam INTEGER NOT NULL
+);
 
-Incluir a estrutura dos documentos JSON (Schema).
+CREATE TABLE PSUs (
+  Id SERIAL PRIMARY KEY,
+  Nome TEXT NOT NULL,
+  Potencia INTEGER NOT NULL,
+  Certificacao TEXT NOT NULL
+);
 
-**Exemplo:**
+CREATE TABLE RAMs (
+  Id SERIAL PRIMARY KEY,
+  Nome TEXT NOT NULL,
+  Tipo TEXT NOT NULL,
+  Capacidade INTEGER NOT NULL,
+  QuantidadeModulos INTEGER NOT NULL
+);
 
-```json
-{
-  "nome": "João Silva",
-  "email": "joao@email.com",
-  "senha": "hash_da_senha"
-}
-```
+CREATE TABLE Usuarios (
+  Id SERIAL PRIMARY KEY,
+  Nome TEXT NOT NULL,
+  Email TEXT NOT NULL UNIQUE,
+  Senha TEXT NOT NULL,
+  Admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+
 
 ### 📁 Obrigatório
 
