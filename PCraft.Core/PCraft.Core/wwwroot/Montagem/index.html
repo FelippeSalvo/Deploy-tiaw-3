@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCraft - Monte seu PC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">PCraft</div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Montagem</a></li>
+                <li><a href="#">Componentes</a></li>
+                <li><a href="#">Sobre</a></li>
+            </ul>
+            <div id="auth-buttons">
+                <a href="../Autenticacao/Login.html" class="btn-login">Login</a>
+                <a href="../Autenticacao/Cadastro.html" class="btn-cadastro">Cadastro</a>
+            </div>
+            <div id="user-info" style="display: none;">
+                <span id="user-name"></span>
+                <button onclick="logout()" class="btn-logout">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Monte seu PC</h1>
+                <p>Selecione os componentes e verifique a compatibilidade</p>
+            </div>
+
+            <div class="builder-grid">
+                <div class="components-panel">
+                    <h2>Componentes</h2>
+
+                    <div class="component-item">
+                        <div class="component-info">
+                            <span class="component-icon">CPU</span>
+                            <div>
+                                <h3>Processador</h3>
+                                <p class="component-status" id="cpu-status">Não selecionado</p>
+                            </div>
+                        </div>
+                        <select id="cpu" onchange="aoSelecionar('cpu', this)">
+                            <option value="">Selecionar...</option>
+                        </select>
+                    </div>
+
+                    <div class="component-item">
+                        <div class="component-info">
+                            <span class="component-icon">MOBO</span>
+                            <div>
+                                <h3>Placa Mãe</h3>
+                                <p class="component-status" id="motherboard-status">Não selecionado</p>
+                            </div>
+                        </div>
+                        <select id="motherboard" onchange="aoSelecionar('motherboard', this)">
+                            <option value="">Selecionar...</option>
+                        </select>
+                    </div>
+
+                    <div class="component-item">
+                        <div class="component-info">
+                            <span class="component-icon">RAM</span>
+                            <div>
+                                <h3>Memória RAM</h3>
+                                <p class="component-status" id="ram-status">Não selecionado</p>
+                            </div>
+                        </div>
+                        <select id="ram" onchange="aoSelecionar('ram', this)">
+                            <option value="">Selecionar...</option>
+                        </select>
+                    </div>
+
+                    <div class="component-item">
+                        <div class="component-info">
+                            <span class="component-icon">GPU</span>
+                            <div>
+                                <h3>Placa de Vídeo</h3>
+                                <p class="component-status" id="gpu-status">Não selecionado</p>
+                            </div>
+                        </div>
+                        <select id="gpu" onchange="aoSelecionar('gpu', this)">
+                            <option value="">Selecionar...</option>
+                        </select>
+                    </div>
+
+                    <div class="component-item">
+                        <div class="component-info">
+                            <span class="component-icon">PSU</span>
+                            <div>
+                                <h3>Fonte</h3>
+                                <p class="component-status" id="psu-status">Não selecionado</p>
+                            </div>
+                        </div>
+                        <select id="psu" onchange="aoSelecionar('psu', this)">
+                            <option value="">Selecionar...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="summary-panel">
+                    <div class="summary-card">
+                        <h2>Resumo</h2>
+                        <div id="selected-components">
+                            <p class="empty-state">Nenhum componente selecionado</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-card">
+                        <h2>Compatibilidade</h2>
+                        <button onclick="verificarCompatibilidade()" class="btn-check">
+                            Validar Compatibilidade
+                        </button>
+                        <div id="compatibility-result" class="compatibility-result"></div>
+                    </div>
+
+                    <div class="summary-card">
+                        <h2>Consumo</h2>
+                        <p class="total-power" id="total-power">-- W</p>
+                        <p class="recommended-psu" id="recommended-psu">Fonte recomendada: -- W</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 PCraft — Verificador de compatibilidade</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
