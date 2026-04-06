@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCraft - Painel do Administrador</title>
+  <link rel="stylesheet" href="Adm.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+      <h1 class="logo">PCraft</h1>
+      <p class="subtitle">Painel do Administrador</p>
+
+      <form id="pecaForm" class="form">
+        <div class="form-group">
+          <label for="tipo">Tipo da peça</label>
+          <select id="tipo" required>
+            <option value="">Selecione o tipo</option>
+            <option value="GPU">Placa de Vídeo</option>
+            <option value="RAM">Memória RAM</option>
+            <option value="CPU">Processador</option>
+            <option value="Motherboard">Placa-mãe</option>
+            <option value="PSU">Fonte</option>
+          </select>
+        </div>
+
+        <div id="camposDinamicos"></div>
+
+        <button type="submit" class="btn-primary">Adicionar peça</button>
+      </form>
+
+      <div class="toolbar">
+        <div class="form-group">
+          <label for="busca">Buscar peças</label>
+          <input type="text" id="busca" placeholder="Buscar por nome ou detalhes" />
+        </div>
+
+        <div class="form-group">
+          <label for="filtroTipo">Filtrar por tipo</label>
+          <select id="filtroTipo">
+            <option value="">Todos os tipos</option>
+            <option value="Placa de Vídeo">Placa de Vídeo</option>
+            <option value="Memória RAM">Memória RAM</option>
+            <option value="Processador">Processador</option>
+            <option value="Placa-mãe">Placa-mãe</option>
+            <option value="Fonte">Fonte</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="list-header">
+        <h2>Lista de peças</h2>
+        <span id="totalPecas">0 peça(s)</span>
+      </div>
+
+      <div id="listaPecas" class="pecas-list"></div>
+
+      <p class="footer-text">
+        PCraft
+      </p>
+    </div>
+  </div>
+
+  <script src="Adm.js"></script>
+</body>
+</html>

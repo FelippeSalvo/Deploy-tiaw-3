@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using PCraft.Core.Data;
 using PCraft.Core.Services;
 
@@ -24,6 +25,14 @@ app.UseCors();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Views")),
+    RequestPath = ""
+});
+
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
