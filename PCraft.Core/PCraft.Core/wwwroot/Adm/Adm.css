@@ -1,0 +1,262 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(90deg, #000814 0%, #020b1d 50%, #000814 100%);
+  color: #ffffff;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px 15px;
+}
+
+.card {
+  width: 100%;
+  max-width: 760px;
+  background: rgba(2, 10, 25, 0.95);
+  border-radius: 14px;
+  padding: 32px 28px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+}
+
+.logo {
+  text-align: center;
+  color: #1ed760;
+  font-size: 2.3rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #c7d2e0;
+  margin-bottom: 28px;
+  font-size: 1rem;
+}
+
+.form,
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.toolbar {
+  margin-top: 26px;
+  margin-bottom: 26px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.form-group input,
+.form-group select {
+  height: 42px;
+  border: 1px solid #344154;
+  border-radius: 6px;
+  background: #1f2a3a;
+  color: #ffffff;
+  padding: 0 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #9aa6b2;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #1ed760;
+  box-shadow: 0 0 0 2px rgba(30, 215, 96, 0.15);
+}
+
+#camposDinamicos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 4px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+#camposDinamicos:empty {
+  display: none;
+}
+
+#camposDinamicos .form-group {
+  margin: 0;
+}
+
+.btn-primary {
+  height: 44px;
+  border: none;
+  border-radius: 6px;
+  background: #1ed760;
+  color: #08111d;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+.list-header h2 {
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.list-header span {
+  font-size: 0.9rem;
+  color: #1ed760;
+  font-weight: bold;
+}
+
+.pecas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.peca-item {
+  background: #152131;
+  border: 1px solid #263548;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.peca-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.peca-nome {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.peca-detalhe {
+  font-size: 0.9rem;
+  color: #b5c0cc;
+  line-height: 1.4;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 6px;
+  background: rgba(30, 215, 96, 0.12);
+  color: #1ed760;
+  border: 1px solid rgba(30, 215, 96, 0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  width: fit-content;
+}
+
+.btn-remove {
+  border: none;
+  background: transparent;
+  color: #ff5c5c;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-remove:hover {
+  color: #ff8080;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 18px;
+  border: 1px dashed #304055;
+  border-radius: 8px;
+  color: #9aa6b2;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.footer-text {
+  margin-top: 22px;
+  text-align: center;
+  color: #1ed760;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 700px) {
+  .card {
+    padding: 24px 18px;
+  }
+
+  #camposDinamicos {
+    grid-template-columns: 1fr;
+  }
+
+  .peca-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-remove {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
