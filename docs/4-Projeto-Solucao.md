@@ -56,9 +56,55 @@ Representação simplificada do Wireframe:
 
 🚨 O grupo deverá inserir aqui a imagem
 
+![PAINEL ADM ](images/ADM.png)
+
+RF vinculado:
+➡️ RF-07 – O sistema deve permitir que o administrador cadastre novas peças no sistema.
+
+História de Usuário:
+➡️ US-07 – Como administrador, eu quero cadastrar peças para disponibilizar no sistema
+
+Descrição:
+Tela administrativa utilizada para cadastro de novos componentes no sistema.
+
+----------------------------------------------------------------------------------------------
+![MONTAGEM](images/MONTAGEM.png)
+
+RF vinculado:
+➡️ RF-05 – O sistema deve permitir que o usuário selecione componentes para montagem de PC.
+
+História de Usuário:
+➡️ US-05 – Como usuário, eu quero selecionar componentes para montar meu computador
+
+Descrição:
+Tela onde o usuário escolhe os componentes do computador, como CPU, GPU e memória, para montar uma configuração personalizada.
+
+-------------------------------------------------------------------------------------------------
+
+![HOME PAGE](<images/HOME PAGE.png>)
+
+RF vinculado:
+➡️ RF-03 – O sistema deve exibir a página inicial do sistema ao usuário.
+
+História de Usuário:
+➡️ US-03 – Como visitante, eu quero visualizar a página inicial para entender o sistema
+
+Descrição:
+Tela inicial do sistema que apresenta a proposta da aplicação e permite navegação para as demais funcionalidades.
 
 
----
+-------------------------------------------------------------------------------------------------
+
+![AUTENTICAÇÃO](images/AUTENTICAÇÃO.png)
+
+RF vinculado:
+➡️ RF-01 – O sistema deve permitir que o usuário realize cadastro informando nome, e-mail e senha.
+
+História de Usuário:
+➡️ US-01 – Como visitante, eu quero criar uma conta para acessar o sistema
+
+Descrição:
+Tela onde o usuário preenche seus dados para criação de conta no sistema.
 
 ## 4.4 Modelagem de Dados (Sprint 2 e 3)
 

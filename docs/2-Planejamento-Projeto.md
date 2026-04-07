@@ -148,12 +148,12 @@ KN=CARLOS EDUARDO
 
 # 🟡 Sprint 2 – MVP
 
-| Responsável | Papel | Tarefa | Início | Prazo | Status |
-|-------------|--------|--------|--------|--------|--------|
-|             |        | Gerar Script do Banco de Dados | 21/03 | 24/03 | ❌ |
-|             |        | Desenvolver Fatia 1 (BD + API + Tela) | 22/03 | 30/03 | ❌ |
-|             |        | Documentar Requisitos do MVP | 25/03 | 02/04 | ❌ |
-|             |        | Revisão técnica e Merge | 02/04 | 05/04 | ❌ |
+![docs\images\Trello-2.png](images/Trello-2.png)
+A=ALEPHE
+IT=IGOR TIAGO
+FS=FELIPPE SALVO
+GR=GABRIEL MAX
+KN=CARLOS EDUARDO
 
 ---
 

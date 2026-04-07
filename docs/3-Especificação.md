@@ -27,18 +27,20 @@ Os **Requisitos Funcionais (RF)** descrevem o que o sistema deve fazer.
 
 ## Tabela de Requisitos Funcionais
 
-| ID    | Descrição do Requisito | Prioridade |
-|-------|------------------------|------------|
-| RF-01 | O sistema deve permitir que os usuários criem uma conta informando nome, e-mail, senha e endereço. | 🔴 ALTA |
-| RF-02 | O sistema deve permitir que os usuários adicionem produtos ao carrinho de compras. | 🟡 MÉDIA |
-| RF-03 | (Descreva aqui o requisito funcional 3 do seu sistema) | (Alta/Média/Baixa) |
-| RF-04 | (Descreva aqui o requisito funcional 4 do seu sistema) | (Alta/Média/Baixa) |
-| RF-05 | (Descreva aqui o requisito funcional 5 do seu sistema) | (Alta/Média/Baixa) |
-| RF-06 | (Descreva aqui o requisito funcional 6 do seu sistema) | (Alta/Média/Baixa) |
-| RF-07 | (Descreva aqui o requisito funcional 7 do seu sistema) | (Alta/Média/Baixa) |
-| RF-08 | (Descreva aqui o requisito funcional 8 do seu sistema) | (Alta/Média/Baixa) |
-| RF-09 | (Descreva aqui o requisito funcional 9 do seu sistema) | (Alta/Média/Baixa) |
-| RF-10 | (Descreva aqui o requisito funcional 10 do seu sistema) | (Alta/Média/Baixa) |
+| ID    | Descrição do Requisito                                                                  | Prioridade |
+| ----- | --------------------------------------------------------------------------------------- | ---------- |
+| RF-01 | O sistema deve permitir que o usuário realize cadastro informando nome, e-mail e senha. | 🔴 ALTA    |
+| RF-02 | O sistema deve permitir que o usuário realize login com e-mail e senha.                 | 🔴 ALTA    |
+| RF-03 | O sistema deve exibir a página inicial do sistema ao usuário.                           | 🔴 ALTA    |
+| RF-04 | O sistema deve permitir que o usuário acesse a funcionalidade de montagem de PC.        | 🔴 ALTA    |
+| RF-05 | O sistema deve permitir que o usuário selecione componentes para montagem de PC.        | 🔴 ALTA    |
+| RF-06 | O sistema deve validar a compatibilidade entre os componentes selecionados.             | 🟡 MÉDIA   |
+| RF-07 | O sistema deve permitir que o administrador cadastre novas peças no sistema.            | 🟡 MÉDIA   |
+| RF-08 | O sistema deve exibir a lista de peças cadastradas para o administrador.                | 🟡 MÉDIA   |
+
+
+
+
 
 ---
 
@@ -69,27 +71,53 @@ Como administrador, quero alterar permissões para controlar o acesso ao sistema
 
 ---
 
-### História 1 (relacionada ao RF-01)
+🔷 História 1 (RF-01) – Cadastro
 
-Como __________________________________________  
-Eu quero _______________________________________  
-Para que _______________________________________
+Como visitante
+Eu quero criar uma conta
+Para acessar o sistema
 
----
+🔷 História 2 (RF-02) – Login
 
-### História 2 (relacionada ao RF-02)
+Como usuário
+Eu quero fazer login
+Para acessar minha conta
 
-Como __________________________________________  
-Eu quero _______________________________________  
-Para que _______________________________________
+🔷 História 3 (RF-03) – Home
 
----
+Como visitante
+Eu quero visualizar a página inicial
+Para entender o sistema
 
-### História 3 (relacionada ao RF-__)
+🔷 História 4 (RF-04) – Acesso à montagem
 
-Como __________________________________________  
-Eu quero _______________________________________  
-Para que _______________________________________
+Como usuário
+Eu quero acessar a tela de montagem
+Para começar a montar meu PC
+
+🔷 História 5 (RF-05) – Seleção de peças
+
+Como usuário
+Eu quero selecionar componentes
+Para montar meu computador
+
+🔷 História 6 (RF-06) – Compatibilidade
+
+Como usuário
+Eu quero validar a compatibilidade
+Para evitar erros na montagem
+
+🔷 História 7 (RF-07) – Admin cadastro
+
+Como administrador
+Eu quero cadastrar peças
+Para disponibilizar no sistema
+
+🔷 História 8 (RF-08) – Admin lista
+
+Como administrador
+Eu quero visualizar as peças cadastradas
+Para gerenciar o sistema
 
 ---
 
@@ -113,14 +141,16 @@ Eles garantem a qualidade da solução.
 
 ## Tabela de Requisitos Não Funcionais
 
-| ID     | Descrição do Requisito | Prioridade |
-|--------|------------------------|------------|
-| RNF-01 | O sistema deve carregar as páginas em até 3 segundos. | 🟡 MÉDIA |
-| RNF-02 | O sistema deve proteger as informações dos clientes por meio de criptografia. | 🔴 ALTA |
-| RNF-03 | (Descreva aqui o requisito não funcional 3 do seu sistema) | (Alta/Média/Baixa) |
-| RNF-04 | (Descreva aqui o requisito não funcional 4 do seu sistema) | (Alta/Média/Baixa) |
-| RNF-05 | (Descreva aqui o requisito não funcional 5 do seu sistema) | (Alta/Média/Baixa) |
-| RNF-06 | (Descreva aqui o requisito não funcional 6 do seu sistema) | (Alta/Média/Baixa) |
+| ID     | Descrição do Requisito                                                              | Prioridade |
+| ------ | ----------------------------------------------------------------------------------- | ---------- |
+| RNF-01 | O sistema deve responder às requisições em até 2 segundos.                              | 🔴 ALTA    |
+| RNF-02 | O sistema deve exigir autenticação para acesso às funcionalidades restritas.            | 🔴 ALTA    |
+| RNF-03 | O sistema deve permitir que o usuário realize login ou cadastro em no máximo 3 etapas.  | 🔴 ALTA    |
+| RNF-04 | O sistema deve possuir separação em arquivos distintos (HTML, CSS e JS)                 | 🟡 MÉDIA   |
+| RNF-05 | O sistema deve ser compatível com navegadores modernos (Chrome, Edge, Firefox).         | 🟡 MÉDIA   |
+| RNF-06 | O sistema deve manter organização do código em camadas (frontend, backend e banco).     | 🟡 MÉDIA   |
+
+
 
 ---
 
@@ -141,16 +171,17 @@ Elas podem envolver:
 
 ## Tabela de Restrições
 
-| ID  | Restrição |
-|-----|-----------|
-| R-01 | O projeto deverá ser entregue até o final do semestre. |
-| R-02 | O sistema deve funcionar apenas dentro da rede interna da empresa. |
-| R-03 | O software deve ser compatível com Windows e Linux. |
-| R-04 | (Descreva aqui a restrição 4 do seu projeto) |
-| R-05 | (Descreva aqui a restrição 5 do seu projeto) |
-| R-06 | (Descreva aqui a restrição 6 do seu projeto) |
-| R-07 | (Descreva aqui a restrição 7 do seu projeto) |
-| R-08 | (Descreva aqui a restrição 8 do seu projeto) |
+| ID   | Restrição                                                                           |
+| ---- | ----------------------------------------------------------------------------------- |
+| R-01 | O projeto deve ser desenvolvido dentro do prazo definido pela disciplina.           |
+| R-02 | O sistema deve utilizar as tecnologias definidas (HTML, CSS, JavaScript e backend). |
+| R-03 |O banco de dados utilizado deve ser compatível com o ambiente definido pelo projeto.  |
+| R-04 | O sistema deve rodar em ambiente local durante o desenvolvimento.                   |
+| R-05 | O projeto deve ser versionado utilizando GitHub.                                    |
+| R-06 | Não é permitido utilizar frameworks não ensinados na disciplina (se aplicável).     |
+| R-07 | O projeto deve seguir os padrões definidos pela disciplina.       |
+| R-08 | O projeto deve ser entregue conforme o modelo solicitado pelo professor.            |
+
 
 ---
 
