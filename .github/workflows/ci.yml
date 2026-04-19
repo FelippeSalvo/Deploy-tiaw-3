@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./PCraft.Core/PCraft.Core
+
     steps:
     - uses: actions/checkout@v4
 
@@ -23,6 +27,3 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore --configuration Release
-
-    - name: Check for compilation errors
-      run: dotnet build --no-restore --configuration Release --verbosity minimal
