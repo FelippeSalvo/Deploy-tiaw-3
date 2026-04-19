@@ -108,9 +108,9 @@ async function verificarCompatibilidade() {
         let html = '';
 
         if (data.isCompatible) {
-            html += `<div class="compatible">✅ Componentes Compatíveis!</div>`;
+            html += `<div class="compatible">Componentes Compatíveis!</div>`;
         } else {
-            html += `<div class="incompatible">❌ Incompatibilidade Detectada</div>`;
+            html += `<div class="incompatible">Incompatibilidade Detectada</div>`;
         }
 
         if (data.issues && data.issues.length > 0) {
@@ -137,31 +137,3 @@ async function verificarCompatibilidade() {
         resultDiv.innerHTML = `<p class="incompatible">Erro: ${e.message}</p>`;
     }
 }
-
-function verificarAuth() {
-    const usuario = localStorage.getItem('usuario');
-    const areaAuth = document.getElementById('auth-buttons');
-    const areaUsuario = document.getElementById('user-info');
-    const nomeUsuario = document.getElementById('user-name');
-
-    if (usuario) {
-        const dados = JSON.parse(usuario);
-        areaAuth.style.display = 'none';
-        areaUsuario.style.display = 'flex';
-        nomeUsuario.textContent = dados.nome || dados.email;
-    } else {
-        areaAuth.style.display = 'flex';
-        areaUsuario.style.display = 'none';
-    }
-}
-
-function logout() {
-    localStorage.removeItem('usuario');
-    verificarAuth();
-    window.location.reload();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    carregarComponentes();
-    verificarAuth();
-});

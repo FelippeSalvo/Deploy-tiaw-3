@@ -29,11 +29,10 @@ app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "Views")),
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
     RequestPath = ""
 });
 
 app.MapControllers();
-app.MapFallbackToFile("index.html");
 
 app.Run();
