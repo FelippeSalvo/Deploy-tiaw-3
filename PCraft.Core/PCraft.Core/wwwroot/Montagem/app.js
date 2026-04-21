@@ -1,4 +1,4 @@
-const API_BASE = window.location.origin + '/api';
+const API_BASE = 'http://localhost:5265/api';
 
 const nomesComponentes = {
     cpu: 'Processador',
@@ -92,7 +92,7 @@ async function verificarCompatibilidade() {
     resultDiv.innerHTML = '<p style="color: #a0a0a5;">Verificando...</p>';
 
     try {
-        const res = await fetch(`${API_BASE}/compatibility/check`, {
+        const res = await fetch(`${API_BASE}/compatibilidade/check`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(request)
@@ -107,33 +107,31 @@ async function verificarCompatibilidade() {
 
         let html = '';
 
-        if (data.isCompatible) {
+        if (data.compativel) {
             html += `<div class="compatible">Componentes Compatíveis!</div>`;
         } else {
             html += `<div class="incompatible">Incompatibilidade Detectada</div>`;
         }
 
-        if (data.issues && data.issues.length > 0) {
-            data.issues.forEach(issue => {
+        if (data.problemas && data.problemas.length > 0) {
+            data.problemas.forEach(problema => {
                 html += `
                     <div class="issue">
-                        <strong>${issue.component1} + ${issue.component2}</strong>
-                        ${issue.issue}
+                        <strong>${problema.componente1} + ${problema.componente2}</strong>
+                        ${problema.problema}
                     </div>
                 `;
             });
         }
 
-        html += `
-            <div class="power-info">
-                <p class="total-power">${data.totalPowerConsumption}W</p>
-                <p class="recommended-psu">Fonte recomendada: ${data.recommendedPSU}W</p>
-            </div>
-        `;
-
         resultDiv.innerHTML = html;
+
+        document.getElementById('total-power').textContent = `${data.consumoTotalEnergia}W`;
+        document.getElementById('recommended-psu').textContent = `Fonte recomendada: ${data.psuRecomendada}W`;
 
     } catch (e) {
         resultDiv.innerHTML = `<p class="incompatible">Erro: ${e.message}</p>`;
     }
 }
+
+document.addEventListener('DOMContentLoaded', carregarComponentes);
