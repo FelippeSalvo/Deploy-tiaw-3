@@ -1,5 +1,6 @@
 const API_BASE = 'http://localhost:5265/api';
 
+// Configuração dos componentes e mapeamento com os endpoints da API
 const nomesComponentes = {
     cpu: 'Processador',
     motherboard: 'Placa Mãe',
@@ -8,71 +9,268 @@ const nomesComponentes = {
     psu: 'Fonte'
 };
 
+const componentesConfig = {
+    cpu: { endpoint: 'cpus' },
+    motherboard: { endpoint: 'motherboards' },
+    ram: { endpoint: 'rams' },
+    gpu: { endpoint: 'gpus' },
+    psu: { endpoint: 'psus' }
+};
+
+// Dados carregados da API
+const componentesDados = {
+    cpu: [],
+    motherboard: [],
+    ram: [],
+    gpu: [],
+    psu: []
+};
+
+// Estado de seleção atual
+const componentesSelecionados = {
+    cpu: null,
+    motherboard: null,
+    ram: null,
+    gpu: null,
+    psu: null
+};
+
+// Estado do modal
+let componenteAtualModal = null;
+
+// Carrega todos os componentes da API e guarda em memória
 async function carregarComponentes() {
-    const endpoints = ['cpus', 'motherboards', 'rams', 'gpus', 'psus'];
-
-    for (const endpoint of endpoints) {
+    for (const [tipo, cfg] of Object.entries(componentesConfig)) {
         try {
-            const res = await fetch(`${API_BASE}/${endpoint}`);
+            const res = await fetch(`${API_BASE}/${cfg.endpoint}`);
             const data = await res.json();
-            const select = document.getElementById(endpoint.slice(0, -1));
-
-            data.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item.id;
-                opt.textContent = item.nome;
-                select.appendChild(opt);
-            });
+            componentesDados[tipo] = Array.isArray(data) ? data : [];
         } catch (e) {
-            console.error(`Erro ao carregar ${endpoint}:`, e);
+            console.error(`Erro ao carregar ${cfg.endpoint}:`, e);
+            componentesDados[tipo] = [];
         }
     }
 }
 
-function aoSelecionar(componente, select) {
-    const statusEl = document.getElementById(`${componente}-status`);
-    const opcaoSelecionada = select.options[select.selectedIndex];
+// Abre o modal para o tipo de componente informado
+function openComponentModal(tipo, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
 
-    if (select.value) {
-        statusEl.textContent = opcaoSelecionada.textContent;
-        statusEl.style.color = '#22c55e';
-    } else {
+    componenteAtualModal = tipo;
+
+    const overlay = document.getElementById('component-modal');
+    const titulo = document.getElementById('modal-title');
+    const subtitulo = document.getElementById('modal-subtitle');
+    const inputBusca = document.getElementById('modal-search');
+
+    titulo.textContent = `Selecionar ${nomesComponentes[tipo]}`;
+    subtitulo.textContent =
+        'Digite para filtrar as peças disponíveis em tempo real e clique para selecionar.';
+
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+
+    if (inputBusca) {
+        inputBusca.value = '';
+        renderizarListaModal();
+        // timeout pequeno para garantir que o input esteja visível
+        setTimeout(() => inputBusca.focus(), 50);
+    }
+}
+
+// Fecha o modal
+function closeComponentModal() {
+    const overlay = document.getElementById('component-modal');
+    if (!overlay) return;
+
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    componenteAtualModal = null;
+}
+
+// Renderiza a lista de componentes dentro do modal
+function renderizarListaModal() {
+    const listaEl = document.getElementById('modal-list');
+    const inputBusca = document.getElementById('modal-search');
+
+    if (!listaEl || !inputBusca || !componenteAtualModal) return;
+
+    const termo = inputBusca.value.trim().toLowerCase();
+    const dados = componentesDados[componenteAtualModal] || [];
+
+    const filtrados = dados.filter((item) => {
+        const texto = (item.nome || '').toLowerCase();
+        return termo === '' || texto.includes(termo);
+    });
+
+    if (filtrados.length === 0) {
+        listaEl.innerHTML =
+            '<div class="modal-empty">Nenhuma peça encontrada para esse filtro.</div>';
+        return;
+    }
+
+    const html = filtrados
+        .map((item) => {
+            const preco = item.preco != null ? `R$ ${item.preco}` : null;
+            const consumo =
+                item.consumoEnergia != null
+                    ? `${item.consumoEnergia} W`
+                    : item.consumo != null
+                    ? `${item.consumo} W`
+                    : null;
+
+            const imagemUrl = item.imagemUrl || item.imagem || null;
+
+            return `
+                <button class="modal-item" type="button" data-id="${item.id}">
+                    ${
+                        imagemUrl
+                            ? `<img src="${imagemUrl}" alt="${item.nome}" class="modal-item-image" />`
+                            : '<div class="modal-item-image"></div>'
+                    }
+                    <div class="modal-item-main">
+                        <div class="modal-item-title">${item.nome}</div>
+                        <div class="modal-item-meta">
+                            ${
+                                preco
+                                    ? `<span>Preço: ${preco}</span>`
+                                    : ''
+                            }
+                            ${
+                                consumo
+                                    ? `<span>Consumo: ${consumo}</span>`
+                                    : ''
+                            }
+                        </div>
+                    </div>
+                </button>
+            `;
+        })
+        .join('');
+
+    listaEl.innerHTML = html;
+}
+
+// Seleciona uma peça a partir do modal
+function selecionarPecaNoModal(idItem) {
+    if (!componenteAtualModal) return;
+
+    const dados = componentesDados[componenteAtualModal] || [];
+    const selecionado = dados.find((d) => String(d.id) === String(idItem));
+    if (!selecionado) return;
+
+    aoSelecionar(componenteAtualModal, selecionado);
+    closeComponentModal();
+}
+
+// Remove a peça selecionada de um componente
+function removerPeca(event, tipo) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    componentesSelecionados[tipo] = null;
+    const statusEl = document.getElementById(`${tipo}-status`);
+    const metaEl = document.getElementById(`${tipo}-meta`);
+
+    if (statusEl) {
         statusEl.textContent = 'Não selecionado';
         statusEl.style.color = '#a0a0a5';
+    }
+    if (metaEl) {
+        metaEl.innerHTML = '';
     }
 
     atualizarResumo();
 }
 
-function atualizarResumo() {
-    const resumo = document.getElementById('selected-components');
-    const componentes = ['cpu', 'motherboard', 'ram', 'gpu', 'psu'];
-    let temSelecao = false;
-    let html = '';
+// Mantém o nome da função para compatibilidade com o código existente
+function aoSelecionar(componente, item) {
+    componentesSelecionados[componente] = item;
 
-    componentes.forEach(comp => {
-        const select = document.getElementById(comp);
-        if (select.value) {
-            temSelecao = true;
-            const opcao = select.options[select.selectedIndex];
-            html += `
-                <div class="selected-item">
-                    <span>${nomesComponentes[comp]}</span>
-                    <span>${opcao.textContent}</span>
-                </div>
-            `;
+    const statusEl = document.getElementById(`${componente}-status`);
+    const metaEl = document.getElementById(`${componente}-meta`);
+
+    if (statusEl) {
+        statusEl.textContent = item.nome || 'Selecionado';
+        statusEl.style.color = '#22c55e';
+    }
+
+    if (metaEl) {
+        const preco = item.preco != null ? `R$ ${item.preco}` : null;
+        const consumo =
+            item.consumoEnergia != null
+                ? `${item.consumoEnergia} W`
+                : item.consumo != null
+                ? `${item.consumo} W`
+                : null;
+
+        let metaHtml = '';
+        if (preco) {
+            metaHtml += `<span>${preco}</span>`;
         }
-    });
+        if (consumo) {
+            metaHtml += `<span>${consumo}</span>`;
+        }
 
-    resumo.innerHTML = temSelecao ? html : '<p class="empty-state">Nenhum componente selecionado</p>';
+        metaEl.innerHTML = metaHtml;
+    }
+
+    atualizarResumo();
 }
 
+// Atualiza o resumo da build na lateral
+function atualizarResumo() {
+    const resumo = document.getElementById('selected-components');
+    if (!resumo) return;
+
+    let temSelecao = false;
+    let html = '';
+    let totalGasto = 0;
+
+    Object.keys(componentesSelecionados).forEach((tipo) => {
+        const item = componentesSelecionados[tipo];
+        if (!item) return;
+
+        temSelecao = true;
+        const preco = item.preco != null ? item.preco : null;
+        if (typeof preco === 'number') {
+            totalGasto += preco;
+        }
+
+        html += `
+            <div class="selected-item">
+                <span>${nomesComponentes[tipo]}</span>
+                <span>${item.nome || ''}</span>
+            </div>
+        `;
+    });
+
+    if (temSelecao && totalGasto > 0) {
+        html += `
+            <div class="selected-item" style="border-top: 1px solid var(--border); margin-top: 8px; padding-top: 10px;">
+                <span>Total estimado</span>
+                <span>R$ ${totalGasto.toFixed(2)}</span>
+            </div>
+        `;
+    }
+
+    resumo.innerHTML = temSelecao
+        ? html
+        : '<p class="empty-state">Nenhum componente selecionado</p>';
+}
+
+// Verifica compatibilidade usando o estado atual em memória
 async function verificarCompatibilidade() {
-    const cpu = document.getElementById('cpu').value;
-    const motherboard = document.getElementById('motherboard').value;
-    const ram = document.getElementById('ram').value;
-    const gpu = document.getElementById('gpu').value;
-    const psu = document.getElementById('psu').value;
+    const cpu = componentesSelecionados.cpu?.id ?? null;
+    const motherboard = componentesSelecionados.motherboard?.id ?? null;
+    const ram = componentesSelecionados.ram?.id ?? null;
+    const gpu = componentesSelecionados.gpu?.id ?? null;
+    const psu = componentesSelecionados.psu?.id ?? null;
 
     if (!cpu && !motherboard && !ram && !gpu && !psu) {
         document.getElementById('compatibility-result').innerHTML =
@@ -101,7 +299,9 @@ async function verificarCompatibilidade() {
         const data = await res.json();
 
         if (!res.ok) {
-            resultDiv.innerHTML = `<p class="incompatible">${data.message || 'Erro na requisição'}</p>`;
+            resultDiv.innerHTML = `<p class="incompatible">${
+                data.message || 'Erro na requisição'
+            }</p>`;
             return;
         }
 
@@ -114,7 +314,7 @@ async function verificarCompatibilidade() {
         }
 
         if (data.problemas && data.problemas.length > 0) {
-            data.problemas.forEach(problema => {
+            data.problemas.forEach((problema) => {
                 html += `
                     <div class="issue">
                         <strong>${problema.componente1} + ${problema.componente2}</strong>
@@ -126,12 +326,54 @@ async function verificarCompatibilidade() {
 
         resultDiv.innerHTML = html;
 
-        document.getElementById('total-power').textContent = `${data.consumoTotalEnergia}W`;
-        document.getElementById('recommended-psu').textContent = `Fonte recomendada: ${data.psuRecomendada}W`;
-
+        if (data.consumoTotalEnergia != null) {
+            document.getElementById(
+                'total-power'
+            ).textContent = `${data.consumoTotalEnergia}W`;
+        }
+        if (data.psuRecomendada != null) {
+            document.getElementById(
+                'recommended-psu'
+            ).textContent = `Fonte recomendada: ${data.psuRecomendada}W`;
+        }
     } catch (e) {
         resultDiv.innerHTML = `<p class="incompatible">Erro: ${e.message}</p>`;
     }
 }
 
-document.addEventListener('DOMContentLoaded', carregarComponentes);
+// Inicialização da página de montagem
+function inicializarMontagem() {
+    carregarComponentes();
+
+    const overlay = document.getElementById('component-modal');
+    const backdrop = overlay?.querySelector('.modal-backdrop');
+    const closeBtn = document.getElementById('modal-close-btn');
+    const inputBusca = document.getElementById('modal-search');
+    const listaEl = document.getElementById('modal-list');
+
+    if (backdrop) {
+        backdrop.addEventListener('click', () => closeComponentModal());
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => closeComponentModal());
+    }
+    if (inputBusca) {
+        inputBusca.addEventListener('input', () => renderizarListaModal());
+    }
+    if (listaEl) {
+        listaEl.addEventListener('click', (e) => {
+            const target = e.target.closest('[data-id]');
+            if (!target) return;
+            const id = target.getAttribute('data-id');
+            selecionarPecaNoModal(id);
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeComponentModal();
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', inicializarMontagem);
