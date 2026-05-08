@@ -45,11 +45,11 @@ namespace PCraft.Core.Services
         private int CalcularConsumoTotal(CPU cpu, GPU gpu, RAM ram)
         {
             var total = 0;
-            if (cpu != null) total += cpu.TDP;
-            if (gpu != null) total += gpu.TDP;
+            if (cpu != null) total += cpu.TDP;  // TDP do processador
+            if (gpu != null) total += gpu.TDP; // TDP da placa de vídeo
             total += 50; // Placa-mãe
-            if (ram != null) total += ram.QuantidadeModulos * 3;
-            total += 30; // Outros
+            if (ram != null) total += ram.QuantidadeModulos * 3; // 3W por módulo RAM
+            total += 30; // Outros - Margem de segurança
             return total;
         }
     }
@@ -155,7 +155,7 @@ namespace PCraft.Core.Services
             if (ctx.PSU == null) return;
 
             var total = 0;
-            if (ctx.CPU != null) total += ctx.CPU.TDP;
+            if (ctx.CPU != null) total += ctx.CPU.TDP; 
             if (ctx.GPU != null) total += ctx.GPU.TDP;
             total += 50;
             if (ctx.RAM != null) total += ctx.RAM.QuantidadeModulos * 3;
