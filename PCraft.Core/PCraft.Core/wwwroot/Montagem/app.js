@@ -1,4 +1,4 @@
-const API_BASE = window.location.origin + '/api';
+const MONTAGEM_API = `${window.location.origin}/api`;
 
 const nomesComponentes = {
     cpu: 'Processador',
@@ -13,7 +13,7 @@ async function carregarComponentes() {
 
     for (const endpoint of endpoints) {
         try {
-            const res = await fetch(`${API_BASE}/${endpoint}`);
+            const res = await fetch(`${MONTAGEM_API}/${endpoint}`);
             const data = await res.json();
             const select = document.getElementById(endpoint.slice(0, -1));
 
@@ -92,7 +92,7 @@ async function verificarCompatibilidade() {
     resultDiv.innerHTML = '<p style="color: #a0a0a5;">Verificando...</p>';
 
     try {
-        const res = await fetch(`${API_BASE}/compatibility/check`, {
+        const res = await fetch(`${MONTAGEM_API}/compatibility/check`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(request)
@@ -137,3 +137,7 @@ async function verificarCompatibilidade() {
         resultDiv.innerHTML = `<p class="incompatible">Erro: ${e.message}</p>`;
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    carregarComponentes();
+});
