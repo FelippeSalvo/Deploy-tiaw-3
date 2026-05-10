@@ -36,69 +36,104 @@
                 <div class="components-panel">
                     <h2>Componentes</h2>
 
-                    <div class="component-item">
+                    <!-- Card CPU -->
+                    <div class="component-item" onclick="openComponentModal('cpu')">
                         <div class="component-info">
                             <span class="component-icon">CPU</span>
-                            <div>
+                            <div class="component-text">
                                 <h3>Processador</h3>
                                 <p class="component-status" id="cpu-status">Não selecionado</p>
+                                <div class="component-meta" id="cpu-meta"></div>
                             </div>
                         </div>
-                        <select id="cpu" onchange="aoSelecionar('cpu', this)">
-                            <option value="">Selecionar...</option>
-                        </select>
+                        <div class="component-actions">
+                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'cpu')">
+                                Remover peça
+                            </button>
+                            <button class="btn-add-component" type="button" onclick="openComponentModal('cpu', event)">
+                                +
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="component-item">
+                    <!-- Card Placa-mãe -->
+                    <div class="component-item" onclick="openComponentModal('motherboard')">
                         <div class="component-info">
                             <span class="component-icon">MOBO</span>
-                            <div>
+                            <div class="component-text">
                                 <h3>Placa Mãe</h3>
                                 <p class="component-status" id="motherboard-status">Não selecionado</p>
+                                <div class="component-meta" id="motherboard-meta"></div>
                             </div>
                         </div>
-                        <select id="motherboard" onchange="aoSelecionar('motherboard', this)">
-                            <option value="">Selecionar...</option>
-                        </select>
+                        <div class="component-actions">
+                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'motherboard')">
+                                Remover peça
+                            </button>
+                            <button class="btn-add-component" type="button" onclick="openComponentModal('motherboard', event)">
+                                +
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="component-item">
+                    <!-- Card RAM -->
+                    <div class="component-item" onclick="openComponentModal('ram')">
                         <div class="component-info">
                             <span class="component-icon">RAM</span>
-                            <div>
+                            <div class="component-text">
                                 <h3>Memória RAM</h3>
                                 <p class="component-status" id="ram-status">Não selecionado</p>
+                                <div class="component-meta" id="ram-meta"></div>
                             </div>
                         </div>
-                        <select id="ram" onchange="aoSelecionar('ram', this)">
-                            <option value="">Selecionar...</option>
-                        </select>
+                        <div class="component-actions">
+                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'ram')">
+                                Remover peça
+                            </button>
+                            <button class="btn-add-component" type="button" onclick="openComponentModal('ram', event)">
+                                +
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="component-item">
+                    <!-- Card GPU -->
+                    <div class="component-item" onclick="openComponentModal('gpu')">
                         <div class="component-info">
                             <span class="component-icon">GPU</span>
-                            <div>
+                            <div class="component-text">
                                 <h3>Placa de Vídeo</h3>
                                 <p class="component-status" id="gpu-status">Não selecionado</p>
+                                <div class="component-meta" id="gpu-meta"></div>
                             </div>
                         </div>
-                        <select id="gpu" onchange="aoSelecionar('gpu', this)">
-                            <option value="">Selecionar...</option>
-                        </select>
+                        <div class="component-actions">
+                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'gpu')">
+                                Remover peça
+                            </button>
+                            <button class="btn-add-component" type="button" onclick="openComponentModal('gpu', event)">
+                                +
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="component-item">
+                    <!-- Card PSU -->
+                    <div class="component-item" onclick="openComponentModal('psu')">
                         <div class="component-info">
                             <span class="component-icon">PSU</span>
-                            <div>
+                            <div class="component-text">
                                 <h3>Fonte</h3>
                                 <p class="component-status" id="psu-status">Não selecionado</p>
+                                <div class="component-meta" id="psu-meta"></div>
                             </div>
                         </div>
-                        <select id="psu" onchange="aoSelecionar('psu', this)">
-                            <option value="">Selecionar...</option>
-                        </select>
+                        <div class="component-actions">
+                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'psu')">
+                                Remover peça
+                            </button>
+                            <button class="btn-add-component" type="button" onclick="openComponentModal('psu', event)">
+                                +
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -127,6 +162,36 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal de seleção de componentes -->
+    <div id="component-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-title">Selecionar componente</h2>
+                    <p id="modal-subtitle" class="modal-subtitle"></p>
+                </div>
+                <button id="modal-close-btn" class="modal-close" type="button" aria-label="Fechar">
+                    ✕
+                </button>
+            </div>
+
+            <div class="modal-search-wrapper">
+                <input
+                    type="text"
+                    id="modal-search"
+                    class="modal-search"
+                    placeholder="Buscar por nome, modelo ou marca..."
+                    autocomplete="off"
+                />
+            </div>
+
+            <div id="modal-list" class="modal-list">
+                <!-- Itens renderizados dinamicamente via JavaScript -->
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
