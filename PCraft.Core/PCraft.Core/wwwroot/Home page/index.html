@@ -8,14 +8,14 @@
 </head>
 <body data-pcraft-page="home">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR (inalterada) -->
     <nav class="navbar">
         <div class="container nav-content">
             <a href="index.html" class="logo">PCraft</a>
 
             <ul class="nav-links">
                 <li><a href="#inicio" class="active">Início</a></li>
-                <li><a href="#vantagens">Vantagens</a></li>
+                <li><a href="#vantagens">Como funciona</a></li>
                 <li><a href="../Montagem/index.html">Montagem</a></li>
                 <li><a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a></li>
                 <li data-pcraft-user-only hidden><a href="../Builds/MinhasBuilds.html">Minhas Builds</a></li>
@@ -25,147 +25,131 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero" id="inicio">
-        <div class="container hero-grid">
-            <div class="hero-content">
-             
-
-                <h1>
-                    Monte o <span>PC ideal</span><br>
-                    com compatibilidade inteligente
-                </h1>
-
-                <p>
-                    Monte seu computador com mais facilidade, escolhendo peças compatíveis 
-                    de forma simples, rápida e organizada.
-                </p>
-
-                <div class="hero-buttons">
-                    <a href="../Montagem/index.html" class="btn-primary">Começar montagem</a>
+    <main class="home-main lp-page">
+        <!-- Hero -->
+        <section class="mp-hero" id="inicio">
+            <div class="container mp-hero-grid">
+                <div class="mp-hero-copy">
+                    <p class="lp-eyebrow">Montagem com compatibilidade inteligente</p>
+                    <h1 class="mp-hero-title">O melhor site para <span class="mp-hero-accent">montar computadores</span></h1>
+                    <p class="mp-hero-lead">
+                         Escolha processador, placa-mãe, memória, placa de vídeo e fonte no seu ritmo.
+                         O PCraft identifica automaticamente possíveis incompatibilidades entre as peças,
+                        tornando a montagem mais simples, rápida e segura.
+                   </p>
+                    <p class="mp-hero-sub">
+                         Salve suas builds, compartilhe configurações e explore diferentes combinações com facilidade.
+                    </p>
+                    <div class="mp-hero-cta lp-hero-ctas">
+                        <a href="../Montagem/index.html" class="mp-btn mp-btn--primary mp-btn--hero">Comece a montar agora</a>
+                        <a href="#vantagens" class="mp-btn mp-btn--ghost">Como funciona</a>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="hero-stats">
-                    <div class="stat-card">
-                        <strong>Escolha com mais segurança</strong>
+        <div class="lp-trust-strip" aria-hidden="true">
+            <div class="container lp-trust-inner">
+                <span class="lp-trust-item">Validação na hora</span>
+                <span class="lp-trust-item">5 categorias de peças</span>
+                <span class="lp-trust-item">Salve e publique builds</span>
+            </div>
+        </div>
+
+        <!-- Produto: montador + comunidade -->
+        <section class="mp-section mp-actions lp-band lp-band--soft" id="explore">
+            <div class="container">
+                <header class="lp-section-head">
                   
+                    <h2 class="mp-section-title lp-section-title">Explore o PCraft</h2>
+                    <p class="mp-section-desc lp-section-lead">Monte com feedback de compatibilidade ou inspire-se nas builds que a comunidade já salvou.</p>
+                </header>
+                <div class="mp-action-grid">
+                    <a href="../Montagem/index.html" class="mp-action-card mp-action-card--primary">
+                        <h3>Montagem</h3>
+                        <p>Escolha processador, placa-mãe, memória, vídeo e fonte. A ferramenta avisa na hora se algo não fecha.</p>
+                        <span class="mp-action-cta">Abrir montador →</span>
+                    </a>
+                    <a href="../Builds/BuildsUsuarios.html" class="mp-action-card">
+                        <h3>Builds públicas</h3>
+                        <p>Veja configurações reais salvas por outros usuários e abra no montador quando quiser se basear nelas.</p>
+                        <span class="mp-action-cta">Ver builds da comunidade →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jornada -->
+        <section class="mp-section mp-steps lp-band" id="vantagens">
+            <div class="container">
+                <header class="lp-section-head">
+                    <p class="lp-kicker">Em quatro passos</p>
+                    <h2 class="mp-section-title lp-section-title">Como funciona</h2>
+                    <p class="mp-section-desc lp-section-lead">Um fluxo simples: você escolhe as peças, o PCraft valida tudo e você compartilha o resultado.</p>
+                </header>
+                <div class="mp-steps-grid">
+                    <div class="mp-step">
+                        <span class="mp-step-num">1</span>
+                        <h3>Você monta seu PC</h3>
+                        <p>Faça do seu jeito: selecione as peças que quiser, sem pré-montagens obrigatórias.</p>
                     </div>
-                   
-                    <div class="stat-card">
-                        <strong>Compatibilidade inteligente</strong>
-                    
+                    <div class="mp-step">
+                        <span class="mp-step-num">2</span>
+                        <h3>Nós testamos a compatibilidade</h3>
+                        <p>Analisamos socket, memória, energia e mais — com feedback claro na hora.</p>
+                    </div>
+                    <div class="mp-step">
+                        <span class="mp-step-num">3</span>
+                        <h3>Refine sua lista</h3>
+                        <p>Ajuste até ficar tudo compatível; compare opções com calma no PCraft.</p>
+                    </div>
+                    <div class="mp-step">
+                        <span class="mp-step-num">4</span>
+                        <h3>Compartilhe</h3>
+                        <p>Salve sua build e publique para a comunidade ver sua configuração.</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="hero-visual">
-                <div class="build-card main-build">
-                    <div class="build-header">
-                        <div>
-                            <h3>Custo-benefício</h3>
-                        </div>
-                        <span class="status online">Compatível</span>
+        <!-- Números -->
+        <section class="mp-stats lp-stats">
+            <div class="container mp-stats-grid">
+                <div class="mp-stat">
+                    <span class="mp-stat-value">100%</span>
+                    <span class="mp-stat-label">Foco em compatibilidade</span>
+                </div>
+                <div class="mp-stat">
+                    <span class="mp-stat-value">Fluidez</span>
+                    <span class="mp-stat-label">Interface rápida e intuitiva.</span>
+                </div>
+                <div class="mp-stat">
+                    <span class="mp-stat-value">Real-Time</span>
+                    <span class="mp-stat-label">Análise instantânea das peças</span>
+                </div>
+
+                <div class="mp-stat">
+                   <span class="mp-stat-value">Next Gen</span>
+                   <span class="mp-stat-label">Monte PCs modernos sem erro</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA final -->
+        <section class="mp-section mp-bottom-cta lp-bottom">
+            <div class="container">
+                <div class="mp-bottom-cta-inner lp-final-cta">
+                    <div class="lp-final-copy">
+                        <p class="lp-kicker lp-kicker--on-dark">Próximo passo</p>
+                        <h2 class="lp-final-title">Pronto para montar seu PC?</h2>
+                        <p class="lp-final-desc">Abra o montador, monte sua lista e deixe o PCraft cuidar da compatibilidade.</p>
                     </div>
-
-                    <div class="build-list">
-                        <div class="build-item">
-                            <span class="item-label">CPU</span>
-                            <span class="item-value">Ryzen 5 5600</span>
-                        </div>
-                        <div class="build-item">
-                            <span class="item-label">PLACA MÃE</span>
-                            <span class="item-value">B550M</span>
-                        </div>
-                        <div class="build-item">
-                            <span class="item-label">RAM</span>
-                            <span class="item-value">16GB DDR4</span>
-                        </div>
-                        <div class="build-item">
-                            <span class="item-label">GPU</span>
-                            <span class="item-value">RTX 4060</span>
-                        </div>
-                        <div class="build-item">
-                            <span class="item-label">PSU</span>
-                            <span class="item-value">650W 80 Plus Bronze</span>
-                        </div>
-                    </div>
-
-                    <div class="build-footer">
-                        <div>
-                            <small>Perfil da build</small>
-                            <strong>Equilíbrio e confiança</strong>
-                        </div>
-                        <a href="../Montagem/index.html" class="mini-btn">Montar outra build</a>
-                    </div>
-                </div>
-
-                
-            </div>
-        </div>
-    </section>
-
-    <!-- VANTAGENS -->
-    <section class="features" id="vantagens">
-        <div class="container">
-            <div class="section-title">
-                <span class="section-tag">Vantagens</span>
-                <h2>Por que usar o PCraft?</h2>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-number">01</div>
-                    <h3>Compatibilidade automática</h3>
-                    <p>
-                        Evite combinações erradas entre CPU, placa-mãe, memória RAM e fonte.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-number">02</div>
-                    <h3>Montagem mais rápida</h3>
-                    <p>
-                        Organize sua build em poucos cliques sem precisar pesquisar tudo separadamente.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-number">03</div>
-                    <h3>Interface simples</h3>
-                    <p>
-                        Navegação direta, visual limpo e foco total na experiência do usuário.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-number">04</div>
-                    <h3>Ideal para iniciantes</h3>
-                    <p>
-                        Mesmo quem não entende muito de hardware consegue montar com mais segurança.
-                    </p>
+                    <a href="../Montagem/index.html" class="mp-btn mp-btn--primary mp-btn--lg mp-btn--hero">Abrir montador</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- CTA FINAL -->
-    <section class="cta">
-        <div class="container cta-box">
-            <div>
-                <span class="section-tag">Pronto para começar?</span>
-                <h2>Monte agora seu PC com o PCraft</h2>
-                <p>
-                    Escolha as peças e valide a compatibilidade em poucos passos.
-                </p>
-            </div>
-
-            <div class="cta-buttons cta-buttons--single">
-                <a href="../Montagem/index.html" class="btn-primary">Ir para montagem</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container footer-content">
             <div>
@@ -176,7 +160,7 @@
 
             <div class="footer-links">
                 <a href="#inicio">Início</a>
-                <a href="#vantagens">Vantagens</a>
+                <a href="#vantagens">Como funciona</a>
                 <a href="../Montagem/index.html">Montagem</a>
                 <a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a>
                 <a href="../Builds/MinhasBuilds.html" data-pcraft-user-only hidden>Minhas Builds</a>
