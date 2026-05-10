@@ -115,51 +115,96 @@ Tela onde o usuário preenche seus dados para criação de conta no sistema.
 #### 🔹 Para Banco Relacional (SQL)
 
 CREATE TABLE CPUs (
-  Id SERIAL PRIMARY KEY,
-  Nome TEXT NOT NULL,
-  Fabricante TEXT NOT NULL,
-  Socket TEXT NOT NULL,
-  TDP INTEGER NOT NULL
+    Id SERIAL PRIMARY KEY,
+    Nome TEXT NOT NULL,
+    Fabricante TEXT NOT NULL,
+    Socket TEXT NOT NULL,
+    TDP INTEGER NOT NULL
 );
 
 CREATE TABLE GPUs (
-  Id SERIAL PRIMARY KEY,
-  Nome TEXT NOT NULL,
-  TDP INTEGER NOT NULL,
-  ConsumoRecomendado INTEGER NOT NULL,
-  Comprimento INTEGER NOT NULL
+    Id SERIAL PRIMARY KEY,
+    Nome TEXT NOT NULL,
+    TDP INTEGER NOT NULL,
+    ConsumoRecomendado INTEGER NOT NULL,
+    Comprimento INTEGER NOT NULL
 );
 
 CREATE TABLE Motherboards (
-  Id SERIAL PRIMARY KEY,
-  Nome TEXT NOT NULL,
-  Socket TEXT NOT NULL,
-  TipoRamSuportado TEXT NOT NULL,
-  CapacidadeMaximaRam INTEGER NOT NULL,
-  SlotsRam INTEGER NOT NULL
+    Id SERIAL PRIMARY KEY,
+    Nome TEXT NOT NULL,
+    Socket TEXT NOT NULL,
+    TipoRamSuportado TEXT NOT NULL,
+    CapacidadeMaximaRam INTEGER NOT NULL,
+    SlotsRam INTEGER NOT NULL
 );
 
 CREATE TABLE PSUs (
-  Id SERIAL PRIMARY KEY,
-  Nome TEXT NOT NULL,
-  Potencia INTEGER NOT NULL,
-  Certificacao TEXT NOT NULL
+    Id SERIAL PRIMARY KEY,
+    Nome TEXT NOT NULL,
+    Potencia INTEGER NOT NULL,
+    Certificacao TEXT NOT NULL
 );
 
 CREATE TABLE RAMs (
-  Id SERIAL PRIMARY KEY,
-  Nome TEXT NOT NULL,
-  Tipo TEXT NOT NULL,
-  Capacidade INTEGER NOT NULL,
-  QuantidadeModulos INTEGER NOT NULL
+    Id SERIAL PRIMARY KEY,
+    Nome TEXT NOT NULL,
+    Tipo TEXT NOT NULL,
+    Capacidade INTEGER NOT NULL,
+    QuantidadeModulos INTEGER NOT NULL
 );
 
 CREATE TABLE Usuarios (
-  Id SERIAL PRIMARY KEY,
-  Nome TEXT NOT NULL,
-  Email TEXT NOT NULL UNIQUE,
-  Senha TEXT NOT NULL,
-  Admin BOOLEAN NOT NULL DEFAULT FALSE
+    Id SERIAL PRIMARY KEY,
+    Nome TEXT NOT NULL,
+    Email TEXT NOT NULL UNIQUE,
+    Senha TEXT NOT NULL,
+    Admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE BuildsSalvas (
+    Id SERIAL PRIMARY KEY,
+    Nome TEXT NOT NULL,
+    Compartilhada BOOLEAN NOT NULL,
+    CriadaEm TIMESTAMP WITH TIME ZONE NOT NULL,
+
+    UsuarioId INTEGER NOT NULL,
+
+    CpuId INTEGER,
+    MotherboardId INTEGER,
+    RamId INTEGER,
+    GpuId INTEGER,
+    PsuId INTEGER,
+
+    CONSTRAINT FK_BuildsSalvas_Usuarios
+        FOREIGN KEY (UsuarioId)
+        REFERENCES Usuarios(Id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_BuildsSalvas_CPUs
+        FOREIGN KEY (CpuId)
+        REFERENCES CPUs(Id)
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_BuildsSalvas_Motherboards
+        FOREIGN KEY (MotherboardId)
+        REFERENCES Motherboards(Id)
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_BuildsSalvas_RAMs
+        FOREIGN KEY (RamId)
+        REFERENCES RAMs(Id)
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_BuildsSalvas_GPUs
+        FOREIGN KEY (GpuId)
+        REFERENCES GPUs(Id)
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_BuildsSalvas_PSUs
+        FOREIGN KEY (PsuId)
+        REFERENCES PSUs(Id)
+        ON DELETE SET NULL
 );
 
 
@@ -217,7 +262,7 @@ Este modelo deve exibir:
 
 ### 📎 Representação do Modelo Físico de Dados
 🚨 O grupo deverá inserir aqui a imagem do diagrama físico de dados.
-
+![Representação do Modelo Físico de Dados](images/DiagramaBD3.png)
 ---
 🔧**Ferramentas Sugeridas**
 - MySQL Workbench (engenharia reversa automática)

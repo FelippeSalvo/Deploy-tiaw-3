@@ -159,12 +159,12 @@ KN=CARLOS EDUARDO
 
 # 🔵 Sprint 3 – Core
 
-| Responsável | Papel | Tarefa | Início | Prazo | Status |
-|-------------|--------|--------|--------|--------|--------|
-|             |        | Implementar Regra de Negócio Y | 06/04 | 15/04 | ❌ |
-|             |        | Implementar Cálculo/Processo Z | 06/04 | 15/04 | ❌ |
-|             |        | Atualizar DER via Engenharia Reversa | 16/04 | 20/04 | ❌ |
-|             |        | Atualizar Diagrama de Classes | 16/04 | 23/04 | ❌ |
+![docs/images/Trello-3.png](images/Trello-3.png)
+A=ALEPHE
+IT=IGOR TIAGO
+FS=FELIPPE SALVO
+GR=GABRIEL MAX
+KN=CARLOS EDUARDO
 
 ---
 
