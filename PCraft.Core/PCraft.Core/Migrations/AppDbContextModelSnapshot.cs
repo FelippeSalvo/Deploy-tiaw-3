@@ -290,7 +290,6 @@ namespace PCraft.Core.Migrations
                     b.ToTable("Usuarios");
                 });
 
-<<<<<<< Updated upstream
             modelBuilder.Entity("PCraft.Core.Models.BuildSalva", b =>
                 {
                     b.HasOne("PCraft.Core.Models.CPU", "Cpu")
@@ -330,12 +329,13 @@ namespace PCraft.Core.Migrations
 
                     b.Navigation("Motherboard");
 
-                    b.Navigation("Psu");
+                                       b.Navigation("Psu");
 
                     b.Navigation("Ram");
 
                     b.Navigation("Usuario");
-=======
+                });
+
             modelBuilder.Entity("PCraft.Core.Models.PasswordResetToken", b =>
                 {
                     b.HasOne("PCraft.Core.Models.User", "User")
@@ -345,8 +345,8 @@ namespace PCraft.Core.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
->>>>>>> Stashed changes
                 });
+
 #pragma warning restore 612, 618
         }
     }
