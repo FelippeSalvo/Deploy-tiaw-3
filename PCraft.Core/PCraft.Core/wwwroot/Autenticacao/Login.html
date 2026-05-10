@@ -8,16 +8,13 @@
     <link rel="stylesheet" href="Login.css">
 </head>
 
-<body>
+<body data-pcraft-page="auth">
 
     <nav class="navbar">
         <div class="container nav-content">
             <a href="../Home page/index.html" class="logo">PCraft</a>
 
-            <div class="nav-actions">
-                <a href="../Home page/index.html" class="btn-cadastro">Home</a>
-                <a href="Cadastro.html" class="btn-login">Cadastro</a>
-            </div>
+            <div class="nav-actions"></div>
         </div>
     </nav>
 
@@ -37,6 +34,7 @@
 
                 <button type="submit">Entrar</button>
             </form>
+            <p id="authMessage" class="auth-message"></p>
 
             <div class="register">
                 <p>Não tem uma conta?</p>
@@ -46,6 +44,16 @@
         </div>
 
     </div>
+
+    <footer class="footer footer--compact">
+        <div class="container footer-content">
+            <div>
+                <h3>PCraft</h3>
+                <p class="footer-tagline">Montagem com compatibilidade inteligente</p>
+                <p class="footer-auth-status" aria-live="polite"></p>
+            </div>
+        </div>
+    </footer>
 
     <script src="auth.js"></script>
 </body>

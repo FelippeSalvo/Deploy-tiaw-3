@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using PCraft.Core.Data;
 using PCraft.Core.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace PCraft.Core.Controllers
 {
@@ -10,10 +15,12 @@ namespace PCraft.Core.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public UsuariosController(AppDbContext context)
+        public UsuariosController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -36,10 +43,25 @@ namespace PCraft.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Usuario usuario)
         {
+            if (string.IsNullOrWhiteSpace(usuario.Nome) ||
+                string.IsNullOrWhiteSpace(usuario.Email) ||
+                string.IsNullOrWhiteSpace(usuario.Senha))
+            {
+                return BadRequest(new { message = "Nome, email e senha são obrigatórios." });
+            }
+
+            var emailNormalizado = usuario.Email.Trim().ToLower();
+            var emailJaExiste = await _context.Usuarios.AnyAsync(u => u.Email.ToLower() == emailNormalizado);
+            if (emailJaExiste)
+            {
+                return Conflict(new { message = "Email já cadastrado." });
+            }
+
+            usuario.Email = emailNormalizado;
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return Ok(usuario);
+            return Ok(new { usuario.Id, usuario.Nome, usuario.Email });
         }
 
         [HttpPut("{id}")]
@@ -71,13 +93,55 @@ namespace PCraft.Core.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(SolicitacaoLogin request)
         {
+            if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Senha))
+            {
+                return BadRequest(new { message = "Email e senha são obrigatórios." });
+            }
+
+            var emailNormalizado = request.Email.Trim().ToLower();
             var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(u => u.Email == request.Email && u.Senha == request.Senha);
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == emailNormalizado);
 
-            if (usuario == null)
-                return Unauthorized();
+            if (usuario == null || usuario.Senha != request.Senha)
+            {
+                return Unauthorized(new { message = "Email ou senha inválidos." });
+            }
 
-            return Ok(new { usuario.Id, usuario.Nome, usuario.Email });
+            var token = GerarJwt(usuario);
+            return Ok(new
+            {
+                token,
+                usuario = new { usuario.Id, usuario.Nome, usuario.Email },
+                expiresIn = 3600
+            });
+        }
+
+        private string GerarJwt(Usuario usuario)
+        {
+            var secretKey = _configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("Jwt:SecretKey não configurada.");
+            var issuer = _configuration["Jwt:Issuer"] ?? "PCraft.Core";
+            var audience = _configuration["Jwt:Audience"] ?? "PCraft.Client";
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new List<Claim>
+            {
+                new(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
+                new(JwtRegisteredClaimNames.Email, usuario.Email),
+                new(JwtRegisteredClaimNames.UniqueName, usuario.Nome),
+                new("admin", usuario.Admin.ToString().ToLower()),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: issuer,
+                audience: audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
