@@ -16,6 +16,7 @@ namespace PCraft.Core.Data
         public DbSet<RAM> RAMs { get; set; }
         public DbSet<GPU> GPUs { get; set; }
         public DbSet<PSU> PSUs { get; set; }
+<<<<<<< Updated upstream
         public DbSet<BuildSalva> BuildsSalvas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -56,5 +57,10 @@ namespace PCraft.Core.Data
                     .OnDelete(DeleteBehavior.SetNull);
             });
         }
+=======
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+        public DbSet<User> Users { get; set; }
+>>>>>>> Stashed changes
     }
+
 }
