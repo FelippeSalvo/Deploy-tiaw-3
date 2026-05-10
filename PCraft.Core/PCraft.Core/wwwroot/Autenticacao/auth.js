@@ -1,30 +1,5 @@
 const AUTH_STORAGE_KEY = 'pcraft.auth';
-/** Fallback quando abre HTML direto pelo disco ou origin inválido (igual ao profile "http" do launchSettings). */
-const API_FALLBACK_ORIGIN = 'http://localhost:5265';
-
-function obterApiBase() {
-    const salva = localStorage.getItem('pcraft.apiBase');
-    if (salva && /^https?:\/\//i.test(salva)) {
-        const u = salva.replace(/\/$/, '');
-        return u.endsWith('/api') ? u : `${u}/api`;
-    }
-
-    const protocol = window.location.protocol;
-
-    // file:///... → fetch não consegue falar com a API usando origin relativo.
-    if (protocol === 'file:') {
-        return `${API_FALLBACK_ORIGIN}/api`;
-    }
-
-    const origin = window.location.origin;
-    if (!origin || origin === 'null') {
-        return `${API_FALLBACK_ORIGIN}/api`;
-    }
-
-    return `${origin}/api`;
-}
-
-const API_BASE = obterApiBase();
+const API_BASE = "http://localhost:5265/api";
 
 function obterSessao() {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);

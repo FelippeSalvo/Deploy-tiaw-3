@@ -6,18 +6,22 @@
     <title>PCraft - Monte seu PC</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body data-pcraft-page="montagem">
-    <nav class="navbar">
+<body>
+   <nav class="navbar">
         <div class="container nav-content">
-            <a href="../Home page/index.html" class="logo">PCraft</a>
+            <a href="index.html" class="logo">PCraft</a>
 
             <ul class="nav-links">
-                <li><a href="../Home page/index.html#inicio">Início</a></li>
-                <li><a href="../Home page/index.html#vantagens">Vantagens</a></li>
-                <li><a href="index.html" class="active">Montagem</a></li>
+                <li><a href="../Home page/index.html">Início</a></li>
+                <li><a href="#vantagens">Vantagens</a></li>
+                <li><a href="#como-funciona">Como funciona</a></li>
+                <li><a href="#montagem" class="active">Montagem</a></li>
             </ul>
 
-            <div class="nav-actions"></div>
+            <div class="nav-actions">
+                <a href="../Autenticacao/Login.html" class="btn-login">Login</a>
+                <a href="../Autenticacao/Cadastro.html" class="btn-cadastro">Cadastro</a>
+            </div>
         </div>
     </nav>
 
@@ -125,22 +129,13 @@
     </main>
 
     <footer class="footer">
-        <div class="container footer-content">
-            <div>
-                <h3>PCraft</h3>
-                <p class="footer-tagline">Montagem com compatibilidade inteligente</p>
-                <p class="footer-auth-status" aria-live="polite"></p>
-            </div>
-            <div class="footer-links">
-                <a href="../Home page/index.html#inicio">Início</a>
-                <a href="../Home page/index.html#vantagens">Vantagens</a>
-                <a href="index.html">Montagem</a>
-            </div>
+        <div class="container">
+            <p>© 2026 PCraft — Verificador de compatibilidade</p>
         </div>
     </footer>
 
-    <script src="../Autenticacao/auth.js"></script>
     <script src="app.js"></script>
+    <script src="../Autenticacao/auth.js"></script>
 </body>
 
 </html>
