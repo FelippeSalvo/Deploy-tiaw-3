@@ -1,5 +1,3 @@
-const API_BASE = 'http://localhost:5265/api';
-
 // Configuração dos componentes e mapeamento com os endpoints da API
 const nomesComponentes = {
     cpu: 'Processador',
