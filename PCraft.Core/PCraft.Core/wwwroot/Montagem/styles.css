@@ -422,6 +422,109 @@ body {
     background: var(--accent-hover);
 }
 
+.btn-save-build {
+    width: 100%;
+    padding: 12px;
+    background: rgba(34, 197, 94, 0.12);
+    color: var(--text-primary);
+    border: 1px solid rgba(34, 197, 94, 0.45);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-save-build:hover {
+    background: rgba(34, 197, 94, 0.2);
+}
+
+.save-build-dialog {
+    max-width: 560px;
+}
+
+.save-build-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.save-build-label {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.save-build-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+    font-size: 0.88rem;
+}
+
+.save-build-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.btn-save-secondary,
+.btn-save-primary {
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-save-secondary {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.btn-save-primary {
+    border: 1px solid rgba(34, 197, 94, 0.45);
+    background: rgba(34, 197, 94, 0.18);
+    color: var(--text-primary);
+}
+
+.btn-save-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(15, 23, 42, 0.98);
+    color: var(--text-primary);
+    border: 1px solid rgba(55, 65, 81, 0.8);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    z-index: 3000;
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-message.success {
+    border-color: rgba(34, 197, 94, 0.6);
+}
+
+.toast-message.error {
+    border-color: rgba(239, 68, 68, 0.6);
+}
+
 
 .compatibility-result {
     margin-top: 15px;

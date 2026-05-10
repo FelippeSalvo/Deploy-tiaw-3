@@ -35,6 +35,7 @@ const componentesSelecionados = {
 
 // Estado do modal
 let componenteAtualModal = null;
+let toastTimeoutId = null;
 
 // Carrega todos os componentes da API e guarda em memória
 async function carregarComponentes() {
@@ -339,6 +340,112 @@ async function verificarCompatibilidade() {
     }
 }
 
+function abrirModalSalvar() {
+    const modal = document.getElementById('save-build-modal');
+    const inputNome = document.getElementById('build-name-input');
+    if (!modal) return;
+
+    inputNome.value = '';
+    document.getElementById('build-share-input').checked = false;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    setTimeout(() => inputNome.focus(), 40);
+}
+
+function fecharModalSalvar() {
+    const modal = document.getElementById('save-build-modal');
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+function obterToken() {
+    const raw = localStorage.getItem('pcraft.auth');
+    if (!raw) return null;
+
+    try {
+        const sessao = JSON.parse(raw);
+        return sessao?.token || null;
+    } catch (_) {
+        return null;
+    }
+}
+
+function obterBuildAtual() {
+    return {
+        Nome: document.getElementById('build-name-input').value.trim(),
+        Compartilhada: document.getElementById('build-share-input').checked,
+        CpuId: componentesSelecionados.cpu?.id ?? null,
+        MotherboardId: componentesSelecionados.motherboard?.id ?? null,
+        RamId: componentesSelecionados.ram?.id ?? null,
+        GpuId: componentesSelecionados.gpu?.id ?? null,
+        PsuId: componentesSelecionados.psu?.id ?? null
+    };
+}
+
+function mostrarToast(mensagem, tipo = 'success') {
+    const toast = document.getElementById('toast-message');
+    if (!toast) return;
+
+    toast.textContent = mensagem;
+    toast.className = `toast-message show ${tipo}`;
+
+    if (toastTimeoutId) clearTimeout(toastTimeoutId);
+    toastTimeoutId = setTimeout(() => {
+        toast.className = 'toast-message';
+    }, 2500);
+}
+
+async function salvarBuild() {
+    const token = obterToken();
+    if (!token) {
+        mostrarToast('Faça login para salvar builds', 'error');
+        return;
+    }
+
+    const payload = obterBuildAtual();
+    if (!payload.Nome) {
+        mostrarToast('Informe um nome para a build', 'error');
+        return;
+    }
+
+    if (!payload.CpuId && !payload.MotherboardId && !payload.RamId && !payload.GpuId && !payload.PsuId) {
+        mostrarToast('Selecione pelo menos um componente', 'error');
+        return;
+    }
+
+    const btnSalvar = document.getElementById('confirm-save-build');
+    const textoOriginal = btnSalvar.textContent;
+    btnSalvar.disabled = true;
+    btnSalvar.textContent = 'Salvando...';
+
+    try {
+        const res = await fetch(`${API_BASE}/builds`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+            mostrarToast(data.message || 'Erro ao salvar build', 'error');
+            return;
+        }
+
+        fecharModalSalvar();
+        mostrarToast('Build salva com sucesso', 'success');
+    } catch (e) {
+        mostrarToast(`Erro: ${e.message}`, 'error');
+    } finally {
+        btnSalvar.disabled = false;
+        btnSalvar.textContent = textoOriginal;
+    }
+}
+
 // Inicialização da página de montagem
 function inicializarMontagem() {
     carregarComponentes();
@@ -348,6 +455,12 @@ function inicializarMontagem() {
     const closeBtn = document.getElementById('modal-close-btn');
     const inputBusca = document.getElementById('modal-search');
     const listaEl = document.getElementById('modal-list');
+    const saveModal = document.getElementById('save-build-modal');
+    const saveBackdrop = saveModal?.querySelector('.modal-backdrop');
+    const openSaveBtn = document.getElementById('btn-salvar-build');
+    const closeSaveBtn = document.getElementById('save-build-close-btn');
+    const cancelSaveBtn = document.getElementById('cancel-save-build');
+    const confirmSaveBtn = document.getElementById('confirm-save-build');
 
     if (backdrop) {
         backdrop.addEventListener('click', () => closeComponentModal());
@@ -366,10 +479,26 @@ function inicializarMontagem() {
             selecionarPecaNoModal(id);
         });
     }
+    if (openSaveBtn) {
+        openSaveBtn.addEventListener('click', abrirModalSalvar);
+    }
+    if (closeSaveBtn) {
+        closeSaveBtn.addEventListener('click', fecharModalSalvar);
+    }
+    if (cancelSaveBtn) {
+        cancelSaveBtn.addEventListener('click', fecharModalSalvar);
+    }
+    if (saveBackdrop) {
+        saveBackdrop.addEventListener('click', fecharModalSalvar);
+    }
+    if (confirmSaveBtn) {
+        confirmSaveBtn.addEventListener('click', salvarBuild);
+    }
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeComponentModal();
+            fecharModalSalvar();
         }
     });
 }
