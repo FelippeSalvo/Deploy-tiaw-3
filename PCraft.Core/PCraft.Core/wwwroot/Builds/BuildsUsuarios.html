@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCraft - Builds dos Usuários</title>
+    <link rel="stylesheet" href="builds.css">
+</head>
+<body data-pcraft-page="builds" data-builds-view="public">
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="../Home page/index.html" class="logo">PCraft</a>
+
+            <ul class="nav-links">
+                <li><a href="../Home page/index.html">Início</a></li>
+                <li><a href="../Montagem/index.html">Montagem</a></li>
+                <li><a href="BuildsUsuarios.html" class="active">Builds dos Usuários</a></li>
+                <li data-pcraft-user-only hidden><a href="MinhasBuilds.html">Minhas Builds</a></li>
+            </ul>
+
+            <div class="nav-actions"></div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <header class="page-header">
+                <h1>Builds dos Usuários</h1>
+                <p>Veja configurações compartilhadas pela comunidade.</p>
+            </header>
+
+            <section id="builds-list" class="builds-grid">
+                <div class="loading-state">Carregando builds públicas...</div>
+            </section>
+        </div>
+    </main>
+
+    <div id="build-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="build-modal-title">
+            <div class="modal-header">
+                <h2 id="build-modal-title">Detalhes da Build</h2>
+                <button id="build-modal-close" class="modal-close" type="button" aria-label="Fechar">✕</button>
+            </div>
+            <div id="build-modal-content" class="modal-content"></div>
+        </div>
+    </div>
+
+    <div id="toast-message" class="toast-message" aria-live="polite"></div>
+
+    <script src="../Autenticacao/auth.js"></script>
+    <script src="builds.js"></script>
+</body>
+</html>

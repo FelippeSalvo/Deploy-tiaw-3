@@ -20,32 +20,53 @@ namespace PCraft.Core.Controllers
             _context = context;
         }
 
-        private static IQueryable<BuildSalva> QueryComPecas() =>
-            _context.BuildsSalvas
-                .Include(b => b.Usuario)
-                .Include(b => b.Cpu)
-                .Include(b => b.Motherboard)
-                .Include(b => b.Ram)
-                .Include(b => b.Gpu)
-                .Include(b => b.Psu);
-
-        private static BuildResponseDTO MapearResposta(BuildSalva b) => new()
+        private async Task<List<BuildResponseDTO>> ProjecaoListaAsync(IQueryable<BuildSalva> builds)
         {
-            Id = b.Id,
-            Nome = b.Nome,
-            Compartilhada = b.Compartilhada,
-            CriadaEm = b.CriadaEm,
-            Usuario = new UsuarioBuildResumoDTO
+            var rows = await builds
+                .Select(b => new
+                {
+                    b.Id,
+                    b.Nome,
+                    b.Compartilhada,
+                    b.CriadaEm,
+                    UsuarioId = b.Usuario.Id,
+                    UsuarioNome = b.Usuario.Nome,
+                    b.CpuId,
+                    b.MotherboardId,
+                    b.RamId,
+                    b.GpuId,
+                    b.PsuId,
+                    CpuNome = b.Cpu != null ? b.Cpu.Nome : null,
+                    MotherboardNome = b.Motherboard != null ? b.Motherboard.Nome : null,
+                    RamNome = b.Ram != null ? b.Ram.Nome : null,
+                    GpuNome = b.Gpu != null ? b.Gpu.Nome : null,
+                    PsuNome = b.Psu != null ? b.Psu.Nome : null
+                })
+                .ToListAsync();
+
+            return rows.Select(r => new BuildResponseDTO
             {
-                Id = b.Usuario.Id,
-                Nome = b.Usuario.Nome
-            },
-            Cpu = b.Cpu?.Nome,
-            Motherboard = b.Motherboard?.Nome,
-            Ram = b.Ram?.Nome,
-            Gpu = b.Gpu?.Nome,
-            Psu = b.Psu?.Nome
-        };
+                Id = r.Id,
+                Nome = r.Nome,
+                Compartilhada = r.Compartilhada,
+                CriadaEm = r.CriadaEm,
+                Usuario = new UsuarioBuildResumoDTO
+                {
+                    Id = r.UsuarioId,
+                    Nome = r.UsuarioNome ?? string.Empty
+                },
+                CpuId = r.CpuId,
+                MotherboardId = r.MotherboardId,
+                RamId = r.RamId,
+                GpuId = r.GpuId,
+                PsuId = r.PsuId,
+                Cpu = r.CpuNome,
+                Motherboard = r.MotherboardNome,
+                Ram = r.RamNome,
+                Gpu = r.GpuNome,
+                Psu = r.PsuNome
+            }).ToList();
+        }
 
         private int? ObterUsuarioIdDoToken()
         {
@@ -87,8 +108,9 @@ namespace PCraft.Core.Controllers
             _context.BuildsSalvas.Add(build);
             await _context.SaveChangesAsync();
 
-            var criada = await QueryComPecas().FirstAsync(b => b.Id == build.Id);
-            return CreatedAtAction(nameof(ObterPorId), new { id = criada.Id }, MapearResposta(criada));
+            var criada = (await ProjecaoListaAsync(_context.BuildsSalvas.AsNoTracking().Where(b => b.Id == build.Id)))
+                .First();
+            return CreatedAtAction(nameof(ObterPorId), new { id = criada.Id }, criada);
         }
 
         [Authorize]
@@ -99,38 +121,42 @@ namespace PCraft.Core.Controllers
             if (usuarioId is null)
                 return Unauthorized(new { message = "Não foi possível identificar o usuário." });
 
-            var lista = await QueryComPecas()
-                .Where(b => b.UsuarioId == usuarioId.Value)
-                .OrderByDescending(b => b.CriadaEm)
-                .ToListAsync();
+            var lista = await ProjecaoListaAsync(
+                _context.BuildsSalvas.AsNoTracking()
+                    .Where(b => b.UsuarioId == usuarioId.Value)
+                    .OrderByDescending(b => b.CriadaEm));
 
-            return Ok(lista.Select(MapearResposta));
+            return Ok(lista);
         }
 
         [HttpGet("publicas")]
         public async Task<ActionResult<IEnumerable<BuildResponseDTO>>> ListarPublicas()
         {
-            var lista = await QueryComPecas()
-                .Where(b => b.Compartilhada)
-                .OrderByDescending(b => b.CriadaEm)
-                .ToListAsync();
+            var lista = await ProjecaoListaAsync(
+                _context.BuildsSalvas.AsNoTracking()
+                    .Where(b => b.Compartilhada)
+                    .OrderByDescending(b => b.CriadaEm));
 
-            return Ok(lista.Select(MapearResposta));
+            return Ok(lista);
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<BuildResponseDTO>> ObterPorId(int id)
         {
-            var build = await QueryComPecas().FirstOrDefaultAsync(b => b.Id == id);
-            if (build is null)
+            var meta = await _context.BuildsSalvas.AsNoTracking()
+                .Where(b => b.Id == id)
+                .Select(b => new { b.UsuarioId, b.Compartilhada })
+                .FirstOrDefaultAsync();
+            if (meta is null)
                 return NotFound(new { message = "Build não encontrada." });
 
             var usuarioId = ObterUsuarioIdDoToken();
-            var podeVerPrivada = build.Compartilhada || usuarioId == build.UsuarioId;
-            if (!podeVerPrivada)
+            if (!meta.Compartilhada && usuarioId != meta.UsuarioId)
                 return NotFound(new { message = "Build não encontrada." });
 
-            return Ok(MapearResposta(build));
+            var dto = (await ProjecaoListaAsync(_context.BuildsSalvas.AsNoTracking().Where(b => b.Id == id)))
+                .First();
+            return Ok(dto);
         }
 
         [Authorize]
@@ -167,8 +193,9 @@ namespace PCraft.Core.Controllers
 
             await _context.SaveChangesAsync();
 
-            var atualizada = await QueryComPecas().FirstAsync(b => b.Id == id);
-            return Ok(MapearResposta(atualizada));
+            var atualizada = (await ProjecaoListaAsync(_context.BuildsSalvas.AsNoTracking().Where(b => b.Id == id)))
+                .First();
+            return Ok(atualizada);
         }
 
         [Authorize]

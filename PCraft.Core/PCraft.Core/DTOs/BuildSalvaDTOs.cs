@@ -37,6 +37,12 @@ namespace PCraft.Core.DTOs
 
         public UsuarioBuildResumoDTO Usuario { get; set; } = null!;
 
+        public int? CpuId { get; set; }
+        public int? MotherboardId { get; set; }
+        public int? RamId { get; set; }
+        public int? GpuId { get; set; }
+        public int? PsuId { get; set; }
+
         public string? Cpu { get; set; }
         public string? Motherboard { get; set; }
         public string? Ram { get; set; }

@@ -1,16 +1,13 @@
-using Microsoft.EntityFrameworkCore;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using PCraft.Core.Data;
 
 #nullable disable
 
 namespace PCraft.Core.Migrations
 {
     /// <inheritdoc />
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20260210120000_SistemaBuildsSalvas")]
-    public class SistemaBuildsSalvas : Migration
+    public partial class CriarTabelaBuildsSalvas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
