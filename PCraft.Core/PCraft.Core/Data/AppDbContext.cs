@@ -56,5 +56,8 @@ namespace PCraft.Core.Data
                     .OnDelete(DeleteBehavior.SetNull);
             });
         }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+        public DbSet<User> Users { get; set; }
     }
+
 }

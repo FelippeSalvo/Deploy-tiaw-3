@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PCraft.Core.Data;
@@ -11,9 +12,11 @@ using PCraft.Core.Data;
 namespace PCraft.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260508201436_AddPasswordResetToken")]
+    partial class AddPasswordResetToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,59 +24,6 @@ namespace PCraft.Core.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("PCraft.Core.Models.BuildSalva", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Compartilhada")
-                        .HasColumnType("boolean");
-
-                    b.Property<int?>("CpuId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CriadaEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("GpuId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("MotherboardId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("PsuId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("RamId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CpuId");
-
-                    b.HasIndex("GpuId");
-
-                    b.HasIndex("MotherboardId");
-
-                    b.HasIndex("PsuId");
-
-                    b.HasIndex("RamId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("BuildsSalvas", (string)null);
-                });
 
             modelBuilder.Entity("PCraft.Core.Models.CPU", b =>
                 {
@@ -290,52 +240,6 @@ namespace PCraft.Core.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("PCraft.Core.Models.BuildSalva", b =>
-                {
-                    b.HasOne("PCraft.Core.Models.CPU", "Cpu")
-                        .WithMany()
-                        .HasForeignKey("CpuId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("PCraft.Core.Models.GPU", "Gpu")
-                        .WithMany()
-                        .HasForeignKey("GpuId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("PCraft.Core.Models.Motherboard", "Motherboard")
-                        .WithMany()
-                        .HasForeignKey("MotherboardId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("PCraft.Core.Models.PSU", "Psu")
-                        .WithMany()
-                        .HasForeignKey("PsuId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("PCraft.Core.Models.RAM", "Ram")
-                        .WithMany()
-                        .HasForeignKey("RamId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("PCraft.Core.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cpu");
-
-                    b.Navigation("Gpu");
-
-                    b.Navigation("Motherboard");
-
-                                       b.Navigation("Psu");
-
-                    b.Navigation("Ram");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("PCraft.Core.Models.PasswordResetToken", b =>
                 {
                     b.HasOne("PCraft.Core.Models.User", "User")
@@ -346,7 +250,6 @@ namespace PCraft.Core.Migrations
 
                     b.Navigation("User");
                 });
-
 #pragma warning restore 612, 618
         }
     }
