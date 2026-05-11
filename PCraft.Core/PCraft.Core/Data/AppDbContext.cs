@@ -57,7 +57,6 @@ namespace PCraft.Core.Data
             });
         }
         public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 
 }

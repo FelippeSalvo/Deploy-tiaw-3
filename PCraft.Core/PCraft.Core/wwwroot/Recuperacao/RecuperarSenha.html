@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCraft - Recuperar Senha</title>
+    <link rel="stylesheet" href="RecuperarSenha.css">
+</head>
+<body data-pcraft-page="auth">
+    <header class="topbar">
+        <div class="brand">PCraft</div>
+
+        <nav class="nav-links">
+            <a href="../Home page/index.html">Início</a>
+            <a href="../Montagem/index.html">Montagem</a>
+            <a href="../Builds/index.html">Builds dos Usuários</a>
+        </nav>
+
+        <div class="nav-actions">
+        <a href="../Autenticacao/Login.html" class="btn-login">Login</a>
+<a href="../Autenticacao/Cadastro.html" class="btn-cadastro">Cadastro</a>
+        </div>
+    </header>
+
+    <main class="auth-page">
+        <section class="auth-card">
+            <h1>PCraft</h1>
+            <p class="subtitle">Recuperação de senha</p>
+
+            <form id="formForgotPassword" class="auth-form">
+                <div class="form-group">
+                    <label for="emailRecuperacao">Email</label>
+                    <input 
+                        type="email" 
+                        id="emailRecuperacao" 
+                        placeholder="Digite seu email cadastrado"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Enviar link de recuperação
+                </button>
+            </form>
+
+            <form id="formResetPassword" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="novaSenha">Nova senha</label>
+                    <input 
+                        type="password" 
+                        id="novaSenha" 
+                        placeholder="Digite sua nova senha"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarNovaSenha">Confirmar nova senha</label>
+                    <input 
+                        type="password" 
+                        id="confirmarNovaSenha" 
+                        placeholder="Confirme sua nova senha"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Redefinir senha
+                </button>
+            </form>
+
+            <div id="authMessage" class="auth-message"></div>
+
+            <div class="auth-footer">
+               <a href="../Autenticacao/Login.html">Voltar para login</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div>
+            <h2>PCraft</h2>
+            <p>Montagem com compatibilidade inteligente</p>
+            <p class="footer-auth-status">Faça login na barra superior para usar sua conta em todo o site.</p>
+        </div>
+    </footer>
+
+    <script src="RecuperarSenha.js"></script>
+</body>
+</html>

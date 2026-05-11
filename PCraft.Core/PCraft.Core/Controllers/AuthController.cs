@@ -5,7 +5,6 @@ using PCraft.Core.DTOs;
 using PCraft.Core.Models;
 using PCraft.Core.Services;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace PCraft.Core.Controllers;
 
@@ -30,7 +29,7 @@ public class AuthController : ControllerBase
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
     {
-        var user = await _context.Users
+        var user = await _context.Usuarios
             .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
         if (user == null)
@@ -73,27 +72,18 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "Token inválido ou expirado." });
         }
 
-        var user = await _context.Users.FindAsync(resetToken.UserId);
+        var user = await _context.Usuarios.FindAsync(resetToken.UserId);
 
         if (user == null)
         {
             return BadRequest(new { message = "Usuário não encontrado." });
         }
 
-        user.PasswordHash = HashPassword(dto.NewPassword);
-
+        user.Senha = dto.NewPassword;
         resetToken.Used = true;
 
         await _context.SaveChangesAsync();
 
         return Ok(new { message = "Senha redefinida com sucesso." });
-    }
-
-    private static string HashPassword(string password)
-    {
-        using var sha256 = SHA256.Create();
-        var bytes = Encoding.UTF8.GetBytes(password);
-        var hash = sha256.ComputeHash(bytes);
-        return Convert.ToBase64String(hash);
     }
 }

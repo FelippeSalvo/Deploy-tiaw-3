@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace PCraft.Core.Models;
 
 public class PasswordResetToken
@@ -6,7 +8,8 @@ public class PasswordResetToken
 
     public int UserId { get; set; }
 
-    public User User { get; set; } = null!;
+    [ForeignKey("UserId")]
+    public Usuario Usuario { get; set; } = null!;
 
     public string Token { get; set; } = string.Empty;
 
