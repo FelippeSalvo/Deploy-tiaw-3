@@ -1,6 +1,6 @@
 namespace PCraft.Core.Models
 {
-    public class GPU
+    public class GPU : IComponent
     {
         public int Id { get; set; }
         public string Nome { get; set; }

@@ -1,6 +1,6 @@
 namespace PCraft.Core.Models
 {
-    public class PSU
+    public class PSU : IComponent
     {
         public int Id { get; set; }
         public string Nome { get; set; }

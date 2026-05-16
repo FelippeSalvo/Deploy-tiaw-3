@@ -1,6 +1,6 @@
 namespace PCraft.Core.Models
 {
-    public class CPU
+    public class CPU : IComponent
     {
         public int Id { get; set; }
         public string Nome { get; set; }

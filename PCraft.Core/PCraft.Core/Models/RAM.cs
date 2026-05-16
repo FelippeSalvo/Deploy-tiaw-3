@@ -1,6 +1,6 @@
 namespace PCraft.Core.Models
 {
-    public class RAM
+    public class RAM : IComponent
     {
         public int Id { get; set; }
         public string Nome { get; set; }
