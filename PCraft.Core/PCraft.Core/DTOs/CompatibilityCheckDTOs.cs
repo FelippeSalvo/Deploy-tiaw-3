@@ -44,4 +44,53 @@ namespace PCraft.Core.DTOs
         [JsonPropertyName("recomendacoes")]
         public List<string> Recomendacoes { get; set; }
     }
+
+    public class SolicitacaoVerificacaoCompatibilidadeInline
+    {
+        public CPUDTO CPU { get; set; }
+        public MotherboardDTO Motherboard { get; set; }
+        public RAMDTO RAM { get; set; }
+        public GPUDTO GPU { get; set; }
+        public PSUDTO PSU { get; set; }
+    }
+
+    public class CPUDTO
+    {
+        public string Nome { get; set; }
+        public string Fabricante { get; set; }
+        public PCraft.Core.Models.CpuSocket Socket { get; set; }
+        public int TDP { get; set; }
+    }
+
+    public class MotherboardDTO
+    {
+        public string Nome { get; set; }
+        public PCraft.Core.Models.CpuSocket Socket { get; set; }
+        public PCraft.Core.Models.RamType TipoRamSuportado { get; set; }
+        public int CapacidadeMaximaRam { get; set; }
+        public int SlotsRam { get; set; }
+    }
+
+    public class RAMDTO
+    {
+        public string Nome { get; set; }
+        public PCraft.Core.Models.RamType Tipo { get; set; }
+        public int Capacidade { get; set; }
+        public int QuantidadeModulos { get; set; }
+    }
+
+    public class GPUDTO
+    {
+        public string Nome { get; set; }
+        public int TDP { get; set; }
+        public int ConsumoRecomendado { get; set; }
+        public int Comprimento { get; set; }
+    }
+
+    public class PSUDTO
+    {
+        public string Nome { get; set; }
+        public int Potencia { get; set; }
+        public PCraft.Core.Models.PsuCertification Certificacao { get; set; }
+    }
 }
