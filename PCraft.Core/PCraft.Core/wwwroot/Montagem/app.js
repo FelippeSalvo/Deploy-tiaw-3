@@ -1,57 +1,59 @@
-// Configuração dos componentes e mapeamento com os endpoints da API
-const nomesComponentes = {
-    cpu: 'Processador',
-    motherboard: 'Placa Mãe',
-    ram: 'Memória RAM',
-    gpu: 'Placa de Vídeo',
-    psu: 'Fonte'
-};
+const configComponentes = [
+    { id: 'cpu', nome: 'Processador', icon: 'CPU', endpoint: 'cpus' },
+    { id: 'motherboard', nome: 'Placa Mãe', icon: 'MOBO', endpoint: 'motherboards' },
+    { id: 'ram', nome: 'Memória RAM', icon: 'RAM', endpoint: 'rams' },
+    { id: 'gpu', nome: 'Placa de Vídeo', icon: 'GPU', endpoint: 'gpus' },
+    { id: 'psu', nome: 'Fonte', icon: 'PSU', endpoint: 'psus' }
+];
 
-const componentesConfig = {
-    cpu: { endpoint: 'cpus' },
-    motherboard: { endpoint: 'motherboards' },
-    ram: { endpoint: 'rams' },
-    gpu: { endpoint: 'gpus' },
-    psu: { endpoint: 'psus' }
-};
+const nomesComponentes = Object.fromEntries(configComponentes.map(c => [c.id, c.nome]));
+const componentesDados = { cpu: [], motherboard: [], ram: [], gpu: [], psu: [] };
+const componentesSelecionados = { cpu: null, motherboard: null, ram: null, gpu: null, psu: null };
 
-// Dados carregados da API
-const componentesDados = {
-    cpu: [],
-    motherboard: [],
-    ram: [],
-    gpu: [],
-    psu: []
-};
-
-// Estado de seleção atual
-const componentesSelecionados = {
-    cpu: null,
-    motherboard: null,
-    ram: null,
-    gpu: null,
-    psu: null
-};
-
-// Estado do modal
 let componenteAtualModal = null;
 let toastTimeoutId = null;
 
-// Carrega todos os componentes da API e guarda em memória
 async function carregarComponentes() {
-    for (const [tipo, cfg] of Object.entries(componentesConfig)) {
+    const promessas = configComponentes.map(async (cfg) => {
         try {
             const res = await fetch(`${API_BASE}/${cfg.endpoint}`);
             const data = await res.json();
-            componentesDados[tipo] = Array.isArray(data) ? data : [];
+            componentesDados[cfg.id] = Array.isArray(data) ? data : [];
         } catch (e) {
             console.error(`Erro ao carregar ${cfg.endpoint}:`, e);
-            componentesDados[tipo] = [];
+            componentesDados[cfg.id] = [];
         }
-    }
+    });
+
+    await Promise.all(promessas);
 }
 
-// Abre o modal para o tipo de componente informado
+function renderizarListaPrincipal() {
+    const container = document.getElementById('components-list');
+    if (!container) return;
+
+    container.innerHTML = configComponentes.map(comp => `
+        <article class="component-item" onclick="openComponentModal('${comp.id}')">
+            <div class="component-info">
+                <span class="component-icon">${comp.icon}</span>
+                <div class="component-text">
+                    <h3>${comp.nome}</h3>
+                    <p class="component-status" id="${comp.id}-status">Não selecionado</p>
+                    <div class="component-meta" id="${comp.id}-meta"></div>
+                </div>
+            </div>
+            <div class="component-actions">
+                <button class="btn-remove" type="button" onclick="removerPeca(event, '${comp.id}')">
+                    Remover peça
+                </button>
+                <button class="btn-add-component" type="button" onclick="openComponentModal('${comp.id}', event)">
+                    +
+                </button>
+            </div>
+        </article>
+    `).join('');
+}
+
 function openComponentModal(tipo, event) {
     if (event) {
         event.stopPropagation();
@@ -66,8 +68,7 @@ function openComponentModal(tipo, event) {
     const inputBusca = document.getElementById('modal-search');
 
     titulo.textContent = `Selecionar ${nomesComponentes[tipo]}`;
-    subtitulo.textContent =
-        'Digite para filtrar as peças disponíveis em tempo real e clique para selecionar.';
+    subtitulo.textContent = 'Digite para filtrar as peças disponíveis em tempo real e clique para selecionar.';
 
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
@@ -75,12 +76,10 @@ function openComponentModal(tipo, event) {
     if (inputBusca) {
         inputBusca.value = '';
         renderizarListaModal();
-        // timeout pequeno para garantir que o input esteja visível
         setTimeout(() => inputBusca.focus(), 50);
     }
 }
 
-// Fecha o modal
 function closeComponentModal() {
     const overlay = document.getElementById('component-modal');
     if (!overlay) return;
@@ -90,7 +89,6 @@ function closeComponentModal() {
     componenteAtualModal = null;
 }
 
-// Renderiza a lista de componentes dentro do modal
 function renderizarListaModal() {
     const listaEl = document.getElementById('modal-list');
     const inputBusca = document.getElementById('modal-search');
@@ -106,88 +104,39 @@ function renderizarListaModal() {
     });
 
     if (filtrados.length === 0) {
-        listaEl.innerHTML =
-            '<div class="modal-empty">Nenhuma peça encontrada para esse filtro.</div>';
+        listaEl.innerHTML = '<div class="modal-empty">Nenhuma peça encontrada para esse filtro.</div>';
         return;
     }
 
-    const html = filtrados
-        .map((item) => {
-            const preco = item.preco != null ? `R$ ${item.preco}` : null;
-            const consumo =
-                item.consumoEnergia != null
-                    ? `${item.consumoEnergia} W`
-                    : item.consumo != null
-                    ? `${item.consumo} W`
-                    : null;
+    listaEl.innerHTML = filtrados.map((item) => {
+        const consumo = item.consumoEnergia != null ? `${item.consumoEnergia} W`
+            : item.consumo != null ? `${item.consumo} W` : null;
 
-            const imagemUrl = item.imagemUrl || item.imagem || null;
+        const metaHtml = consumo ? `<span>Consumo: ${consumo}</span>` : '';
 
-            return `
-                <button class="modal-item" type="button" data-id="${item.id}">
-                    ${
-                        imagemUrl
-                            ? `<img src="${imagemUrl}" alt="${item.nome}" class="modal-item-image" />`
-                            : '<div class="modal-item-image"></div>'
-                    }
-                    <div class="modal-item-main">
-                        <div class="modal-item-title">${item.nome}</div>
-                        <div class="modal-item-meta">
-                            ${
-                                preco
-                                    ? `<span>Preço: ${preco}</span>`
-                                    : ''
-                            }
-                            ${
-                                consumo
-                                    ? `<span>Consumo: ${consumo}</span>`
-                                    : ''
-                            }
-                        </div>
-                    </div>
-                </button>
-            `;
-        })
-        .join('');
-
-    listaEl.innerHTML = html;
+        return `
+            <button class="modal-item" type="button" data-id="${item.id}">
+                <div class="modal-item-main">
+                    <div class="modal-item-title">${item.nome}</div>
+                    <div class="modal-item-meta">${metaHtml}</div>
+                </div>
+            </button>
+        `;
+    }).join('');
 }
 
-// Seleciona uma peça a partir do modal
 function selecionarPecaNoModal(idItem) {
     if (!componenteAtualModal) return;
 
     const dados = componentesDados[componenteAtualModal] || [];
     const selecionado = dados.find((d) => String(d.id) === String(idItem));
-    if (!selecionado) return;
 
-    aoSelecionar(componenteAtualModal, selecionado);
-    closeComponentModal();
+    if (selecionado) {
+        aoSelecionar(componenteAtualModal, selecionado);
+        closeComponentModal();
+    }
 }
 
-// Remove a peça selecionada de um componente
-function removerPeca(event, tipo) {
-    if (event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    componentesSelecionados[tipo] = null;
-    const statusEl = document.getElementById(`${tipo}-status`);
-    const metaEl = document.getElementById(`${tipo}-meta`);
-
-    if (statusEl) {
-        statusEl.textContent = 'Não selecionado';
-        statusEl.style.color = '#a0a0a5';
-    }
-    if (metaEl) {
-        metaEl.innerHTML = '';
-    }
-
-    atualizarResumo();
-}
-
-// Mantém o nome da função para compatibilidade com o código existente
 function aoSelecionar(componente, item) {
     componentesSelecionados[componente] = item;
 
@@ -196,94 +145,78 @@ function aoSelecionar(componente, item) {
 
     if (statusEl) {
         statusEl.textContent = item.nome || 'Selecionado';
-        statusEl.style.color = '#22c55e';
+        statusEl.style.color = '#22c55e'; // Verde = sucesso
     }
 
     if (metaEl) {
-        const preco = item.preco != null ? `R$ ${item.preco}` : null;
-        const consumo =
-            item.consumoEnergia != null
-                ? `${item.consumoEnergia} W`
-                : item.consumo != null
-                ? `${item.consumo} W`
-                : null;
+        const consumo = item.consumoEnergia != null ? `${item.consumoEnergia} W`
+            : item.consumo != null ? `${item.consumo} W` : null;
 
-        let metaHtml = '';
-        if (preco) {
-            metaHtml += `<span>${preco}</span>`;
-        }
-        if (consumo) {
-            metaHtml += `<span>${consumo}</span>`;
-        }
-
-        metaEl.innerHTML = metaHtml;
+        metaEl.innerHTML = consumo ? `<span>${consumo}</span>` : '';
     }
 
     atualizarResumo();
 }
 
-// Atualiza o resumo da build na lateral
+function removerPeca(event, tipo) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    componentesSelecionados[tipo] = null;
+
+    const statusEl = document.getElementById(`${tipo}-status`);
+    const metaEl = document.getElementById(`${tipo}-meta`);
+
+    if (statusEl) {
+        statusEl.textContent = 'Não selecionado';
+        statusEl.style.color = '#a0a0a5';
+    }
+    if (metaEl) metaEl.innerHTML = '';
+
+    atualizarResumo();
+}
+
 function atualizarResumo() {
     const resumo = document.getElementById('selected-components');
     if (!resumo) return;
 
-    let temSelecao = false;
-    let html = '';
-    let totalGasto = 0;
+    const itensHtml = [];
 
     Object.keys(componentesSelecionados).forEach((tipo) => {
         const item = componentesSelecionados[tipo];
         if (!item) return;
 
-        temSelecao = true;
-        const preco = item.preco != null ? item.preco : null;
-        if (typeof preco === 'number') {
-            totalGasto += preco;
-        }
-
-        html += `
+        itensHtml.push(`
             <div class="selected-item">
                 <span>${nomesComponentes[tipo]}</span>
                 <span>${item.nome || ''}</span>
             </div>
-        `;
+        `);
     });
 
-    if (temSelecao && totalGasto > 0) {
-        html += `
-            <div class="selected-item" style="border-top: 1px solid var(--border); margin-top: 8px; padding-top: 10px;">
-                <span>Total estimado</span>
-                <span>R$ ${totalGasto.toFixed(2)}</span>
-            </div>
-        `;
+    if (itensHtml.length > 0) {
+        resumo.innerHTML = itensHtml.join('');
+    } else {
+        resumo.innerHTML = '<p class="empty-state">Nenhum componente selecionado</p>';
     }
-
-    resumo.innerHTML = temSelecao
-        ? html
-        : '<p class="empty-state">Nenhum componente selecionado</p>';
 }
 
-// Verifica compatibilidade usando o estado atual em memória
 async function verificarCompatibilidade() {
-    const cpu = componentesSelecionados.cpu?.id ?? null;
-    const motherboard = componentesSelecionados.motherboard?.id ?? null;
-    const ram = componentesSelecionados.ram?.id ?? null;
-    const gpu = componentesSelecionados.gpu?.id ?? null;
-    const psu = componentesSelecionados.psu?.id ?? null;
+    const request = {
+        cpuId: componentesSelecionados.cpu?.id ? parseInt(componentesSelecionados.cpu.id) : null,
+        motherboardId: componentesSelecionados.motherboard?.id ? parseInt(componentesSelecionados.motherboard.id) : null,
+        ramId: componentesSelecionados.ram?.id ? parseInt(componentesSelecionados.ram.id) : null,
+        gpuId: componentesSelecionados.gpu?.id ? parseInt(componentesSelecionados.gpu.id) : null,
+        psuId: componentesSelecionados.psu?.id ? parseInt(componentesSelecionados.psu.id) : null
+    };
 
-    if (!cpu && !motherboard && !ram && !gpu && !psu) {
+    if (!request.cpuId && !request.motherboardId && !request.ramId && !request.gpuId && !request.psuId) {
         document.getElementById('compatibility-result').innerHTML =
             '<p class="incompatible">Selecione pelo menos um componente</p>';
         return;
     }
-
-    const request = {
-        cpuId: cpu ? parseInt(cpu) : null,
-        motherboardId: motherboard ? parseInt(motherboard) : null,
-        ramId: ram ? parseInt(ram) : null,
-        gpuId: gpu ? parseInt(gpu) : null,
-        psuId: psu ? parseInt(psu) : null
-    };
 
     const resultDiv = document.getElementById('compatibility-result');
     resultDiv.innerHTML = '<p style="color: #a0a0a5;">Verificando...</p>';
@@ -298,21 +231,15 @@ async function verificarCompatibilidade() {
         const data = await res.json();
 
         if (!res.ok) {
-            resultDiv.innerHTML = `<p class="incompatible">${
-                data.message || 'Erro na requisição'
-            }</p>`;
+            resultDiv.innerHTML = `<p class="incompatible">${data.message || 'Erro na requisição'}</p>`;
             return;
         }
 
-        let html = '';
+        let html = data.compativel
+            ? `<div class="compatible">Componentes Compatíveis!</div>`
+            : `<div class="incompatible">Incompatibilidade Detectada</div>`;
 
-        if (data.compativel) {
-            html += `<div class="compatible">Componentes Compatíveis!</div>`;
-        } else {
-            html += `<div class="incompatible">Incompatibilidade Detectada</div>`;
-        }
-
-        if (data.problemas && data.problemas.length > 0) {
+        if (data.problemas?.length > 0) {
             data.problemas.forEach((problema) => {
                 html += `
                     <div class="issue">
@@ -326,14 +253,10 @@ async function verificarCompatibilidade() {
         resultDiv.innerHTML = html;
 
         if (data.consumoTotalEnergia != null) {
-            document.getElementById(
-                'total-power'
-            ).textContent = `${data.consumoTotalEnergia}W`;
+            document.getElementById('total-power').textContent = `${data.consumoTotalEnergia}W`;
         }
         if (data.psuRecomendada != null) {
-            document.getElementById(
-                'recommended-psu'
-            ).textContent = `Fonte recomendada: ${data.psuRecomendada}W`;
+            document.getElementById('recommended-psu').textContent = `Fonte recomendada: ${data.psuRecomendada}W`;
         }
     } catch (e) {
         resultDiv.innerHTML = `<p class="incompatible">Erro: ${e.message}</p>`;
@@ -342,31 +265,29 @@ async function verificarCompatibilidade() {
 
 function abrirModalSalvar() {
     const modal = document.getElementById('save-build-modal');
-    const inputNome = document.getElementById('build-name-input');
     if (!modal) return;
 
-    inputNome.value = '';
+    document.getElementById('build-name-input').value = '';
     document.getElementById('build-share-input').checked = false;
+
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    setTimeout(() => inputNome.focus(), 40);
+    setTimeout(() => document.getElementById('build-name-input').focus(), 40);
 }
 
 function fecharModalSalvar() {
     const modal = document.getElementById('save-build-modal');
     if (!modal) return;
+
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
 }
 
 function obterToken() {
-    const raw = localStorage.getItem('pcraft.auth');
-    if (!raw) return null;
-
     try {
-        const sessao = JSON.parse(raw);
+        const sessao = JSON.parse(localStorage.getItem('pcraft.auth'));
         return sessao?.token || null;
-    } catch (_) {
+    } catch {
         return null;
     }
 }
@@ -404,11 +325,11 @@ async function salvarBuild() {
     }
 
     const payload = obterBuildAtual();
+
     if (!payload.Nome) {
         mostrarToast('Informe um nome para a build', 'error');
         return;
     }
-
     if (!payload.CpuId && !payload.MotherboardId && !payload.RamId && !payload.GpuId && !payload.PsuId) {
         mostrarToast('Selecione pelo menos um componente', 'error');
         return;
@@ -446,54 +367,31 @@ async function salvarBuild() {
     }
 }
 
-// Inicialização da página de montagem
 function inicializarMontagem() {
+    renderizarListaPrincipal();
     carregarComponentes();
 
-    const overlay = document.getElementById('component-modal');
-    const backdrop = overlay?.querySelector('.modal-backdrop');
-    const closeBtn = document.getElementById('modal-close-btn');
-    const inputBusca = document.getElementById('modal-search');
-    const listaEl = document.getElementById('modal-list');
-    const saveModal = document.getElementById('save-build-modal');
-    const saveBackdrop = saveModal?.querySelector('.modal-backdrop');
-    const openSaveBtn = document.getElementById('btn-salvar-build');
-    const closeSaveBtn = document.getElementById('save-build-close-btn');
-    const cancelSaveBtn = document.getElementById('cancel-save-build');
-    const confirmSaveBtn = document.getElementById('confirm-save-build');
+    const addListener = (selector, event, callback) => {
+        const element = typeof selector === 'string' ? document.getElementById(selector) : selector;
+        if (element) element.addEventListener(event, callback);
+    };
 
-    if (backdrop) {
-        backdrop.addEventListener('click', () => closeComponentModal());
-    }
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => closeComponentModal());
-    }
-    if (inputBusca) {
-        inputBusca.addEventListener('input', () => renderizarListaModal());
-    }
-    if (listaEl) {
-        listaEl.addEventListener('click', (e) => {
-            const target = e.target.closest('[data-id]');
-            if (!target) return;
-            const id = target.getAttribute('data-id');
-            selecionarPecaNoModal(id);
-        });
-    }
-    if (openSaveBtn) {
-        openSaveBtn.addEventListener('click', abrirModalSalvar);
-    }
-    if (closeSaveBtn) {
-        closeSaveBtn.addEventListener('click', fecharModalSalvar);
-    }
-    if (cancelSaveBtn) {
-        cancelSaveBtn.addEventListener('click', fecharModalSalvar);
-    }
-    if (saveBackdrop) {
-        saveBackdrop.addEventListener('click', fecharModalSalvar);
-    }
-    if (confirmSaveBtn) {
-        confirmSaveBtn.addEventListener('click', salvarBuild);
-    }
+    const overlay = document.getElementById('component-modal');
+    addListener(overlay?.querySelector('.modal-backdrop'), 'click', closeComponentModal);
+    addListener('modal-close-btn', 'click', closeComponentModal);
+    addListener('modal-search', 'input', renderizarListaModal);
+
+    addListener('modal-list', 'click', (e) => {
+        const target = e.target.closest('[data-id]');
+        if (target) selecionarPecaNoModal(target.getAttribute('data-id'));
+    });
+
+    const saveModal = document.getElementById('save-build-modal');
+    addListener(saveModal?.querySelector('.modal-backdrop'), 'click', fecharModalSalvar);
+    addListener('btn-salvar-build', 'click', abrirModalSalvar);
+    addListener('save-build-close-btn', 'click', fecharModalSalvar);
+    addListener('cancel-save-build', 'click', fecharModalSalvar);
+    addListener('confirm-save-build', 'click', salvarBuild);
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {

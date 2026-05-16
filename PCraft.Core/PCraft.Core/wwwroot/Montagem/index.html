@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCraft - Monte seu PC</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body data-pcraft-page="montagem">
-   <nav class="navbar">
+    <nav class="navbar">
         <div class="container nav-content">
             <a href="index.html" class="logo">PCraft</a>
 
@@ -25,117 +27,18 @@
 
     <main class="main-content">
         <div class="container">
-            <div class="page-header">
+            <header class="page-header">
                 <h1>Monte seu PC</h1>
                 <p>Selecione os componentes e verifique a compatibilidade</p>
-            </div>
+            </header>
 
             <div class="builder-grid">
-                <div class="components-panel">
+                <section class="components-panel">
                     <h2>Componentes</h2>
+                    <div id="components-list"></div>
+                </section>
 
-                    <!-- Card CPU -->
-                    <div class="component-item" onclick="openComponentModal('cpu')">
-                        <div class="component-info">
-                            <span class="component-icon">CPU</span>
-                            <div class="component-text">
-                                <h3>Processador</h3>
-                                <p class="component-status" id="cpu-status">Não selecionado</p>
-                                <div class="component-meta" id="cpu-meta"></div>
-                            </div>
-                        </div>
-                        <div class="component-actions">
-                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'cpu')">
-                                Remover peça
-                            </button>
-                            <button class="btn-add-component" type="button" onclick="openComponentModal('cpu', event)">
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card Placa-mãe -->
-                    <div class="component-item" onclick="openComponentModal('motherboard')">
-                        <div class="component-info">
-                            <span class="component-icon">MOBO</span>
-                            <div class="component-text">
-                                <h3>Placa Mãe</h3>
-                                <p class="component-status" id="motherboard-status">Não selecionado</p>
-                                <div class="component-meta" id="motherboard-meta"></div>
-                            </div>
-                        </div>
-                        <div class="component-actions">
-                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'motherboard')">
-                                Remover peça
-                            </button>
-                            <button class="btn-add-component" type="button" onclick="openComponentModal('motherboard', event)">
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card RAM -->
-                    <div class="component-item" onclick="openComponentModal('ram')">
-                        <div class="component-info">
-                            <span class="component-icon">RAM</span>
-                            <div class="component-text">
-                                <h3>Memória RAM</h3>
-                                <p class="component-status" id="ram-status">Não selecionado</p>
-                                <div class="component-meta" id="ram-meta"></div>
-                            </div>
-                        </div>
-                        <div class="component-actions">
-                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'ram')">
-                                Remover peça
-                            </button>
-                            <button class="btn-add-component" type="button" onclick="openComponentModal('ram', event)">
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card GPU -->
-                    <div class="component-item" onclick="openComponentModal('gpu')">
-                        <div class="component-info">
-                            <span class="component-icon">GPU</span>
-                            <div class="component-text">
-                                <h3>Placa de Vídeo</h3>
-                                <p class="component-status" id="gpu-status">Não selecionado</p>
-                                <div class="component-meta" id="gpu-meta"></div>
-                            </div>
-                        </div>
-                        <div class="component-actions">
-                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'gpu')">
-                                Remover peça
-                            </button>
-                            <button class="btn-add-component" type="button" onclick="openComponentModal('gpu', event)">
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card PSU -->
-                    <div class="component-item" onclick="openComponentModal('psu')">
-                        <div class="component-info">
-                            <span class="component-icon">PSU</span>
-                            <div class="component-text">
-                                <h3>Fonte</h3>
-                                <p class="component-status" id="psu-status">Não selecionado</p>
-                                <div class="component-meta" id="psu-meta"></div>
-                            </div>
-                        </div>
-                        <div class="component-actions">
-                            <button class="btn-remove" type="button" onclick="removerPeca(event, 'psu')">
-                                Remover peça
-                            </button>
-                            <button class="btn-add-component" type="button" onclick="openComponentModal('psu', event)">
-                                +
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="summary-panel">
+                <aside class="summary-panel">
                     <div class="summary-card">
                         <h2>Resumo</h2>
                         <div id="selected-components">
@@ -163,65 +66,48 @@
                             Salvar Build
                         </button>
                     </div>
-                </div>
+                </aside>
             </div>
         </div>
     </main>
 
-    <!-- Modal de seleção de componentes -->
+    <!-- Modal: Seleção de Componentes -->
     <div id="component-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-backdrop"></div>
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <div class="modal-header">
+            <header class="modal-header">
                 <div>
                     <h2 id="modal-title">Selecionar componente</h2>
                     <p id="modal-subtitle" class="modal-subtitle"></p>
                 </div>
-                <button id="modal-close-btn" class="modal-close" type="button" aria-label="Fechar">
-                    ✕
-                </button>
-            </div>
+                <button id="modal-close-btn" class="modal-close" type="button" aria-label="Fechar">✕</button>
+            </header>
 
             <div class="modal-search-wrapper">
-                <input
-                    type="text"
-                    id="modal-search"
-                    class="modal-search"
-                    placeholder="Buscar por nome, modelo ou marca..."
-                    autocomplete="off"
-                />
+                <input type="text" id="modal-search" class="modal-search"
+                    placeholder="Buscar por nome, modelo ou marca..." autocomplete="off" />
             </div>
 
-            <div id="modal-list" class="modal-list">
-                <!-- Itens renderizados dinamicamente via JavaScript -->
-            </div>
+            <div id="modal-list" class="modal-list"></div>
         </div>
     </div>
 
-    <!-- Modal salvar build -->
+    <!-- Modal: Salvar Build -->
     <div id="save-build-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-backdrop"></div>
         <div class="modal-dialog save-build-dialog" role="dialog" aria-modal="true" aria-labelledby="save-build-title">
-            <div class="modal-header">
+            <header class="modal-header">
                 <div>
                     <h2 id="save-build-title">Salvar Build</h2>
                     <p class="modal-subtitle">Defina um nome e escolha se deseja compartilhar.</p>
                 </div>
-                <button id="save-build-close-btn" class="modal-close" type="button" aria-label="Fechar">
-                    ✕
-                </button>
-            </div>
+                <button id="save-build-close-btn" class="modal-close" type="button" aria-label="Fechar">✕</button>
+            </header>
 
-            <div class="save-build-form">
+            <form class="save-build-form">
                 <label for="build-name-input" class="save-build-label">Nome da build</label>
-                <input
-                    type="text"
-                    id="build-name-input"
-                    class="modal-search"
-                    maxlength="80"
-                    placeholder="Ex.: Setup Gamer 1440p"
-                    autocomplete="off"
-                />
+                <input type="text" id="build-name-input" class="modal-search" maxlength="80"
+                    placeholder="Ex.: Setup Gamer 1440p" autocomplete="off" />
 
                 <label class="save-build-checkbox">
                     <input type="checkbox" id="build-share-input" />
@@ -232,11 +118,10 @@
                     <button id="cancel-save-build" type="button" class="btn-save-secondary">Cancelar</button>
                     <button id="confirm-save-build" type="button" class="btn-save-primary">Salvar</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
-    <!-- Toast -->
     <div id="toast-message" class="toast-message" aria-live="polite"></div>
 
     <footer class="footer">

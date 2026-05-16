@@ -263,6 +263,7 @@ body {
     cursor: pointer;
     box-shadow: none;
 }
+
 .component-item:hover {
     border-color: rgba(34, 197, 94, 0.35);
     background: rgba(31, 41, 55, 0.65);
@@ -754,20 +755,12 @@ body {
     background: none;
 }
 
-.modal-item-image {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    object-fit: contain;
-    background: rgba(31, 41, 55, 0.7);
-    border: 1px solid rgba(55, 65, 81, 0.55);
-}
-
 @keyframes modalFadeIn {
     from {
         opacity: 0;
         transform: translateY(6px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
