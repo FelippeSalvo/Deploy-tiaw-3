@@ -332,8 +332,8 @@ async function salvarBuild() {
         mostrarToast('Informe um nome para a build', 'error');
         return;
     }
-    if (!payload.CpuId && !payload.MotherboardId && !payload.RamId && !payload.GpuId && !payload.PsuId) {
-        mostrarToast('Selecione pelo menos um componente', 'error');
+    if (!payload.CpuId || !payload.MotherboardId || !payload.RamId || !payload.GpuId || !payload.PsuId) {
+        mostrarToast('Selecione todos os componentes (Processador, Placa-mãe, RAM, GPU e Fonte) para salvar', 'error');
         return;
     }
 

@@ -19,8 +19,8 @@ namespace PCraft.Core.Controllers
             _context = context;
         }
 
-        private bool PossuiAlgumComponente(int? cpuId, int? moboId, int? ramId, int? gpuId, int? psuId) =>
-            cpuId.HasValue || moboId.HasValue || ramId.HasValue || gpuId.HasValue || psuId.HasValue;
+        private bool PossuiTodosComponentes(int? cpuId, int? moboId, int? ramId, int? gpuId, int? psuId) =>
+            cpuId.HasValue && moboId.HasValue && ramId.HasValue && gpuId.HasValue && psuId.HasValue;
 
         [Authorize]
         [HttpPost]
@@ -29,11 +29,23 @@ namespace PCraft.Core.Controllers
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return BadRequest(new { message = "Informe um nome para a build." });
 
-            if (!PossuiAlgumComponente(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
-                return BadRequest(new { message = "Selecione pelo menos um componente." });
+            if (!PossuiTodosComponentes(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
+                return BadRequest(new { message = "Todos os 5 componentes (Processador, Placa-mãe, RAM, GPU e Fonte) são obrigatórios para salvar a build." });
 
             var usuarioId = User.GetUserId();
             if (usuarioId is null) return Unauthorized(new { message = "Não foi possível identificar o usuário." });
+
+            var existeDuplicata = await _context.BuildsSalvas.AnyAsync(b => 
+                b.UsuarioId == usuarioId.Value &&
+                b.CpuId == dto.CpuId &&
+                b.MotherboardId == dto.MotherboardId &&
+                b.RamId == dto.RamId &&
+                b.GpuId == dto.GpuId &&
+                b.PsuId == dto.PsuId
+            );
+
+            if (existeDuplicata)
+                return Conflict(new { message = "Você já possui uma build salva com esta mesma configuração de peças." });
 
             var build = new BuildSalva
             {
@@ -109,8 +121,8 @@ namespace PCraft.Core.Controllers
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return BadRequest(new { message = "Informe um nome para a build." });
 
-            if (!PossuiAlgumComponente(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
-                return BadRequest(new { message = "Mantenha pelo menos um componente." });
+            if (!PossuiTodosComponentes(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
+                return BadRequest(new { message = "Todos os 5 componentes são obrigatórios." });
 
             var usuarioId = User.GetUserId();
             if (usuarioId is null) return Unauthorized(new { message = "Não foi possível identificar o usuário." });
