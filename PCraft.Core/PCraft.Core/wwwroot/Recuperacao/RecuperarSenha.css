@@ -240,3 +240,11 @@ body {
 .logo-c {
   color: #22c55e;
 }
+.topbar .brand, .auth-card h1 {
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
