@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="RecuperarSenha.css">
     <link rel="icon" href="../assets/logo.png" type="image/png">
 </head>
+
 <body data-pcraft-page="auth">
     <header class="topbar">
         <div class="brand"><span class="logo-c">PC</span>RAFT<span class="logo-dot"></span></div>
@@ -18,8 +20,8 @@
         </nav>
 
         <div class="nav-actions">
-        <a href="../Autenticacao/Login.html" class="btn-login">Login</a>
-<a href="../Autenticacao/Cadastro.html" class="btn-cadastro">Cadastro</a>
+            <a href="../Autenticacao/Login.html" class="btn-login">Login</a>
+            <a href="../Autenticacao/Cadastro.html" class="btn-cadastro">Cadastro</a>
         </div>
     </header>
 
@@ -31,12 +33,7 @@
             <form id="formForgotPassword" class="auth-form">
                 <div class="form-group">
                     <label for="emailRecuperacao">Email</label>
-                    <input 
-                        type="email" 
-                        id="emailRecuperacao" 
-                        placeholder="Digite seu email cadastrado"
-                        required
-                    >
+                    <input type="email" id="emailRecuperacao" placeholder="Digite seu email cadastrado" required>
                 </div>
 
                 <button type="submit" class="btn-primary">
@@ -47,22 +44,12 @@
             <form id="formResetPassword" class="auth-form hidden">
                 <div class="form-group">
                     <label for="novaSenha">Nova senha</label>
-                    <input 
-                        type="password" 
-                        id="novaSenha" 
-                        placeholder="Digite sua nova senha"
-                        required
-                    >
+                    <input type="password" id="novaSenha" placeholder="Digite sua nova senha" required>
                 </div>
 
                 <div class="form-group">
                     <label for="confirmarNovaSenha">Confirmar nova senha</label>
-                    <input 
-                        type="password" 
-                        id="confirmarNovaSenha" 
-                        placeholder="Confirme sua nova senha"
-                        required
-                    >
+                    <input type="password" id="confirmarNovaSenha" placeholder="Confirme sua nova senha" required>
                 </div>
 
                 <button type="submit" class="btn-primary">
@@ -73,19 +60,18 @@
             <div id="authMessage" class="auth-message"></div>
 
             <div class="auth-footer">
-               <a href="../Autenticacao/Login.html">Voltar para login</a>
+                <a href="../Autenticacao/Login.html">Voltar para login</a>
             </div>
         </section>
     </main>
 
     <footer class="footer">
-        <div>
-            <h2>PCraft</h2>
-            <p>Montagem com compatibilidade inteligente</p>
-            <p class="footer-auth-status">Faça login na barra superior para usar sua conta em todo o site.</p>
+        <div class="container">
+            <p>&copy; 2026 PCraft — Verificador de compatibilidade</p>
         </div>
     </footer>
 
     <script src="RecuperarSenha.js"></script>
 </body>
+
 </html>

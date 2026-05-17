@@ -248,3 +248,13 @@ body {
   align-items: baseline;
   justify-content: center;
 }
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: #94a3b8;
+    font-size: 14px;
+    margin-top: auto;
+}
+.footer p {
+    margin: 0;
+}

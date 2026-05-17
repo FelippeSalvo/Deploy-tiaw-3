@@ -1016,3 +1016,13 @@ body {
 .logo-c {
   color: #22c55e;
 }
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: #94a3b8;
+    font-size: 14px;
+    margin-top: auto;
+}
+.footer p {
+    margin: 0;
+}
