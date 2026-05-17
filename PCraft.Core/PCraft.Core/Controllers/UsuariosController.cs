@@ -58,10 +58,11 @@ namespace PCraft.Core.Controllers
             }
 
             usuario.Email = emailNormalizado;
+            usuario.Admin = false; // Garante que não é possível criar um admin pela API
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return Ok(new { usuario.Id, usuario.Nome, usuario.Email });
+            return Ok(new { usuario.Id, usuario.Nome, usuario.Email, usuario.Admin });
         }
 
         [HttpPut("{id}")]
@@ -111,7 +112,7 @@ namespace PCraft.Core.Controllers
             return Ok(new
             {
                 token,
-                usuario = new { usuario.Id, usuario.Nome, usuario.Email },
+                usuario = new { usuario.Id, usuario.Nome, usuario.Email, usuario.Admin },
                 expiresIn = 3600
             });
         }

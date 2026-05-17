@@ -148,7 +148,8 @@ function normalizarUsuarioResposta(u) {
     return {
         id: u.id ?? u.Id,
         nome: (u.nome ?? u.Nome ?? '').trim() || 'Usuário',
-        email: u.email ?? u.Email ?? ''
+        email: u.email ?? u.Email ?? '',
+        admin: !!(u.admin ?? u.Admin)
     };
 }
 
@@ -195,6 +196,9 @@ function atualizarInterfaceAuth() {
     });
     document.querySelectorAll('[data-pcraft-user-only]').forEach((el) => {
         el.hidden = !autenticado;
+    });
+    document.querySelectorAll('[data-pcraft-admin-only]').forEach((el) => {
+        el.hidden = !(autenticado && sessao && sessao.usuario && sessao.usuario.admin);
     });
 }
 
