@@ -1,4 +1,4 @@
-const form = document.getElementById("pecaForm");
+﻿const form = document.getElementById("pecaForm");
 const tipoInput = document.getElementById("tipo");
 const camposDinamicos = document.getElementById("camposDinamicos");
 
@@ -7,8 +7,6 @@ const filtroTipo = document.getElementById("filtroTipo");
 
 const listaPecas = document.getElementById("listaPecas");
 const totalPecas = document.getElementById("totalPecas");
-
-const API_BASE = "http://localhost:5265/api";
 
 const MODELOS = {
   CPU: {

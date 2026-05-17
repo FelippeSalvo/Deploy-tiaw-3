@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PCraft - Painel do Administrador</title>
   <link rel="stylesheet" href="Adm.css" />
 </head>
+
 <body data-pcraft-page="adm">
   <nav class="navbar">
     <div class="container nav-content">
       <a href="../Home page/index.html" class="logo">PCraft</a>
       <ul class="nav-links">
-        <li><a href="../Home page/index.html#inicio">Início</a></li>
+        <li><a href="../Home page/index.html" class="active">Início</a></li>
         <li><a href="../Montagem/index.html">Montagem</a></li>
         <li><a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a></li>
         <li data-pcraft-user-only hidden><a href="../Builds/MinhasBuilds.html">Minhas Builds</a></li>
+        <li data-pcraft-admin-only hidden><a href="../Adm/Adm.html">Painel Admin</a></li>
       </ul>
       <div class="nav-actions"></div>
     </div>
@@ -92,7 +95,8 @@
     </div>
   </footer>
 
-  <script src="Adm.js"></script>
   <script src="../Autenticacao/auth.js"></script>
+  <script src="Adm.js"></script>
 </body>
+
 </html>
