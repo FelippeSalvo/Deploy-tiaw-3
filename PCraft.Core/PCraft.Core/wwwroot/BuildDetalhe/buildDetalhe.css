@@ -101,6 +101,29 @@
     background: rgba(255, 255, 255, 0.02);
 }
 
+.comp-type-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.component-icon-box {
+    width: 36px;
+    height: 36px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+.component-icon-box svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--accent);
+}
+
 .comp-type {
     font-weight: 700;
     color: var(--accent);
@@ -115,6 +138,27 @@
 .comp-empty {
     color: var(--text-secondary);
     font-style: italic;
+}
+
+.btn-search-price {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-search-price:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .build-detail-footer-info {

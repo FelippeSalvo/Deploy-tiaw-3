@@ -49,10 +49,12 @@ function abrirModalEdicao(build) {
     buildEditandoId = build.id;
     const modal = document.getElementById('edit-modal');
     const nome = document.getElementById('edit-build-name');
+    const descricao = document.getElementById('edit-build-desc');
     const compartilhada = document.getElementById('edit-build-shared');
     if (!modal || !nome || !compartilhada) return;
 
     nome.value = build.nome || '';
+    if (descricao) descricao.value = build.descricao || '';
     compartilhada.checked = Boolean(build.compartilhada);
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
@@ -209,6 +211,8 @@ async function salvarEdicao() {
     if (!atual) return;
 
     const nome = document.getElementById('edit-build-name').value.trim();
+    const descricaoEl = document.getElementById('edit-build-desc');
+    const descricao = descricaoEl ? descricaoEl.value.trim() : '';
     const compartilhada = document.getElementById('edit-build-shared').checked;
 
     if (!nome) {
@@ -218,6 +222,7 @@ async function salvarEdicao() {
 
     const payload = {
         nome,
+        descricao,
         compartilhada,
         cpuId: atual.cpuId ?? null,
         motherboardId: atual.motherboardId ?? null,

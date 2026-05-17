@@ -19,12 +19,38 @@ function mostrarToast(mensagem, tipo = 'success') {
     }, 2400);
 }
 
+const ICONES = {
+    'Processador': '<svg viewBox="0 0 24 24"><path d="M7 4V2h2v2h2V2h2v2h2V2h2v2h2v2h2v2h-2v2h2v2h-2v2h2v2h-2v2h2v2h-2v2h-2v2h-2v-2h-2v2h-2v-2H9v2H7v-2H5v-2H3v-2h2v-2H3v-2h2v-2H3v-2h2V8H3V6h2V4h2zm2 2v12h6V6H9z"/></svg>',
+    'Placa de vídeo': '<svg viewBox="0 0 24 24"><path d="M21 2H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H3V4h18v16zm-2-14H5v2h14V6zm0 4H5v8h14v-8z"/></svg>',
+    'Placa-mãe': '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-2h-2v2zm0-4h2v-2h-2v2zm0-4h2V7h-2v2z"/></svg>',
+    'Memória RAM': '<svg viewBox="0 0 24 24"><path d="M2 9v6h20V9H2zm2 4v-2h2v2H4zm4 0v-2h2v2H8zm4 0v-2h2v2h-2zm4 0v-2h2v2h-2z"/></svg>',
+    'Fonte': '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
+};
+
 function renderizarComponente(tipo, nome) {
+    const nomeOriginal = nome || '';
     const nomeHtml = nome ? `<span class="comp-name">${nome}</span>` : `<span class="comp-empty">Não selecionado</span>`;
+    const iconeSvg = ICONES[tipo] || '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
+    
+    let actionsHtml = '';
+    if (nome) {
+        const queryBusca = encodeURIComponent(nomeOriginal);
+        actionsHtml = `<a href="https://www.google.com/search?q=${queryBusca}+preço+comprar" target="_blank" rel="noopener noreferrer" class="btn-search-price">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            Buscar Preço
+        </a>`;
+    }
+
     return `
         <tr>
-            <td class="comp-type">${tipo}</td>
+            <td>
+                <div class="comp-type-wrapper">
+                    <div class="component-icon-box">${iconeSvg}</div>
+                    <span class="comp-type">${tipo}</span>
+                </div>
+            </td>
             <td>${nomeHtml}</td>
+            <td>${actionsHtml}</td>
         </tr>
     `;
 }
@@ -84,18 +110,7 @@ async function carregarDetalhes() {
             ${renderizarComponente('Fonte', build.psu)}
         `;
 
-        // Check ownership
-        const sessao = obterSessao();
-        if (sessao && build.usuarioId === sessao.id) {
-            const btnEdit = document.getElementById('btn-edit');
-            btnEdit.style.display = 'inline-flex';
-            btnEdit.addEventListener('click', () => {
-                // For editing, redirect to montagem with edit mode, or keep the old edit logic. 
-                // Since old logic used a modal, for now we can just show a toast or implement a basic prompt.
-                // Wait, previously editing was just a modal for Nome and Compartilhada.
-                mostrarToast('Edição redirecionará para montagem em breve.', 'success');
-            });
-        }
+
 
     } catch (e) {
         document.getElementById('loading-detail').textContent = `Falha de conexão: ${e.message}`;
