@@ -1,4 +1,4 @@
-* {
+﻿* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -218,4 +218,25 @@ body {
     .nav-links {
         display: none;
     }
+}
+.navbar .logo {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+}
+
+.logo-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  margin-left: 2px;
+}
+.logo-c {
+  color: #22c55e;
 }
