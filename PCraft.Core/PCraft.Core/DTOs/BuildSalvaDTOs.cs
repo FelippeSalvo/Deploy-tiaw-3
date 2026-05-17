@@ -34,6 +34,7 @@ namespace PCraft.Core.DTOs
         public string Nome { get; set; } = string.Empty;
         public string? Descricao { get; set; }
         public bool Compartilhada { get; set; }
+        public bool Compativel { get; set; }
 
         [JsonPropertyName("criadaEm")]
         public DateTime CriadaEm { get; set; }

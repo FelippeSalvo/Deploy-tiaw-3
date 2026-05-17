@@ -6,6 +6,7 @@ namespace PCraft.Core.Models
         public string Nome { get; set; } = string.Empty;
         public bool Compartilhada { get; set; }
         public string? Descricao { get; set; }
+        public bool Compativel { get; set; } = true;
         public DateTime CriadaEm { get; set; } = DateTime.UtcNow;
 
         public int UsuarioId { get; set; }
