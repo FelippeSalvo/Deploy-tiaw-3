@@ -1,6 +1,6 @@
 namespace PCraft.Core.Models
 {
-    public class Motherboard
+    public class Motherboard : IComponent
     {
         public int Id { get; set; }
         public string Nome { get; set; }
