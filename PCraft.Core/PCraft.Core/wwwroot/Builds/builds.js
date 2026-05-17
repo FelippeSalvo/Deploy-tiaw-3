@@ -1,5 +1,8 @@
 let buildsCache = [];
 let buildEditandoId = null;
+
+let paginaAtual = 1;
+const CARDS_POR_PAGINA = 6;
 let toastTimer = null;
 
 function obterSessao() {
@@ -82,8 +85,13 @@ function renderizarCards(builds, view) {
         return;
     }
 
-    list.innerHTML = builds.map((build) => {
-        // Pick an image deterministically from 1 to 4 based on build id
+    const totalPaginas = Math.ceil(builds.length / CARDS_POR_PAGINA);
+    if (paginaAtual > totalPaginas && totalPaginas > 0) paginaAtual = totalPaginas;
+
+    const inicio = (paginaAtual - 1) * CARDS_POR_PAGINA;
+    const buildsPagina = builds.slice(inicio, inicio + CARDS_POR_PAGINA);
+
+    list.innerHTML = buildsPagina.map((build) => {
         const placeholderIndex = ((build.id || build.nome.length) % 4) + 1;
         const imgPath = `img/placeholder_${placeholderIndex}.png`;
         
@@ -129,6 +137,55 @@ function renderizarCards(builds, view) {
             </div>
         </article>
     `}).join('');
+
+    renderizarPaginacao(builds.length, view);
+}
+
+function renderizarPaginacao(totalItems, view) {
+    const list = document.getElementById('builds-list');
+    let pagContainer = document.getElementById('pagination-container');
+    
+    if (!pagContainer) {
+        pagContainer = document.createElement('div');
+        pagContainer.id = 'pagination-container';
+        pagContainer.className = 'pagination-container';
+        list.parentNode.insertBefore(pagContainer, list.nextSibling);
+    }
+
+    const totalPaginas = Math.ceil(totalItems / CARDS_POR_PAGINA);
+    if (totalPaginas <= 1) {
+        pagContainer.innerHTML = '';
+        return;
+    }
+
+    let html = '<div class="pagination-buttons">';
+    
+    html += `<button class="btn-page ${paginaAtual === 1 ? 'disabled' : ''}" data-page="${paginaAtual - 1}" ${paginaAtual === 1 ? 'disabled' : ''}>Anterior</button>`;
+    
+    for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= paginaAtual - 1 && i <= paginaAtual + 1)) {
+            html += `<button class="btn-page ${i === paginaAtual ? 'active' : ''}" data-page="${i}">${i}</button>`;
+        } else if (i === paginaAtual - 2 || i === paginaAtual + 2) {
+            html += `<span class="pagination-dots">...</span>`;
+        }
+    }
+    
+    html += `<button class="btn-page ${paginaAtual === totalPaginas ? 'disabled' : ''}" data-page="${paginaAtual + 1}" ${paginaAtual === totalPaginas ? 'disabled' : ''}>Próximo</button>`;
+    html += '</div>';
+
+    pagContainer.innerHTML = html;
+
+    const btns = pagContainer.querySelectorAll('button[data-page]');
+    btns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const novaPagina = parseInt(e.target.getAttribute('data-page'));
+            if (novaPagina && novaPagina !== paginaAtual && novaPagina >= 1 && novaPagina <= totalPaginas) {
+                paginaAtual = novaPagina;
+                renderizarCards(buildsCache, view);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    });
 }
 
 async function carregarMinhasBuilds() {

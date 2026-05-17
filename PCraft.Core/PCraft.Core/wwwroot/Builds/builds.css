@@ -223,6 +223,60 @@ body {
     gap: 22px;
 }
 
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+.pagination-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-card);
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(55, 65, 81, 0.75);
+    box-shadow: var(--shadow);
+}
+
+.btn-page {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-page:not(.disabled):hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-page.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+}
+
+.btn-page.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-dots {
+    color: var(--text-secondary);
+    padding: 0 4px;
+}
+
 .build-card {
     position: relative;
     border: 1px solid rgba(55, 65, 81, 0.75);
