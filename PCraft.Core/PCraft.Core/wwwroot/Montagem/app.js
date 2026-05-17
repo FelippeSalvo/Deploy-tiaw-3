@@ -268,6 +268,7 @@ function abrirModalSalvar() {
     if (!modal) return;
 
     document.getElementById('build-name-input').value = '';
+    document.getElementById('build-desc-input').value = '';
     document.getElementById('build-share-input').checked = false;
 
     modal.classList.add('is-open');
@@ -295,6 +296,7 @@ function obterToken() {
 function obterBuildAtual() {
     return {
         Nome: document.getElementById('build-name-input').value.trim(),
+        Descricao: document.getElementById('build-desc-input').value.trim(),
         Compartilhada: document.getElementById('build-share-input').checked,
         CpuId: componentesSelecionados.cpu?.id ?? null,
         MotherboardId: componentesSelecionados.motherboard?.id ?? null,
@@ -330,8 +332,8 @@ async function salvarBuild() {
         mostrarToast('Informe um nome para a build', 'error');
         return;
     }
-    if (!payload.CpuId && !payload.MotherboardId && !payload.RamId && !payload.GpuId && !payload.PsuId) {
-        mostrarToast('Selecione pelo menos um componente', 'error');
+    if (!payload.CpuId || !payload.MotherboardId || !payload.RamId || !payload.GpuId || !payload.PsuId) {
+        mostrarToast('Selecione todos os componentes (Processador, Placa-mãe, RAM, GPU e Fonte) para salvar', 'error');
         return;
     }
 

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCraft - Minhas Builds</title>
     <link rel="stylesheet" href="builds.css">
 </head>
+
 <body data-pcraft-page="builds" data-builds-view="mine">
     <nav class="navbar">
         <div class="container nav-content">
@@ -35,16 +37,7 @@
         </div>
     </main>
 
-    <div id="build-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-backdrop"></div>
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="build-modal-title">
-            <div class="modal-header">
-                <h2 id="build-modal-title">Detalhes da Build</h2>
-                <button id="build-modal-close" class="modal-close" type="button" aria-label="Fechar">✕</button>
-            </div>
-            <div id="build-modal-content" class="modal-content"></div>
-        </div>
-    </div>
+
 
     <div id="edit-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-backdrop"></div>
@@ -56,6 +49,10 @@
             <div class="modal-content">
                 <label class="field-label" for="edit-build-name">Nome</label>
                 <input id="edit-build-name" class="field-input" type="text" maxlength="80" />
+
+                <label class="field-label" for="edit-build-desc">Descrição</label>
+                <input id="edit-build-desc" class="field-input" type="text" maxlength="255" />
+
 
                 <label class="field-checkbox">
                     <input id="edit-build-shared" type="checkbox" />
@@ -75,4 +72,5 @@
     <script src="../Autenticacao/auth.js"></script>
     <script src="builds.js"></script>
 </body>
+
 </html>

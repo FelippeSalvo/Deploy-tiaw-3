@@ -12,7 +12,9 @@ namespace PCraft.Core.Extensions
             {
                 Id = b.Id,
                 Nome = b.Nome,
+                Descricao = b.Descricao,
                 Compartilhada = b.Compartilhada,
+                Compativel = b.Compativel,
                 CriadaEm = b.CriadaEm,
                 Usuario = new UsuarioBuildResumoDTO
                 {

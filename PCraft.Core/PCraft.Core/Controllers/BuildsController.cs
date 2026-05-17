@@ -5,6 +5,7 @@ using PCraft.Core.Data;
 using PCraft.Core.DTOs;
 using PCraft.Core.Models;
 using PCraft.Core.Extensions;
+using PCraft.Core.Services;
 
 namespace PCraft.Core.Controllers
 {
@@ -13,14 +14,28 @@ namespace PCraft.Core.Controllers
     public class BuildsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ICompatibilityService _compatibilityService;
 
-        public BuildsController(AppDbContext context)
+        public BuildsController(AppDbContext context, ICompatibilityService compatibilityService)
         {
             _context = context;
+            _compatibilityService = compatibilityService;
         }
 
-        private bool PossuiAlgumComponente(int? cpuId, int? moboId, int? ramId, int? gpuId, int? psuId) =>
-            cpuId.HasValue || moboId.HasValue || ramId.HasValue || gpuId.HasValue || psuId.HasValue;
+        private bool PossuiTodosComponentes(int? cpuId, int? moboId, int? ramId, int? gpuId, int? psuId) =>
+            cpuId.HasValue && moboId.HasValue && ramId.HasValue && gpuId.HasValue && psuId.HasValue;
+
+        private async Task<bool> AvaliarCompatibilidadeAsync(int? cpuId, int? moboId, int? ramId, int? gpuId, int? psuId)
+        {
+            var cpu = await _context.CPUs.FindAsync(cpuId);
+            var mobo = await _context.Motherboards.FindAsync(moboId);
+            var ram = await _context.RAMs.FindAsync(ramId);
+            var gpu = await _context.GPUs.FindAsync(gpuId);
+            var psu = await _context.PSUs.FindAsync(psuId);
+
+            var resposta = _compatibilityService.VerificarCompatibilidade(cpu!, mobo!, ram!, gpu!, psu!);
+            return resposta.Compativel;
+        }
 
         [Authorize]
         [HttpPost]
@@ -29,16 +44,32 @@ namespace PCraft.Core.Controllers
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return BadRequest(new { message = "Informe um nome para a build." });
 
-            if (!PossuiAlgumComponente(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
-                return BadRequest(new { message = "Selecione pelo menos um componente." });
+            if (!PossuiTodosComponentes(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
+                return BadRequest(new { message = "Todos os 5 componentes (Processador, Placa-mãe, RAM, GPU e Fonte) são obrigatórios para salvar a build." });
 
             var usuarioId = User.GetUserId();
             if (usuarioId is null) return Unauthorized(new { message = "Não foi possível identificar o usuário." });
 
+            var existeDuplicata = await _context.BuildsSalvas.AnyAsync(b => 
+                b.UsuarioId == usuarioId.Value &&
+                b.CpuId == dto.CpuId &&
+                b.MotherboardId == dto.MotherboardId &&
+                b.RamId == dto.RamId &&
+                b.GpuId == dto.GpuId &&
+                b.PsuId == dto.PsuId
+            );
+
+            if (existeDuplicata)
+                return Conflict(new { message = "Você já possui uma build salva com esta mesma configuração de peças." });
+
+            bool compativel = await AvaliarCompatibilidadeAsync(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId);
+
             var build = new BuildSalva
             {
                 Nome = dto.Nome.Trim(),
+                Descricao = dto.Descricao?.Trim(),
                 Compartilhada = dto.Compartilhada,
+                Compativel = compativel,
                 UsuarioId = usuarioId.Value,
                 CpuId = dto.CpuId,
                 MotherboardId = dto.MotherboardId,
@@ -108,8 +139,8 @@ namespace PCraft.Core.Controllers
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return BadRequest(new { message = "Informe um nome para a build." });
 
-            if (!PossuiAlgumComponente(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
-                return BadRequest(new { message = "Mantenha pelo menos um componente." });
+            if (!PossuiTodosComponentes(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId))
+                return BadRequest(new { message = "Todos os 5 componentes são obrigatórios." });
 
             var usuarioId = User.GetUserId();
             if (usuarioId is null) return Unauthorized(new { message = "Não foi possível identificar o usuário." });
@@ -118,8 +149,12 @@ namespace PCraft.Core.Controllers
             if (build is null) return NotFound(new { message = "Build não encontrada." });
             if (build.UsuarioId != usuarioId.Value) return Forbid();
 
+            bool compativel = await AvaliarCompatibilidadeAsync(dto.CpuId, dto.MotherboardId, dto.RamId, dto.GpuId, dto.PsuId);
+
             build.Nome = dto.Nome.Trim();
+            build.Descricao = dto.Descricao?.Trim();
             build.Compartilhada = dto.Compartilhada;
+            build.Compativel = compativel;
             build.CpuId = dto.CpuId;
             build.MotherboardId = dto.MotherboardId;
             build.RamId = dto.RamId;
