@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCraft - Detalhes da Build</title>
+    <link rel="stylesheet" href="../Builds/builds.css">
+    <link rel="stylesheet" href="buildDetalhe.css">
+</head>
+<body data-pcraft-page="build-detalhe">
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="../Home page/index.html" class="logo">PCraft</a>
+
+            <ul class="nav-links">
+                <li><a href="../Home page/index.html">Início</a></li>
+                <li><a href="../Montagem/index.html">Montagem</a></li>
+                <li><a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a></li>
+                <li data-pcraft-user-only hidden><a href="../Builds/MinhasBuilds.html">Minhas Builds</a></li>
+            </ul>
+
+            <div class="nav-actions"></div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container" id="build-detail-wrapper">
+            <div id="loading-detail" class="loading-state">Carregando detalhes da build...</div>
+            
+            <div id="build-detail-content" style="display: none;">
+                <div class="build-detail-header">
+                    <div class="build-detail-header-info">
+                        <h1 id="detail-title">PC montado (Build)</h1>
+                        <p class="build-meta" id="detail-meta"></p>
+                    </div>
+                    <div class="build-actions-top">
+                        <button class="btn-action btn-action--ghost" id="btn-share">Compartilhar</button>
+                        <button class="btn-action btn-action--primary" id="btn-edit" style="display: none;">Editar build</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="build-components-table">
+                        <thead>
+                            <tr>
+                                <th>Peça</th>
+                                <th>Selecionado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-components">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="build-detail-footer-info">
+                    <h2>A melhor ferramenta para montar computadores</h2>
+                    <p class="subtitle">Monte seu PC — gamer ou profissional — com tudo compatível e sem complicação</p>
+
+                    <div class="info-section">
+                        <h3>Várias peças disponíveis</h3>
+                        <p>Novos componentes são adicionados constantemente — você tem liberdade total para montar o PC do seu jeito.</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>Tudo compatível</h3>
+                        <p>Nossa ferramenta verifica automaticamente a compatibilidade entre as peças. Evite erros e dores de cabeça — montar seu PC nunca foi tão fácil e seguro.</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>Montar PC ficou fácil pra qualquer um</h3>
+                        <p>Nosso site é acessado todos os dias por pessoas decididas a montar ou dar um upgrade no seu computador — seja para jogos, trabalho, estudos ou atualizações pontuais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast-message" class="toast-message" aria-live="polite"></div>
+
+    <script src="../Autenticacao/auth.js"></script>
+    <script src="buildDetalhe.js"></script>
+</body>
+</html>

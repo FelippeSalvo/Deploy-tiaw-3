@@ -43,52 +43,7 @@ function formatarData(valor) {
     return data.toLocaleDateString('pt-BR');
 }
 
-function linhaSpecModal(label, valor) {
-    const v = valor && String(valor).trim() ? valor : '—';
-    return `<li><span class="spec-label">${label}</span><span class="spec-value">${v}</span></li>`;
-}
 
-function abrirModalDetalhes(build) {
-    const modal = document.getElementById('build-modal');
-    const content = document.getElementById('build-modal-content');
-    if (!modal || !content) return;
-    const autor = build.usuario?.nome || 'Usuário';
-    const statusClass = build.compartilhada ? 'publica' : '';
-    const statusText = build.compartilhada ? 'Pública' : 'Privada';
-    content.innerHTML = `
-        <div class="build-detail">
-            <div class="build-detail-head">
-                <span class="build-card-icon build-detail-icon" aria-hidden="true">${inicialNomeBuild(build.nome)}</span>
-                <div class="build-detail-head-text">
-                    <h3 class="build-detail-title">${build.nome}</h3>
-                    <p class="build-detail-meta">
-                        <span class="build-meta-author">${autor}</span>
-                        <span class="build-meta-sep">•</span>
-                        <span class="build-meta-date">${formatarData(build.criadaEm)}</span>
-                    </p>
-                </div>
-            </div>
-            <span class="build-status build-detail-badge ${statusClass}">${statusText}</span>
-            <p class="build-detail-section-title">Configuração</p>
-            <ul class="build-specs build-detail-specs">
-                ${linhaSpecModal('CPU', build.cpu)}
-                ${linhaSpecModal('Placa-mãe', build.motherboard)}
-                ${linhaSpecModal('RAM', build.ram)}
-                ${linhaSpecModal('GPU', build.gpu)}
-                ${linhaSpecModal('Fonte', build.psu)}
-            </ul>
-        </div>
-    `;
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-}
-
-function fecharModalDetalhes() {
-    const modal = document.getElementById('build-modal');
-    if (!modal) return;
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-}
 
 function abrirModalEdicao(build) {
     buildEditandoId = build.id;
@@ -125,44 +80,53 @@ function renderizarCards(builds, view) {
         return;
     }
 
-    list.innerHTML = builds.map((build) => `
+    list.innerHTML = builds.map((build) => {
+        // Pick an image deterministically from 1 to 4 based on build id
+        const placeholderIndex = ((build.id || build.nome.length) % 4) + 1;
+        const imgPath = `img/placeholder_${placeholderIndex}.png`;
+        
+        return `
         <article class="build-card">
-            <div class="build-card-head">
-                <span class="build-card-icon" aria-hidden="true">${inicialNomeBuild(build.nome)}</span>
-                <div class="build-card-head-text">
-                    <h3 class="build-card-title">${build.nome}</h3>
-                    <p class="build-meta">
-                        ${view === 'public' ? `<span class="build-meta-author">${build.usuario?.nome || 'Usuário'}</span><span class="build-meta-sep">•</span>` : ''}
+            <div class="build-card-image">
+                <img src="${imgPath}" alt="Build placeholder" loading="lazy">
+            </div>
+            <div class="build-card-content">
+                <h3 class="build-card-title">${build.nome}</h3>
+                
+                <div class="build-specs-box">
+                    <p class="build-desc">Computador montado com peças otimizadas visando o melhor desempenho.</p>
+                    <ul class="build-specs">
+                        <li><span class="spec-value">• ${build.cpu || 'CPU não informada'}</span></li>
+                        <li><span class="spec-value">• ${build.gpu || 'GPU não informada'}</span></li>
+                        ${build.motherboard ? `<li><span class="spec-value">• ${build.motherboard}</span></li>` : ''}
+                    </ul>
+                </div>
+
+                <div class="build-badges">
+                    <span class="build-badge">Gaming</span>
+                    ${view === 'mine' ? `<span class="build-badge ${build.compartilhada ? 'publica' : 'privada'}">${build.compartilhada ? 'Pública' : 'Privada'}</span>` : ''}
+                </div>
+
+                <div class="build-footer">
+                    <div class="build-author-info">
+                        ${view === 'public' ? `<span class="build-meta-author">Por <strong>${build.usuario?.nome || 'Usuário'}</strong></span>` : '<span class="build-meta-author">Por <strong>Você</strong></span>'}
+                        <span class="build-meta-sep">•</span>
                         <span class="build-meta-date">${formatarData(build.criadaEm)}</span>
-                    </p>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    ${view === 'mine' ? `
+                        <button type="button" class="btn-action btn-action--ghost" data-action="edit" data-id="${build.id}">Editar</button>
+                        <button type="button" class="btn-action btn-action--danger" data-action="delete" data-id="${build.id}">Excluir</button>
+                        <button type="button" class="btn-action btn-action--primary" data-action="open" data-id="${build.id}">Abrir</button>
+                    ` : `
+                        <button type="button" class="btn-action btn-action--primary" data-action="view" data-id="${build.id}">Ver build</button>
+                    `}
                 </div>
             </div>
-            <ul class="build-specs">
-                <li><span class="spec-label">CPU</span><span class="spec-value">${build.cpu || '—'}</span></li>
-                <li><span class="spec-label">GPU</span><span class="spec-value">${build.gpu || '—'}</span></li>
-            </ul>
-            ${
-                view === 'mine'
-                    ? `<span class="build-status ${build.compartilhada ? 'publica' : ''}">
-                        ${build.compartilhada ? 'Pública' : 'Privada'}
-                       </span>`
-                    : ''
-            }
-            <div class="card-actions">
-                ${
-                    view === 'mine'
-                        ? `
-                            <button type="button" class="btn-action btn-action--primary" data-action="open" data-id="${build.id}">Abrir</button>
-                            <button type="button" class="btn-action btn-action--ghost" data-action="edit" data-id="${build.id}">Editar</button>
-                            <button type="button" class="btn-action btn-action--danger" data-action="delete" data-id="${build.id}">Excluir</button>
-                          `
-                        : `
-                            <button type="button" class="btn-action btn-action--primary" data-action="view" data-id="${build.id}">Ver build</button>
-                          `
-                }
-            </div>
         </article>
-    `).join('');
+    `}).join('');
 }
 
 async function carregarMinhasBuilds() {
@@ -286,15 +250,12 @@ async function salvarEdicao() {
 
 function conectarEventos(view) {
     const list = document.getElementById('builds-list');
-    const modalClose = document.getElementById('build-modal-close');
-    const modalBackdrop = document.querySelector('#build-modal .modal-backdrop');
     const editClose = document.getElementById('edit-modal-close');
     const editCancel = document.getElementById('edit-cancel');
     const editSave = document.getElementById('edit-save');
     const editBackdrop = document.querySelector('#edit-modal .modal-backdrop');
 
-    modalClose?.addEventListener('click', fecharModalDetalhes);
-    modalBackdrop?.addEventListener('click', fecharModalDetalhes);
+
     editClose?.addEventListener('click', fecharModalEdicao);
     editCancel?.addEventListener('click', fecharModalEdicao);
     editSave?.addEventListener('click', salvarEdicao);
@@ -309,7 +270,7 @@ function conectarEventos(view) {
         if (!build) return;
 
         if (action === 'open' || action === 'view') {
-            abrirModalDetalhes(build);
+            window.location.href = `../BuildDetalhe/index.html?id=${build.id}`;
             return;
         }
         if (action === 'edit' && view === 'mine') {
