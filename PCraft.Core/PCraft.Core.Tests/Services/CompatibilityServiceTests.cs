@@ -235,5 +235,6 @@ public class CompatibilityServiceTests
         Assert.Contains(resultado.Problemas, p => p.Problema.Contains("Socket incompatível"));
         Assert.Contains(resultado.Problemas, p => p.Problema.Contains("Tipo de RAM incompatível"));
         Assert.Contains(resultado.Problemas, p => p.Problema.Contains("PSU") && p.Problema.Contains("insuficiente"));
+
     }
 }
