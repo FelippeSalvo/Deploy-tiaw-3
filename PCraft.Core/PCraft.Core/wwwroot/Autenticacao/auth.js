@@ -72,7 +72,7 @@ function detectarPagina() {
     const attr = (typeof document.body !== 'undefined'
         ? (document.body.getAttribute('data-pcraft-page') || '')
         : '').toLowerCase();
-    if (['home', 'montagem', 'auth', 'adm', 'builds'].includes(attr)) {
+    if (['home', 'montagem', 'auth', 'adm', 'builds', 'build-detalhe'].includes(attr)) {
         return attr;
     }
 
@@ -112,7 +112,7 @@ function obterRotas() {
             cadastro: '../Autenticacao/Cadastro.html'
         };
     }
-    if (pagina === 'builds') {
+    if (pagina === 'builds' || pagina === 'build-detalhe') {
         return {
             home: '../Home page/index.html',
             montagem: '../Montagem/index.html',

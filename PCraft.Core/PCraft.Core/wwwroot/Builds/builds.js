@@ -94,7 +94,7 @@ function renderizarCards(builds, view) {
                 <h3 class="build-card-title">${build.nome}</h3>
                 
                 <div class="build-specs-box">
-                    <p class="build-desc">Computador montado com peças otimizadas visando o melhor desempenho.</p>
+                    <p class="build-desc">${build.descricao || 'Nenhuma descrição fornecida para esta configuração.'}</p>
                     <ul class="build-specs">
                         <li><span class="spec-value">• ${build.cpu || 'CPU não informada'}</span></li>
                         <li><span class="spec-value">• ${build.gpu || 'GPU não informada'}</span></li>
