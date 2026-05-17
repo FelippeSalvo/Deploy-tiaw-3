@@ -38,6 +38,7 @@ namespace PCraft.Core.Controllers
             var build = new BuildSalva
             {
                 Nome = dto.Nome.Trim(),
+                Descricao = dto.Descricao?.Trim(),
                 Compartilhada = dto.Compartilhada,
                 UsuarioId = usuarioId.Value,
                 CpuId = dto.CpuId,
@@ -119,6 +120,7 @@ namespace PCraft.Core.Controllers
             if (build.UsuarioId != usuarioId.Value) return Forbid();
 
             build.Nome = dto.Nome.Trim();
+            build.Descricao = dto.Descricao?.Trim();
             build.Compartilhada = dto.Compartilhada;
             build.CpuId = dto.CpuId;
             build.MotherboardId = dto.MotherboardId;
