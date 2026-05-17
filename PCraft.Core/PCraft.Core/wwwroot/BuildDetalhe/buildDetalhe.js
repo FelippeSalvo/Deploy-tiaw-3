@@ -101,6 +101,17 @@ async function carregarDetalhes() {
             document.getElementById('detail-description-container').style.display = 'none';
         }
 
+        const tagsContainer = document.getElementById('detail-tags');
+        if (tagsContainer) {
+            tagsContainer.innerHTML = '';
+            if (build.compativel === false) {
+                const badge = document.createElement('span');
+                badge.className = 'build-badge incompatible';
+                badge.textContent = 'Incompatível';
+                tagsContainer.appendChild(badge);
+            }
+        }
+
         const tbody = document.getElementById('detail-components');
         tbody.innerHTML = `
             ${renderizarComponente('Processador', build.cpu)}

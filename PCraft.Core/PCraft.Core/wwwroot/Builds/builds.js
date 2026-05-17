@@ -114,6 +114,7 @@ function renderizarCards(builds, view) {
 
                 <div class="build-badges">
                     <span class="build-badge">Gaming</span>
+                    ${build.compativel === false ? `<span class="build-badge incompatible">Incompatível</span>` : ''}
                     ${view === 'mine' ? `<span class="build-badge ${build.compartilhada ? 'publica' : 'privada'}">${build.compartilhada ? 'Pública' : 'Privada'}</span>` : ''}
                 </div>
 
