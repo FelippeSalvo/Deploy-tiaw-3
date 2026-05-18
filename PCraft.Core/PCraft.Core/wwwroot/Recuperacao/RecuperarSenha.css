@@ -1,4 +1,4 @@
-* {
+﻿* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -218,4 +218,58 @@ body {
     .nav-links {
         display: none;
     }
+}
+.navbar .logo {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+}
+
+.logo-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  margin-left: 2px;
+}
+.logo-c {
+  color: #22c55e;
+}
+.topbar .brand, .auth-card h1 {
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: #94a3b8;
+    font-size: 14px;
+    margin-top: auto;
+}
+.footer p {
+    margin: 0;
+}
+.topbar .brand {
+  font-style: italic !important;
+  font-weight: 900 !important;
+  font-size: 1.8rem !important;
+  letter-spacing: -1px !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: baseline !important;
+  text-decoration: none !important;
+}
+
+.auth-card h1 {
+  color: #ffffff !important;
+  font-size: 2.2rem !important;
 }

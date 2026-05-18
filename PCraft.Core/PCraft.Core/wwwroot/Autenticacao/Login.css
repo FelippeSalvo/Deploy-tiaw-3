@@ -1,4 +1,4 @@
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -486,4 +486,43 @@ button:hover {
         text-align: center;
         justify-content: center;
     }
+}
+.navbar .logo {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+}
+
+.logo-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  margin-left: 2px;
+}
+.logo-c {
+  color: #22c55e;
+}
+.auth-card h1 {
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: #94a3b8;
+    font-size: 14px;
+    margin-top: auto;
+}
+.footer p {
+    margin: 0;
 }

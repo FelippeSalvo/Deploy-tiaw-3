@@ -1,23 +1,27 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCraft - Cadastro</title>
     <link rel="stylesheet" href="Login.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
 </head>
 
 <body data-pcraft-page="auth">
 
     <nav class="navbar">
         <div class="container nav-content">
-            <a href="../Home page/index.html" class="logo">PCraft</a>
+            <a href="../Home page/index.html" class="logo"><span class="logo-c">PC</span>RAFT<span
+                    class="logo-dot"></span></a>
 
             <ul class="nav-links">
                 <li><a href="../Home page/index.html">Início</a></li>
                 <li><a href="../Montagem/index.html">Montagem</a></li>
                 <li><a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a></li>
                 <li data-pcraft-user-only hidden><a href="../Builds/MinhasBuilds.html">Minhas Builds</a></li>
+                <li data-pcraft-admin-only hidden><a href="../Adm/Adm.html">Painel Admin</a></li>
             </ul>
 
             <div class="nav-actions"></div>
@@ -27,7 +31,7 @@
     <div class="login-container">
         <div class="login-box">
 
-            <h1>PCraft</h1>
+            <h1><span class="logo-c">PC</span>RAFT<span class="logo-dot"></span></h1>
             <p class="subtitle">Criar conta</p>
 
             <form id="formCadastro">
@@ -55,16 +59,13 @@
         </div>
     </div>
 
-    <footer class="footer footer--compact">
-        <div class="container footer-content">
-            <div>
-                <h3>PCraft</h3>
-                <p class="footer-tagline">Montagem com compatibilidade inteligente</p>
-                <p class="footer-auth-status" aria-live="polite"></p>
-            </div>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 PCraft — Verificador de compatibilidade</p>
         </div>
     </footer>
 
     <script src="auth.js"></script>
 </body>
+
 </html>

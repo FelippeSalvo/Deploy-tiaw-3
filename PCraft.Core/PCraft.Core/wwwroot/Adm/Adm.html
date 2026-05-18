@@ -1,20 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PCraft - Painel do Administrador</title>
   <link rel="stylesheet" href="Adm.css" />
 </head>
+
 <body data-pcraft-page="adm">
   <nav class="navbar">
     <div class="container nav-content">
-      <a href="../Home page/index.html" class="logo">PCraft</a>
+      <a href="../Home page/index.html" class="logo"><span class="logo-c">PC</span>RAFT<span
+          class="logo-dot"></span></a>
       <ul class="nav-links">
-        <li><a href="../Home page/index.html#inicio">Início</a></li>
+        <li><a href="../Home page/index.html">Início</a></li>
         <li><a href="../Montagem/index.html">Montagem</a></li>
         <li><a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a></li>
         <li data-pcraft-user-only hidden><a href="../Builds/MinhasBuilds.html">Minhas Builds</a></li>
+        <li data-pcraft-admin-only hidden><a href="../Adm/Adm.html" class="active">Painel Admin</a></li>
       </ul>
       <div class="nav-actions"></div>
     </div>
@@ -75,24 +79,14 @@
     </div>
   </div>
 
-  <footer class="footer adm-site-footer">
-    <div class="container footer-content">
-      <div>
-        <h3>PCraft</h3>
-        <p class="footer-tagline">Painel administrativo</p>
-        <p class="footer-auth-status" aria-live="polite"></p>
-      </div>
-      <div class="footer-links">
-        <a href="../Home page/index.html">Início</a>
-        <a href="../Montagem/index.html">Montagem</a>
-        <a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a>
-        <a href="../Builds/MinhasBuilds.html" data-pcraft-user-only hidden>Minhas Builds</a>
-        <a href="../Autenticacao/Login.html" data-pcraft-guest-only>Login</a>
-      </div>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PCraft — Verificador de compatibilidade</p>
     </div>
   </footer>
 
-  <script src="Adm.js"></script>
   <script src="../Autenticacao/auth.js"></script>
+  <script src="Adm.js"></script>
 </body>
+
 </html>

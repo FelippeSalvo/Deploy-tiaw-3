@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCraft - Monte seu PC</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
 </head>
 
 <body data-pcraft-page="montagem">
     <nav class="navbar">
         <div class="container nav-content">
-            <a href="index.html" class="logo">PCraft</a>
+            <a href="index.html" class="logo"><span class="logo-c">PC</span>RAFT<span class="logo-dot"></span></a>
 
             <ul class="nav-links">
                 <li><a href="../Home page/index.html">Início</a></li>
-                <li><a href="../Home page/index.html#vantagens">Vantagens</a></li>
-                <li><a href="#montagem" class="active">Montagem</a></li>
+                <li><a href="../Montagem/index.html" class="active">Montagem</a></li>
                 <li><a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a></li>
                 <li data-pcraft-user-only hidden><a href="../Builds/MinhasBuilds.html">Minhas Builds</a></li>
+                <li data-pcraft-admin-only hidden><a href="../Adm/Adm.html">Painel Admin</a></li>
             </ul>
 
             <div class="nav-actions"></div>
@@ -109,8 +110,9 @@
                 <input type="text" id="build-name-input" class="modal-search" maxlength="80"
                     placeholder="Ex.: Setup Gamer 1440p" autocomplete="off" />
 
-                <label for="build-desc-input" class="save-build-label" style="margin-top: 16px;">Descrição (Opcional)</label>
-                <textarea id="build-desc-input" class="modal-search" style="min-height: 80px; resize: vertical;" 
+                <label for="build-desc-input" class="save-build-label" style="margin-top: 16px;">Descrição
+                    (Opcional)</label>
+                <textarea id="build-desc-input" class="modal-search" style="min-height: 80px; resize: vertical;"
                     placeholder="Conte mais sobre essa configuração..."></textarea>
 
                 <label class="save-build-checkbox">
@@ -128,7 +130,7 @@
 
     <div id="toast-message" class="toast-message" aria-live="polite"></div>
 
-    <footer class="footer">
+        <footer class="footer">
         <div class="container">
             <p>© 2026 PCraft — Verificador de compatibilidade</p>
         </div>
