@@ -1,5 +1,5 @@
 const AUTH_STORAGE_KEY = 'pcraft.auth';
-const API_BASE = "http://localhost:5265/api";
+const API_BASE = "https://pcraft-expo.onrender.com/api";
 
 function obterSessao() {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
@@ -46,7 +46,7 @@ function mensagemFalhaConexao(erro, contexto) {
         return 'Não dá para cadastrar abrindo o HTML pelo disco. Inicie o backend (dotnet run) e acesse pelo navegador: ' +
             `${API_FALLBACK_ORIGIN}/Autenticacao/Cadastro.html`;
     }
-    return 'Sem conexão com a API (' + API_BASE + '). Coloque o backend no ar nesta porta ou defina manualmente localStorage \'pcraft.apiBase\' (ex.: http://localhost:5627 sem /api no final).';
+    return 'Sem conexão com a API (' + API_BASE + '). Verifique se o backend está online no Render.';
 }
 
 function escapeHtml(texto) {
