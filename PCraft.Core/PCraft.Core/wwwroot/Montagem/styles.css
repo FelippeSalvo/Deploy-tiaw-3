@@ -244,6 +244,7 @@ body {
     padding: 20px;
     border: 1px solid rgba(55, 65, 81, 0.6);
     box-shadow: none;
+    align-self: start;
 }
 
 .components-panel h2 {
@@ -360,6 +361,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-self: start;
 }
 
 .summary-card {
@@ -793,24 +795,26 @@ body {
         padding: 18px 16px 16px;
     }
 }
+
 .navbar .logo {
-  font-style: italic;
-  font-weight: 900;
-  font-size: 1.8rem;
-  letter-spacing: -1px;
-  color: #ffffff;
-  display: flex;
-  align-items: baseline;
-  text-decoration: none;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    color: #ffffff;
+    display: flex;
+    align-items: baseline;
+    text-decoration: none;
 }
 
 .logo-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background-color: #22c55e;
-  margin-left: 2px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #22c55e;
+    margin-left: 2px;
 }
+
 .logo-c {
-  color: #22c55e;
+    color: #22c55e;
 }
