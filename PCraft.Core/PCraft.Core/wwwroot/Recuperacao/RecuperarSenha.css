@@ -258,3 +258,18 @@ body {
 .footer p {
     margin: 0;
 }
+.topbar .brand {
+  font-style: italic !important;
+  font-weight: 900 !important;
+  font-size: 1.8rem !important;
+  letter-spacing: -1px !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: baseline !important;
+  text-decoration: none !important;
+}
+
+.auth-card h1 {
+  color: #ffffff !important;
+  font-size: 2.2rem !important;
+}
