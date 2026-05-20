@@ -1,0 +1,15 @@
+name: Keep-Alive Database (Supabase)
+
+on:
+  schedule:
+    # Rodar uma vez por dia às 12:00 UTC (09:00 no horário de Brasília)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Permite rodar manualmente pelo painel do GitHub se quiser testar
+
+jobs:
+  ping-db:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping DB
+        run: |
+          curl -s -o /dev/null -w "HTTP Status: %{http_code}\n" https://pcraft-expo.onrender.com/api/ping/db

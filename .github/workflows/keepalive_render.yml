@@ -1,0 +1,15 @@
+name: Keep-Alive API (Render)
+
+on:
+  schedule:
+    # Rodar a cada 14 minutos apenas das 13:00 às 23:00 no horário de Brasília (16:00 às 02:00 UTC)
+    - cron: '*/14 0-2,16-23 * * *'
+  workflow_dispatch: # Permite rodar manualmente pelo painel do GitHub se quiser testar
+
+jobs:
+  ping-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping API
+        run: |
+          curl -s -o /dev/null -w "HTTP Status: %{http_code}\n" https://pcraft-expo.onrender.com/api/ping
