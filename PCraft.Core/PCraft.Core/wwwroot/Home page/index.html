@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -7,11 +7,11 @@
     <title>PCraft - Monte seu PC ideal</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="../assets/logo.png" type="image/png">
+    <link rel="stylesheet" href="../Builds/builds.css">
 </head>
 
 <body data-pcraft-page="home">
 
-    <!-- NAVBAR (inalterada) -->
     <nav class="navbar">
         <div class="container nav-content">
             <a href="index.html" class="logo"><span class="logo-c">PC</span>RAFT<span class="logo-dot"></span></a>
@@ -36,13 +36,22 @@
                     <p class="lp-eyebrow">Montagem com compatibilidade inteligente</p>
                     <h1 class="mp-hero-title">O melhor site para <span class="mp-hero-accent">montar computadores</span>
                     </h1>
-                    <p class="mp-hero-lead">
-                        Escolha processador, placa-mãe, memória, placa de vídeo e fonte no seu ritmo.
-                        O PCraft identifica automaticamente possíveis incompatibilidades entre as peças,
-                        tornando a montagem mais simples, rápida e segura.
-                    </p>
                     <p class="mp-hero-sub">
-                        Salve suas builds, compartilhe configurações e explore diferentes combinações com facilidade.
+                        <span class="desktop-text">
+                            Escolha processador, placa-mãe, memória, placa de vídeo e fonte no seu ritmo.
+                            O PCraft identifica automaticamente possíveis incompatibilidades entre as peças,
+                            tornando a montagem mais simples, rápida e segura.
+
+                            <br><br>
+
+                            Salve suas builds, compartilhe configurações e explore diferentes combinações com facilidade.
+                        </span>
+
+                        <span class="mobile-text">
+                            Monte seu PC com segurança.
+                            O PCraft identifica incompatibilidades automaticamente
+                            e ajuda você a criar builds com mais facilidade.
+                        </span>
                     </p>
                     <div class="mp-hero-cta lp-hero-ctas">
                         <a href="../Montagem/index.html" class="mp-btn mp-btn--primary mp-btn--hero">Comece a montar
@@ -65,7 +74,6 @@
         <section class="mp-section mp-actions lp-band lp-band--soft" id="explore">
             <div class="container">
                 <header class="lp-section-head">
-
                     <h2 class="mp-section-title lp-section-title">Explore o PCraft</h2>
                     <p class="mp-section-desc lp-section-lead">Monte com feedback de compatibilidade ou inspire-se nas
                         builds que a comunidade já salvou.</p>
@@ -87,59 +95,46 @@
             </div>
         </section>
 
-        <!-- Jornada -->
-        <section class="mp-section mp-steps lp-band" id="vantagens">
+        <!-- Builds da comunidade -->
+        <section class="mp-section lp-band" id="vantagens">
             <div class="container">
                 <header class="lp-section-head">
-                    <p class="lp-kicker">Em quatro passos</p>
-                    <h2 class="mp-section-title lp-section-title">Como funciona</h2>
-                    <p class="mp-section-desc lp-section-lead">Um fluxo simples: você escolhe as peças, o PCraft valida
-                        tudo e você compartilha o resultado.</p>
+                    <p class="lp-kicker">Builds da comunidade</p>
+                    <h2 class="mp-section-title lp-section-title">
+                        Confira as builds mais recentes
+                    </h2>
+                    <p class="mp-section-desc lp-section-lead">
+                        Explore configurações compartilhadas pela comunidade PCraft.
+                    </p>
                 </header>
-                <div class="mp-steps-grid">
-                    <div class="mp-step">
-                        <span class="mp-step-num">1</span>
-                        <h3>Você monta seu PC</h3>
-                        <p>Faça do seu jeito: selecione as peças que quiser, sem pré-montagens obrigatórias.</p>
-                    </div>
-                    <div class="mp-step">
-                        <span class="mp-step-num">2</span>
-                        <h3>Nós testamos a compatibilidade</h3>
-                        <p>Analisamos socket, memória, energia e mais — com feedback claro na hora.</p>
-                    </div>
-                    <div class="mp-step">
-                        <span class="mp-step-num">3</span>
-                        <h3>Refine sua lista</h3>
-                        <p>Ajuste até ficar tudo compatível; compare opções com calma no PCraft.</p>
-                    </div>
-                    <div class="mp-step">
-                        <span class="mp-step-num">4</span>
-                        <h3>Compartilhe</h3>
-                        <p>Salve sua build e publique para a comunidade ver sua configuração.</p>
-                    </div>
-                </div>
+
+                <div id="builds-list" class="builds-grid"></div>
             </div>
         </section>
 
-        <!-- Números -->
-        <section class="mp-stats lp-stats">
-            <div class="container mp-stats-grid">
-                <div class="mp-stat">
-                    <span class="mp-stat-value">100%</span>
-                    <span class="mp-stat-label">Foco em compatibilidade</span>
-                </div>
-                <div class="mp-stat">
-                    <span class="mp-stat-value">Fluidez</span>
-                    <span class="mp-stat-label">Interface rápida e intuitiva.</span>
-                </div>
-                <div class="mp-stat">
-                    <span class="mp-stat-value">Real-Time</span>
-                    <span class="mp-stat-label">Análise instantânea das peças</span>
-                </div>
+        <section class="community-bar">
+            <div class="container">
+                <div class="community-bar-content">
+                    <div class="community-item">
+                        <div>
+                            <small>CPU Favorita</small>
+                            <strong id="topCpu">Carregando...</strong>
+                        </div>
+                    </div>
 
-                <div class="mp-stat">
-                    <span class="mp-stat-value">Next Gen</span>
-                    <span class="mp-stat-label">Monte PCs modernos sem erro</span>
+                    <div class="community-item">
+                        <div>
+                            <small>GPU Favorita</small>
+                            <strong id="topGpu">Carregando...</strong>
+                        </div>
+                    </div>
+
+                    <div class="community-item">
+                        <div>
+                            <small>Maior Compartilhador</small>
+                            <strong id="topUser">Carregando...</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -167,8 +162,8 @@
         </div>
     </footer>
 
-    <script src="app.js"></script>
     <script src="../Autenticacao/auth.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
