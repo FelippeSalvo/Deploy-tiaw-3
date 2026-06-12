@@ -1,5 +1,5 @@
 const AUTH_STORAGE_KEY = 'pcraft.auth';
-const API_BASE = "http://localhost:5265/api";
+const API_BASE = "https://pcraft-expo.onrender.com/api";
 
 function obterSessao() {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
