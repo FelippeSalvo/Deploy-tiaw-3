@@ -1,4 +1,4 @@
-const API_BASE = "https://pcraft-expo.onrender.com/api";
+const API_BASE = "http://localhost:5265/api";
 
 const formForgotPassword = document.getElementById("formForgotPassword");
 const formResetPassword = document.getElementById("formResetPassword");

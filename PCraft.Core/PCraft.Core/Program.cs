@@ -63,10 +63,4 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.MapControllers();
 
-app.MapGet("/", context =>
-{
-    context.Response.Redirect("/Home%20page/index.html");
-    return Task.CompletedTask;
-});
-
 app.Run();
