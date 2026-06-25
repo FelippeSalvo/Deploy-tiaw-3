@@ -1,5 +1,25 @@
 const AUTH_STORAGE_KEY = 'pcraft.auth';
-const API_BASE = "http://localhost:5265/api";
+const PCraft_ORIGIN_DEPLOY = 'https://pcraft-expo.onrender.com';
+
+function resolverApiBase() {
+    const custom = localStorage.getItem('pcraft.apiBase');
+    if (custom) {
+        const base = custom.trim().replace(/\/$/, '');
+        return base.endsWith('/api') ? base : `${base}/api`;
+    }
+
+    const { hostname, origin, protocol } = window.location;
+    if (protocol === 'file:') {
+        return `${PCraft_ORIGIN_DEPLOY}/api`;
+    }
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return `${origin}/api`;
+    }
+    return `${origin}/api`;
+}
+
+const API_BASE = resolverApiBase();
+const API_FALLBACK_ORIGIN = PCraft_ORIGIN_DEPLOY;
 
 function obterSessao() {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
@@ -46,7 +66,7 @@ function mensagemFalhaConexao(erro, contexto) {
         return 'Não dá para cadastrar abrindo o HTML pelo disco. Inicie o backend (dotnet run) e acesse pelo navegador: ' +
             `${API_FALLBACK_ORIGIN}/Autenticacao/Cadastro.html`;
     }
-    return 'Sem conexão com a API (' + API_BASE + '). Coloque o backend no ar nesta porta ou defina manualmente localStorage \'pcraft.apiBase\' (ex.: http://localhost:5627 sem /api no final).';
+    return 'Sem conexão com a API (' + API_BASE + '). Verifique se o backend está no ar ou defina localStorage \'pcraft.apiBase\' (ex.: https://pcraft-expo.onrender.com sem /api no final).';
 }
 
 function escapeHtml(texto) {

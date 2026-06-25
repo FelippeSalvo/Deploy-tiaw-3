@@ -1,5 +1,4 @@
-const API_BASE = "http://localhost:5265/api";
-
+// API_BASE vem de ../Autenticacao/auth.js
 const formForgotPassword = document.getElementById("formForgotPassword");
 const formResetPassword = document.getElementById("formResetPassword");
 const authMessage = document.getElementById("authMessage");
