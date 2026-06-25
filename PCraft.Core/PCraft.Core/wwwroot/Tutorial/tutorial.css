@@ -1,0 +1,689 @@
+/* Tutorial — estende builds.css */
+
+.tutorial-main {
+    padding-bottom: 0;
+    overflow-x: hidden;
+}
+
+/* —— Hero —— */
+.tut-hero {
+    position: relative;
+    padding: 64px 0 56px;
+    border-bottom: 1px solid rgba(55, 65, 81, 0.55);
+    background-color: #070a10;
+    background-image:
+        linear-gradient(135deg, rgba(3, 5, 10, 0.94) 0%, rgba(6, 10, 18, 0.82) 45%, rgba(8, 14, 22, 0.75) 100%),
+        radial-gradient(circle at 85% 20%, rgba(34, 197, 94, 0.08), transparent 40%);
+}
+
+.tut-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(55, 65, 81, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(55, 65, 81, 0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, transparent 85%);
+    pointer-events: none;
+}
+
+.tut-hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.tut-label {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+}
+
+.tut-hero h1 {
+    font-size: clamp(2rem, 4.2vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+}
+
+.tut-highlight {
+    color: #4ade80;
+}
+
+.tut-lead {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+    max-width: 520px;
+    margin-bottom: 28px;
+}
+
+.tut-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tut-jump a {
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(55, 65, 81, 0.85);
+    background: rgba(17, 24, 39, 0.55);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.tut-jump a:hover {
+    border-color: rgba(34, 197, 94, 0.5);
+    color: var(--accent);
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.tut-jump a.is-active {
+    border-color: rgba(34, 197, 94, 0.6);
+    color: #052e16;
+    background: var(--accent);
+}
+
+/* Painel decorativo do hero */
+.tut-hero-panel {
+    background: linear-gradient(160deg, rgba(17, 24, 39, 0.95) 0%, rgba(12, 18, 28, 0.9) 100%);
+    border: 1px solid rgba(55, 65, 81, 0.8);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.tut-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tut-panel-badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: var(--accent);
+    font-size: 0.72rem;
+}
+
+.tut-panel-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tut-panel-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(15, 20, 31, 0.8);
+    border: 1px solid rgba(55, 65, 81, 0.5);
+    font-size: 0.9rem;
+    color: #e2e8f0;
+}
+
+.tut-panel-tag {
+    flex-shrink: 0;
+    min-width: 36px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--accent);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.tut-panel-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.tut-panel-stats > div {
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(15, 20, 31, 0.75);
+    border: 1px solid rgba(55, 65, 81, 0.45);
+}
+
+.tut-panel-stats small {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.tut-panel-stats strong {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.tut-panel-ok strong {
+    color: var(--accent);
+}
+
+/* Faixa de destaques */
+.tut-strip {
+    border-bottom: 1px solid rgba(55, 65, 81, 0.45);
+    background: rgba(6, 9, 15, 0.95);
+    padding: 16px 0;
+}
+
+.tut-strip-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px 36px;
+}
+
+.tut-strip-inner span {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #94a3b8;
+    position: relative;
+    padding-left: 1.1rem;
+}
+
+.tut-strip-inner span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+/* —— Seções —— */
+.tut-section {
+    padding: 72px 0;
+    position: relative;
+}
+
+.tut-section--steps {
+    background: rgba(8, 11, 18, 0.5);
+    border-top: 1px solid rgba(55, 65, 81, 0.35);
+    border-bottom: 1px solid rgba(55, 65, 81, 0.35);
+}
+
+.tut-section--checks {
+    background: transparent;
+}
+
+.tut-section--builds {
+    background: linear-gradient(180deg, rgba(8, 12, 20, 0.6) 0%, rgba(11, 15, 25, 0.3) 100%);
+    border-top: 1px solid rgba(55, 65, 81, 0.35);
+}
+
+.tut-section-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px 28px;
+    margin-bottom: 40px;
+    max-width: 720px;
+}
+
+.tut-section-num {
+    flex-shrink: 0;
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(34, 197, 94, 0.16);
+    user-select: none;
+    margin-top: 2px;
+}
+
+.tut-section-head-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.tut-section-head h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+}
+
+.tut-section-head-body h2:only-child {
+    margin-bottom: 0;
+}
+
+.tut-desc {
+    color: var(--text-secondary);
+    line-height: 1.65;
+    font-size: 1rem;
+}
+
+/* —— Cards de componentes (bento + cores) —— */
+.tut-components-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+}
+
+.tut-comp-card {
+    grid-column: span 2;
+    background: rgba(17, 24, 39, 0.92);
+    border: 1px solid rgba(55, 65, 81, 0.75);
+    border-radius: 20px;
+    padding: 24px 22px;
+    box-shadow: var(--shadow);
+}
+
+.tut-comp-card--cpu {
+    box-shadow: var(--shadow), inset 0 3px 0 0 #22c55e;
+}
+
+.tut-comp-card--cpu .tut-comp-icon { color: #4ade80; background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.35); }
+
+.tut-comp-card--mb {
+    box-shadow: var(--shadow), inset 0 3px 0 0 #3b82f6;
+}
+
+.tut-comp-card--mb .tut-comp-icon { color: #60a5fa; background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.35); }
+
+.tut-comp-card--ram {
+    box-shadow: var(--shadow), inset 0 3px 0 0 #a855f7;
+}
+
+.tut-comp-card--ram .tut-comp-icon { color: #c084fc; background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.35); }
+
+.tut-comp-card--gpu {
+    grid-column: 2 / span 2;
+    box-shadow: var(--shadow), inset 0 3px 0 0 #f97316;
+}
+
+.tut-comp-card--gpu .tut-comp-icon { color: #fb923c; background: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.35); }
+
+.tut-comp-card--psu {
+    grid-column: 4 / span 2;
+    box-shadow: var(--shadow), inset 0 3px 0 0 #eab308;
+}
+
+.tut-comp-card--psu .tut-comp-icon { color: #facc15; background: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.35); }
+
+.tut-comp-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 48px;
+    padding: 0 12px;
+    border-radius: 14px;
+    border: 1px solid;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+}
+
+.tut-comp-card h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.tut-comp-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.tut-comp-extra {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    margin-bottom: 0;
+}
+
+.tut-comp-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* —— Passos (timeline) —— */
+.tut-steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.tut-steps::before {
+    content: "";
+    position: absolute;
+    top: 21px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.4) 15%, rgba(34, 197, 94, 0.4) 85%, transparent);
+    z-index: 0;
+}
+
+.tut-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.tut-step-num {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #0f141f;
+    color: var(--accent);
+    border: 2px solid rgba(34, 197, 94, 0.45);
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+.tut-step > div {
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid rgba(55, 65, 81, 0.65);
+    border-radius: 16px;
+    padding: 18px 14px;
+    min-height: 140px;
+    transition: border-color 0.2s;
+}
+
+.tut-step:hover > div {
+    border-color: rgba(34, 197, 94, 0.35);
+}
+
+.tut-step h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tut-step p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.tut-note {
+    padding: 18px 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(55, 65, 81, 0.6);
+    border-left: 3px solid var(--accent);
+    background: rgba(17, 24, 39, 0.7);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* —— Compatibilidade —— */
+.tut-check-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.tut-check-card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid rgba(55, 65, 81, 0.7);
+    border-radius: 18px;
+    padding: 24px 22px 24px 28px;
+    transition: border-color 0.2s;
+}
+
+.tut-check-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+}
+
+.tut-check-card:hover {
+    border-color: rgba(55, 65, 81, 0.9);
+}
+
+.tut-check-card--socket::before { background: #22c55e; }
+.tut-check-card--ram::before { background: #a855f7; }
+.tut-check-card--gpu::before { background: #f97316; }
+.tut-check-card--psu::before { background: #eab308; }
+
+.tut-check-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.tut-check-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tut-check-card p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* —— Features —— */
+.tut-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.tut-feature {
+    position: relative;
+    padding: 28px 24px;
+    border-radius: 20px;
+    border: 1px solid rgba(55, 65, 81, 0.7);
+    background: rgba(17, 24, 39, 0.85);
+}
+
+.tut-feature:hover {
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.tut-feature-num {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(34, 197, 94, 0.2);
+    margin-bottom: 12px;
+    letter-spacing: -0.03em;
+}
+
+.tut-feature h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.tut-feature p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* —— CTA —— */
+.tut-cta {
+    padding: 56px 0 72px;
+}
+
+.tut-cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 44px 48px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.98) 0%, rgba(10, 18, 24, 0.95) 100%);
+    border: 1px solid rgba(55, 65, 81, 0.85);
+    box-shadow: var(--shadow);
+}
+
+.tut-cta-inner h2 {
+    font-size: 1.55rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.tut-cta-inner p {
+    color: #cbd5e1;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 480px;
+}
+
+.tut-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.tut-btn--primary {
+    background: var(--accent);
+    color: #052e16;
+    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.22);
+}
+
+.tut-btn--primary:hover {
+    background: var(--accent-hover);
+}
+
+/* —— Responsive —— */
+@media (max-width: 1024px) {
+    .tut-hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tut-hero-panel {
+        max-width: 420px;
+    }
+
+    .tut-steps {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .tut-steps::before {
+        display: none;
+    }
+
+    .tut-step {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        padding: 0;
+    }
+
+    .tut-step > div {
+        min-height: auto;
+        flex: 1;
+    }
+}
+
+@media (max-width: 900px) {
+    .tut-components-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tut-comp-card,
+    .tut-comp-card--gpu,
+    .tut-comp-card--psu {
+        grid-column: auto;
+    }
+
+    .tut-check-grid,
+    .tut-feature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .tut-hero {
+        padding: 44px 0 40px;
+    }
+
+    .tut-section {
+        padding: 48px 0;
+    }
+
+    .tut-cta-inner {
+        padding: 28px 24px;
+    }
+
+    .tut-panel-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        gap: 14px;
+        font-size: 0.85rem;
+    }
+}

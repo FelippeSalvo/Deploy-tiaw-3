@@ -1,5 +1,5 @@
 const AUTH_STORAGE_KEY = 'pcraft.auth';
-const API_BASE = "https://pcraft-expo.onrender.com/api";
+const API_BASE = "http://localhost:5265/api";
 
 function obterSessao() {
     const raw = localStorage.getItem(AUTH_STORAGE_KEY);
@@ -72,12 +72,13 @@ function detectarPagina() {
     const attr = (typeof document.body !== 'undefined'
         ? (document.body.getAttribute('data-pcraft-page') || '')
         : '').toLowerCase();
-    if (['home', 'montagem', 'auth', 'adm', 'builds', 'build-detalhe'].includes(attr)) {
+    if (['home', 'montagem', 'auth', 'adm', 'builds', 'build-detalhe', 'tutorial'].includes(attr)) {
         return attr;
     }
 
     const p = pathParaMatch();
     if (p.includes('/autenticacao/')) return 'auth';
+    if (p.includes('/tutorial')) return 'tutorial';
     if (p.includes('/montagem')) return 'montagem';
     if (p.includes('/builds/')) return 'builds';
     if (p.includes('/adm')) return 'adm';
@@ -100,6 +101,14 @@ function obterRotas() {
         return {
             home: '../Home page/index.html',
             montagem: 'index.html',
+            login: '../Autenticacao/Login.html',
+            cadastro: '../Autenticacao/Cadastro.html'
+        };
+    }
+    if (pagina === 'tutorial') {
+        return {
+            home: '../Home page/index.html',
+            montagem: '../Montagem/index.html',
             login: '../Autenticacao/Login.html',
             cadastro: '../Autenticacao/Cadastro.html'
         };

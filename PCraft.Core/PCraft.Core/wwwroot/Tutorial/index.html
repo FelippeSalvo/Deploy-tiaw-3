@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCraft - Tutorial</title>
+    <link rel="stylesheet" href="../Builds/builds.css">
+    <link rel="stylesheet" href="tutorial.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
+</head>
+
+<body data-pcraft-page="tutorial">
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="../Home page/index.html" class="logo"><span class="logo-c">PC</span>RAFT<span class="logo-dot"></span></a>
+
+            <ul class="nav-links">
+                <li><a href="../Home page/index.html">Início</a></li>
+                <li><a href="../Montagem/index.html">Montagem</a></li>
+                <li><a href="index.html" class="active">Tutorial</a></li>
+                <li><a href="../Builds/BuildsUsuarios.html">Builds dos Usuários</a></li>
+                <li data-pcraft-user-only hidden><a href="../Builds/MinhasBuilds.html">Minhas Builds</a></li>
+                <li data-pcraft-admin-only hidden><a href="../Adm/Adm.html">Painel Admin</a></li>
+            </ul>
+
+            <div class="nav-actions"></div>
+        </div>
+    </nav>
+
+    <main class="tutorial-main">
+        <section class="tut-hero">
+            <div class="container tut-hero-grid">
+                <div class="tut-hero-copy">
+                    <span class="tut-label">Tutorial</span>
+                    <h1>Como usar o <span class="tut-highlight">PCraft</span></h1>
+                    <p class="tut-lead">
+                        O que cada componente faz, como montar uma build
+                        e o que a verificação de compatibilidade analisa.
+                    </p>
+                    <nav class="tut-jump" aria-label="Ir para seção">
+                        <a href="#componentes">Componentes</a>
+                        <a href="#passos">Passo a passo</a>
+                        <a href="#compatibilidade">Compatibilidade</a>
+                        <a href="#builds">Salvar builds</a>
+                    </nav>
+                </div>
+
+                <aside class="tut-hero-panel" aria-hidden="true">
+                    <div class="tut-panel-head">
+                        <span>Resumo da build</span>
+                        <span class="tut-panel-badge">Exemplo</span>
+                    </div>
+                    <ul class="tut-panel-list">
+                        <li><span class="tut-panel-tag">CPU</span> Ryzen 7 7800X3D</li>
+                        <li><span class="tut-panel-tag">MB</span> B650 Tomahawk</li>
+                        <li><span class="tut-panel-tag">RAM</span> 32 GB DDR5</li>
+                        <li><span class="tut-panel-tag">GPU</span> RTX 4070 Super</li>
+                        <li><span class="tut-panel-tag">PSU</span> 750 W Gold</li>
+                    </ul>
+                    <div class="tut-panel-stats">
+                        <div>
+                            <small>Consumo</small>
+                            <strong>412 W</strong>
+                        </div>
+                        <div>
+                            <small>Fonte sugerida</small>
+                            <strong>494 W</strong>
+                        </div>
+                        <div class="tut-panel-ok">
+                            <small>Status</small>
+                            <strong>Compatível</strong>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <div class="tut-strip">
+            <div class="container tut-strip-inner">
+                <span>5 categorias de peças</span>
+                <span>Validação em tempo real</span>
+                <span>Consumo estimado</span>
+                <span>Builds públicas e privadas</span>
+            </div>
+        </div>
+
+        <section class="tut-section" id="componentes">
+            <div class="container">
+                <header class="tut-section-head">
+                    <span class="tut-section-num">01</span>
+                    <div class="tut-section-head-body">
+                        <h2>Componentes disponíveis</h2>
+                        <p class="tut-desc">
+                            O montador trabalha com cinco categorias de peças.
+                        </p>
+                    </div>
+                </header>
+
+                <div class="tut-components-grid">
+                    <article class="tut-comp-card tut-comp-card--cpu">
+                        <span class="tut-comp-icon">CPU</span>
+                        <h3>Processador</h3>
+                        <p>Executa os programas e influencia o desempenho geral do PC.</p>
+                        <p class="tut-comp-extra">A escolha depende do socket (LGA1700, AM5, etc.), que tem que ser o mesmo da placa-mãe.</p>
+                    </article>
+
+                    <article class="tut-comp-card tut-comp-card--mb">
+                        <span class="tut-comp-icon">MB</span>
+                        <h3>Placa-mãe</h3>
+                        <p>Interliga CPU, RAM, placa de vídeo e fonte.</p>
+                        <p class="tut-comp-extra">Define socket, tipo de RAM (DDR4/DDR5), slots e capacidade máxima de memória.</p>
+                    </article>
+
+                    <article class="tut-comp-card tut-comp-card--ram">
+                        <span class="tut-comp-icon">RAM</span>
+                        <h3>Memória RAM</h3>
+                        <p>Armazena os dados que os programas usam enquanto estão abertos.</p>
+                        <p class="tut-comp-extra">Tipo, capacidade total e quantidade de módulos precisam respeitar os limites da placa-mãe.</p>
+                    </article>
+
+                    <article class="tut-comp-card tut-comp-card--gpu">
+                        <span class="tut-comp-icon">GPU</span>
+                        <h3>Placa de vídeo</h3>
+                        <p>Processa os gráficos em jogos, edição de vídeo e render 3D.</p>
+                        <p class="tut-comp-extra">Consome bastante energia; a fonte precisa suportar o consumo recomendado da placa.</p>
+                    </article>
+
+                    <article class="tut-comp-card tut-comp-card--psu">
+                        <span class="tut-comp-icon">PSU</span>
+                        <h3>Fonte</h3>
+                        <p>Fornece energia para todos os componentes.</p>
+                        <p class="tut-comp-extra">A potência em watts precisa cobrir o sistema inteiro, com margem de segurança.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="tut-section tut-section--steps" id="passos">
+            <div class="container">
+                <header class="tut-section-head">
+                    <span class="tut-section-num">02</span>
+                    <div class="tut-section-head-body">
+                        <h2>Usando o montador</h2>
+                        <p class="tut-desc">O fluxo principal fica na página Montagem.</p>
+                    </div>
+                </header>
+
+                <ol class="tut-steps">
+                    <li class="tut-step">
+                        <span class="tut-step-num">1</span>
+                        <div>
+                            <h3>Abrir a Montagem</h3>
+                            <p>No menu, acesse Montagem. À esquerda ficam as categorias de peças; à direita, o resumo da build.</p>
+                        </div>
+                    </li>
+                    <li class="tut-step">
+                        <span class="tut-step-num">2</span>
+                        <div>
+                            <h3>Selecionar as peças</h3>
+                            <p>Clique em uma categoria. Abre uma janela com busca por nome ou marca. Escolha o item e confirme.</p>
+                        </div>
+                    </li>
+                    <li class="tut-step">
+                        <span class="tut-step-num">3</span>
+                        <div>
+                            <h3>Conferir o resumo</h3>
+                            <p>O painel lateral lista o que já foi escolhido, o consumo em watts e a potência de fonte sugerida.</p>
+                        </div>
+                    </li>
+                    <li class="tut-step">
+                        <span class="tut-step-num">4</span>
+                        <div>
+                            <h3>Validar compatibilidade</h3>
+                            <p>Com as cinco peças selecionadas, clique em Validar Compatibilidade. O sistema verifica socket, RAM, GPU e fonte.</p>
+                        </div>
+                    </li>
+                    <li class="tut-step">
+                        <span class="tut-step-num">5</span>
+                        <div>
+                            <h3>Salvar ou corrigir</h3>
+                            <p>Se não houver erros, você pode salvar a build (é preciso estar logado). Se aparecer algum alerta, troque a peça indicada e valide de novo.</p>
+                        </div>
+                    </li>
+                </ol>
+
+                <p class="tut-note">
+                    A ordem de seleção não importa. Pode começar pela CPU ou pela placa-mãe; o importante é validar no final.
+                </p>
+            </div>
+        </section>
+
+        <section class="tut-section tut-section--checks" id="compatibilidade">
+            <div class="container">
+                <header class="tut-section-head">
+                    <span class="tut-section-num">03</span>
+                    <div class="tut-section-head-body">
+                        <h2>Verificação de compatibilidade</h2>
+                        <p class="tut-desc">Ao clicar em Validar Compatibilidade, o PCraft checa estes pontos:</p>
+                    </div>
+                </header>
+
+                <div class="tut-check-grid">
+                    <div class="tut-check-card tut-check-card--socket">
+                        <span class="tut-check-tag">CPU e placa-mãe</span>
+                        <h3>Socket</h3>
+                        <p>Processador e placa-mãe precisam usar o mesmo socket, como LGA1700 ou AM5.</p>
+                    </div>
+                    <div class="tut-check-card tut-check-card--ram">
+                        <span class="tut-check-tag">RAM e placa-mãe</span>
+                        <h3>Tipo e capacidade</h3>
+                        <p>DDR4 não funciona em placa DDR5. A capacidade total e o número de pentes não podem passar do limite da placa.</p>
+                    </div>
+                    <div class="tut-check-card tut-check-card--gpu">
+                        <span class="tut-check-tag">GPU e fonte</span>
+                        <h3>Potência da placa de vídeo</h3>
+                        <p>A fonte precisa atender o consumo mínimo recomendado pela GPU escolhida.</p>
+                    </div>
+                    <div class="tut-check-card tut-check-card--psu">
+                        <span class="tut-check-tag">Sistema e fonte</span>
+                        <h3>Consumo total</h3>
+                        <p>Soma CPU, GPU, RAM, placa-mãe e uma margem. Se a fonte for insuficiente, aparece um alerta.</p>
+                    </div>
+                </div>
+
+                <p class="tut-note">
+                    Quando tudo está certo, o resultado mostra que a build é compatível. Se houver problema,
+                    a mensagem indica qual peça precisa ser trocada, por exemplo socket diferente entre CPU e placa-mãe.
+                </p>
+            </div>
+        </section>
+
+        <section class="tut-section tut-section--builds" id="builds">
+            <div class="container">
+                <header class="tut-section-head">
+                    <span class="tut-section-num">04</span>
+                    <div class="tut-section-head-body">
+                        <h2>Salvar e compartilhar builds</h2>
+                    </div>
+                </header>
+
+                <div class="tut-feature-grid">
+                    <div class="tut-feature">
+                        <span class="tut-feature-num">01</span>
+                        <h3>Salvar build</h3>
+                        <p>Com login feito, dê um nome à configuração e defina se ela fica pública ou privada.</p>
+                    </div>
+                    <div class="tut-feature">
+                        <span class="tut-feature-num">02</span>
+                        <h3>Minhas Builds</h3>
+                        <p>Lista as configurações que você salvou. Dá para abrir e revisar as peças escolhidas.</p>
+                    </div>
+                    <div class="tut-feature">
+                        <span class="tut-feature-num">03</span>
+                        <h3>Builds dos Usuários</h3>
+                        <p>Mostra builds públicas de outros usuários. Você pode ver os detalhes e usar como referência.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tut-cta">
+            <div class="container">
+                <div class="tut-cta-inner">
+                    <div>
+                        <h2>Abrir o montador</h2>
+                        <p>Selecione as peças, valide a compatibilidade e salve quando terminar.</p>
+                    </div>
+                    <a href="../Montagem/index.html" class="tut-btn tut-btn--primary">Ir para Montagem</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 PCraft — Verificador de compatibilidade</p>
+        </div>
+    </footer>
+
+    <script src="../Autenticacao/auth.js"></script>
+</body>
+
+</html>
