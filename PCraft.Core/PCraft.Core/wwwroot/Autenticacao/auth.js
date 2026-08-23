@@ -92,12 +92,13 @@ function detectarPagina() {
     const attr = (typeof document.body !== 'undefined'
         ? (document.body.getAttribute('data-pcraft-page') || '')
         : '').toLowerCase();
-    if (['home', 'montagem', 'auth', 'adm', 'builds', 'build-detalhe', 'tutorial'].includes(attr)) {
+    if (['home', 'montagem', 'auth', 'adm', 'builds', 'build-detalhe', 'recuperacao', 'tutorial'].includes(attr)) {
         return attr;
     }
 
     const p = pathParaMatch();
     if (p.includes('/autenticacao/')) return 'auth';
+    if (p.includes('/recuperacao/')) return 'recuperacao';
     if (p.includes('/tutorial')) return 'tutorial';
     if (p.includes('/montagem')) return 'montagem';
     if (p.includes('/builds/')) return 'builds';
@@ -108,6 +109,15 @@ function detectarPagina() {
 /** Caminhos relativos para links da barra, conforme a pasta atual. */
 function obterRotas() {
     const pagina = detectarPagina();
+
+    if (pagina === 'recuperacao') {
+        return {
+            home: '../Home page/index.html',
+            montagem: '../Montagem/index.html',
+            login: '../Autenticacao/Login.html',
+            cadastro: '../Autenticacao/Cadastro.html'
+        };
+    }
 
     if (pagina === 'auth') {
         return {
